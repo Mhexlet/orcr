@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{{ title|title }}{% endblock %}</title>
+        {% block css %}
+        <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
+        <link rel="stylesheet" href="{% static 'css/style.css'%}">
+        {% endblock %}
+        <link type="image/x-icon" href="/static/img/site_icon.svg" rel="shortcut icon" id="head_icon">
+        <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+        <script src="{% static 'js/base.js' %}"></script>
+        {% block js %}
+        {% endblock %}
+    </head>
+    <body>
+        <div class="base-sidebar">
+            <a href="{% url 'index' %}" class="base-logo-block">
+                <img src="{% static 'img/logo.png' %}" alt="logo" class="base-logo">
+            </a>
+            <div class="base-search-block">
+                <input type="text" class="base-search" placeholder="Поиск">
+            </div>
+            <div class="base-menu">
+                {% block menu %}
+                    {% for section in menu_sections %}
+                        <div class="menu-section-block{% if current_page and current_page.section.pk == section.pk %} active{% endif %}" id="menu-section-{{ section.pk }}">
+                            <span class="menu-section">{{ section.name }}</span>
+                            <img src="{% static 'img/menu-arrow.svg' %}" alt=">" class="menu-section-arrow"{% if current_page and current_page.section.pk == section.pk %} style="transform: rotate(-90deg);"{% endif %}>
+                        </div>
+                        <div class="menu-section-dropdown" id="menu-dropdown-{{ section.pk }}"{% if current_page and current_page.section.pk == section.pk %} style="display: flex; height: auto;"{% endif %}>
+                            {% for page in section.get_pages %}
+                                {% if page.approved or user.is_staff %}
+                                    <a href="{% url 'custom:constructor' url=page.url %}" class="menu-section-page{% if page.url == request.resolver_match.kwargs.url %} active{% endif %}">
+                                        {{ page.title }}<div class="menu-section-page-circle"></div>
+                                    </a>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    {% for page in menu_pages %}
+                        {% if page.approved or user.is_staff %}
+                            <a href="{% url 'custom:constructor' url=page.url %}" class="menu-page{% if page.url == request.resolver_match.kwargs.url %} active{% endif %}">{{ page.title }}</a>
+                        {% endif %}
+                    {% endfor %}
+                    <a href="{% url 'geography' %}" class="menu-page{% if 'geography' in request.resolver_match.url_name %} active{% endif %}">География ранней помощи </a>
+                    <a href="{% url 'consultation' %}" class="menu-page{% if 'consultation' in request.resolver_match.url_name %} active{% endif %}">Интерактивная консультация</a>
+                    <a href="{% url 'faq' %}" class="menu-page{% if 'faq' in request.resolver_match.url_name %} active{% endif %}">Вопрос - ответ</a>
+                    <a href="{% url 'reviews' %}" class="menu-page{% if 'reviews' in request.resolver_match.url_name %} active{% endif %}">Отзывы</a>
+                {% endblock %}
+            </div>
+        </div>
+        <div class="base-container">
+            <div class="base-header">
+                {% block header %}
+                <div class="header-title-block">
+                    <h1>Региональный ресурсно - методический центр ранней помощи детям и их семьям в Иркутской области</h1>
+                    <h2>На базе ОГБУСО «Реабилитационный центр для детей и подростков с ограниченными возможностями»</h2>
+                </div>
+                <div class="header-right-block">
+                    <div class="header-poor-vision">Версия для слабовидящих</div>
+                </div>
+                {% endblock %}
+            </div>
+            <div class="base-content">
+                {% block content %}
+                {% endblock %}
+            </div>
+            <div class="base-footer">
+                {% block footer %}
+                {% endblock %}
+            </div>
+        </div>
+    </body>
+</html>
