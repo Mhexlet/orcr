@@ -1,5 +1,8 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block js %}
+<script src="{% static 'js/page.js' %}"></script>
+{% endblock %}
 {% block content %}
     <h3 class="page-title">{{ title|title }}</h3>
         <div class="separator"></div>
@@ -8,9 +11,9 @@
         </div>
         {% for fileset in filesets %}
             <div class="separator"></div>
-            <h4 class="page-label">{{ block.name }}</h4>
+            <h4 class="page-label">{{ fileset.name }}</h4>
             <div class="page-file-set">
-                {% for file in block.get_files %}
+                {% for file in fileset.get_files %}
                     <div class="page-file-block">
                         <a href="/media/{{ file.file }}" download class="page-file">{{ file.extension }}</a>
                         <span class="page-file-name">{% if file.name %}{{ file.name }}{% endif %}</span>
@@ -20,9 +23,9 @@
         {% endfor %}
         {% for album in albums %}
             <div class="separator"></div>
-            <h4 class="page-label">{{ block.name }}</h4>
+            <h4 class="page-label">{{ album.name }}</h4>
             <div class="page-album">
-                {% for image in block.get_images %}
+                {% for image in album.get_images %}
                     <div class="page-album-subblock">
                         <div class="page-album-img-block">
                             <img src="/media/{{ image.image }}" class="page-album-img">
@@ -32,6 +35,9 @@
                 {% endfor %}
             </div>
         {% endfor %}
+        <div class="faq-background">
+            <img class="page-background-img">
+        </div>
         <!-- {% for block in blocks %}
             <div class="separator"></div>
             {% if block.type == 'text' %}

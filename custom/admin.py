@@ -56,10 +56,8 @@ class FileSetFileAdmin(admin.ModelAdmin):
 
 @admin.register(Page)
 class PageAdmin(SummernoteModelAdmin):
-    # displaying posts with title slug and created time
     list_display = [field.name for field in Page._meta.get_fields() if type(field) != ManyToOneRel]
     list_filter = ('title', 'url', 'section')
     search_fields = ['title', 'url', 'section']
-    # prepopulated_fields = {'slug': ('title',)}
     summernote_fields = ('content',)
 

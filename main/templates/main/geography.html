@@ -1,4 +1,21 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block js %}
+<script src="{% static 'js/geography.js' %}"></script>
+{% endblock %}
 {% block content %}
+<div class="geo-content">
+    <div class="geo-names">
+        <div class="geo-separator"></div>
+        {% for place in places %}
+        <div class="geo-name" id="name-{{ place.pk }}">{{ place.name }}</div>
+        <div class="geo-separator"></div>
+        {% endfor %}
+    </div>
+    <div class="geo-places">
+        {% for place in places %}
+        <iframe src="{{ place.src }}" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" class="geo-place" id="src-{{ place.pk }}"></iframe>
+        {% endfor %}
+    </div>
+</div>
 {% endblock %}

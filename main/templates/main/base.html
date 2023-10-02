@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
         <link rel="stylesheet" href="{% static 'css/style.css'%}">
         {% endblock %}
-        <link type="image/x-icon" href="/static/img/site_icon.svg" rel="shortcut icon" id="head_icon">
+        <link type="image/x-icon" href="/static/img/logo.png" rel="shortcut icon" id="head_icon">
         <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
         <script src="{% static 'js/base.js' %}"></script>
         {% block js %}
@@ -46,6 +46,7 @@
                             <a href="{% url 'custom:constructor' url=page.url %}" class="menu-page{% if page.url == request.resolver_match.kwargs.url %} active{% endif %}">{{ page.title }}</a>
                         {% endif %}
                     {% endfor %}
+                    <a href="{% url 'news' %}" class="menu-page{% if 'news' in request.resolver_match.url_name %} active{% endif %}">Новости</a>
                     <a href="{% url 'geography' %}" class="menu-page{% if 'geography' in request.resolver_match.url_name %} active{% endif %}">География ранней помощи </a>
                     <a href="{% url 'consultation' %}" class="menu-page{% if 'consultation' in request.resolver_match.url_name %} active{% endif %}">Интерактивная консультация</a>
                     <a href="{% url 'faq' %}" class="menu-page{% if 'faq' in request.resolver_match.url_name %} active{% endif %}">Вопрос - ответ</a>

@@ -5,7 +5,8 @@ $h3-color: #968E7E;
 $menu-heading-color: #716D66;
 $first-color: #FFFFFF;
 $second-color: #F8F6F2;
-$highlight-color: #4FC9DA;
+$highlight-color: #00aeef;
+$highlight-color-hover: #0498ce;
 $separator-color: #E0E0DE;
 
 * {
@@ -28,6 +29,42 @@ input:focus {
     border-bottom: 1px dashed $separator-color;
 }
 
+.med-button {
+    border-radius: 0.95rem;
+    padding: 0.775rem 1.5rem;
+    background-color: $highlight-color;
+    color: $first-color;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    transition: all 0.2s ease;
+}
+
+.med-button:hover {
+    background-color: $highlight-color-hover;
+}
+
+.med-input {
+    color: $menu-heading-color;
+    background-color: $first-color;
+    border-radius: 0.95rem;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    padding: 0.775rem 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.3;
+    border: 1px solid $first-color;
+}
+
+.med-input:focus {
+    outline: none;
+}
+
 // BASE
 
 .base-sidebar {
@@ -41,17 +78,18 @@ input:focus {
 }
 
 .base-logo-block {
-    height: 110px;
+    height: 150px;
     width: 100%;
     box-sizing: border-box;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding: 0 1.5rem;
 }
 
 .base-logo {
-    width: 90px;
-    height: 90px;
+    width: 130px;
+    height: 130px;
 }
 
 .base-search-block {
@@ -96,6 +134,7 @@ input:focus {
     font-size: 1.15rem;
     color: $menu-heading-color;
     text-transform: capitalize;
+    transition: color 0.2s ease;
 }
 
 .menu-section:hover, .menu-page:hover {
@@ -145,6 +184,7 @@ input:focus {
     padding-left: 40px;
     font-size: 14px;
     text-transform: capitalize;
+    transition: all 0.2s ease;
 }
 
 .menu-section-page.active, .menu-page.active {
@@ -184,7 +224,7 @@ input:focus {
 }
 
 .base-header {
-    height: 110px;
+    height: 150px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -235,10 +275,20 @@ input:focus {
 
 .page-title {
     color: $h1-color;
-    font-size: 20px;
+    font-size: 2.2rem;
     font-weight: 600;
     text-transform: capitalize;
     margin-bottom: 1.75rem;
+}
+
+.page-content img {
+    border-radius: 0.95rem;
+    cursor: pointer;
+}
+
+.page-background-img {
+    max-width: 90%;
+    max-height: 90%;
 }
 
 .page-label {
@@ -260,14 +310,15 @@ input:focus {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    object-fit: fill;
     overflow: hidden;
     margin: 0 auto 10px;
+    border-radius: 0.95rem;
 }
 
 .page-img {
     min-height: 100%;
     min-width: 100%;
+    object-fit: cover;
 }
 
 .page-img-description {
@@ -285,15 +336,15 @@ input:focus {
 
 .page-album {
     margin-bottom: 1.5rem;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 22% 22% 22% 22%;
+    grid-gap: 3%;
 }
 
 .page-album-subblock {
     display: flex;
     flex-direction: column;
-    width: 22%;
+    width: 100%;
 }
 
 .page-album-img-block {
@@ -302,14 +353,16 @@ input:focus {
     display: flex;
     align-items: flex-start;
     justify-content: center;
-    object-fit: fill;
     overflow: hidden;
     margin-bottom: 10px;
+    border-radius: 0.95rem;
+    cursor: pointer;
 }
 
 .page-album-img {
     min-height: 100%;
     min-width: 100%;
+    object-fit: cover;
 }
 
 .page-album-img-name {
@@ -360,3 +413,475 @@ input:focus {
     width: 100%;
 }
 
+// INDEX
+
+.index-slider-block {
+    width: 80%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.index-slider-left-arrow, .index-slider-right-arrow {
+    position: absolute;
+    top: calc(50% - 20px);
+    left: -80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    border: 2px dashed $separator-color;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    z-index: 3;
+}
+
+.index-slider-right-arrow {
+    left: auto;
+    right: -80px;
+}
+
+.index-slider-left-arrow-img, .index-slider-right-arrow-img {
+    filter: invert(0.5);
+    width: 40px;
+    cursor: pointer;
+}
+
+.index-slider-left-arrow-img {
+    transform: rotate(-180deg);
+}
+
+.index-slides-block {
+    width: 100%;
+    height: calc(56vw - 202px);
+    max-width: 800px;
+    max-height: 448px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    border-radius: 0.95rem;
+}
+
+.index-slide-block {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+}
+
+.index-slide-block > img {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.index-previous-slide {
+    left: -100%;
+}
+
+.index-current-slide {
+    left: 0;
+}
+
+.index-next-slide {
+    left: 100%;
+}
+
+.index-links-block {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.index-link {
+    vertical-align: middle;
+    color: $h1-color;
+    line-height: 1.3;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: color 0.2s ease;
+}
+
+.index-links-block > .index-link {
+    text-transform: capitalize;
+    text-align: center;
+    width: 30%;
+}
+
+.index-link:hover {
+    color: $highlight-color;
+}
+
+.index-news-block {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.index-news-subblock {
+    width: 30%;
+    margin-bottom: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.index-news-subblock > .index-link {
+    height: 60px;
+}
+
+.index-news-img-block {
+    width: 100%;
+    height: calc(17vw - 60px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-radius: 0.95rem;
+}
+
+.index-news-img {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.index-news-date, .index-answer {
+    margin-top: 10px;
+    color: $h3-color;
+    font-weight: 600;
+    font-size: 1.075rem;
+}
+
+.index-faq-block {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0.95rem;
+    padding-left: 24px;
+    position: relative;
+}
+
+.index-faq-color-block {
+    width: 4px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 0.95rem;
+    pointer-events: none;
+}
+
+.index-faq-block > .index-link {
+    font-size: 1.15rem;
+    line-height: 1.3;
+}
+
+.index-answer {
+    color: $text-color;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.2;
+}
+
+// FAQ
+
+.faq-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.75rem;
+}
+
+.faq-header > .page-title {
+    margin-bottom: 0;
+}
+
+.faq-asking-name {
+    color: $menu-heading-color;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin-bottom: 10px;
+    pointer-events: none;
+}
+
+.faq-question {
+    color: $h1-color;
+    line-height: 1.3;
+    font-weight: 600;
+    font-size: 1.25rem;
+    pointer-events: none;
+}
+
+.faq-faq-block {
+    cursor: pointer;
+    margin-top: 0;
+    margin-bottom: 3rem;
+}
+
+.faq-faq-block > .index-answer {
+    pointer-events: none;
+}
+
+.faq-ask-question {
+    color: $h1-color;
+    font-size: 20px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+    cursor: pointer;
+}
+
+.faq-ask-question:hover {
+    color: $highlight-color;
+}
+
+.faq-background {
+    position: fixed;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 30;
+    background-color: rgba(166, 166, 166, 0.6);
+}
+
+.faq-form-block {
+    padding: 1.5rem;
+    background-color: $second-color;
+    border: 1px dashed $separator-color;
+    border-radius: 0.95rem;
+    display: flex;
+    flex-direction: column;
+    width: 300px
+}
+
+.faq-question-input {
+    margin: 10px 0;
+    height: 150px;
+    resize: none;
+}
+
+.faq-form-notification {
+    font-size: 1.075rem;
+    font-weight: 600;
+    text-align: center;
+    width: 100%;
+    color: $menu-heading-color;
+}
+
+.g-recaptcha {
+    margin: 0 auto 10px;
+}
+
+// NEWS
+
+.news-news-block {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.news-news-subblock {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 1.5rem;
+}
+
+.news-news-img-block {
+    width: 30%;
+    max-width: 200px;
+    height: calc(17vw - 60px);
+    max-height: 112px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0.95rem;
+}
+
+.news-news-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-right: 20px;
+    flex-grow: 1;
+}
+
+.news-news-color-block {
+    border-radius: 0.95rem;
+    min-width: 4px;
+    width: 4px;
+    margin-right: 20px;
+}
+
+.single-news-title {
+    margin-bottom: 20px;
+}
+
+.single-news-img-block {
+    width: 60%;
+    height: calc(34vw - 121px);
+    margin: 1rem auto;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0.95rem;
+}
+
+// REVIEWS
+
+.reviews-subblock {
+    cursor: pointer;
+    justify-content: start;
+}
+
+.reviews-pointers-none {
+    pointer-events: none;
+}
+
+.reviews-left {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.reviews-left > .index-answer {
+    min-height: 40px;
+}
+
+.paginator-menu {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+// GEOGRAPHY
+
+.geo-content {
+    display: flex;
+    width: 100%;
+    height: calc(100vh - 120px - 4rem);
+}
+
+.geo-names {
+    height: 100%;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-right: 1.5rem;
+}
+
+.geo-name {
+    width: 100%;
+    padding: 1.5rem 10px;
+    box-sizing: border-box;
+    background-color: transparent;
+    transition: all 0.2s ease;
+    color: $menu-heading-color;
+    font-size: 1.075rem;
+    font-weight: 500;
+    line-height: 1.2;
+    cursor: pointer;
+}
+
+.geo-name:hover, .geo-name.selected {
+    background-color: #4FC9DA;
+    color: $first-color;
+}
+
+.geo-separator {
+    width: 100%;
+    border-bottom: 1px dashed $separator-color;
+}
+
+.geo-places {
+    flex-grow: 1;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.geo-place {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+.geo-place.selected {
+    display: block;
+}
+
+// CONSULTATION
+
+.consultation-intro, .consultation-content-text {
+    color: $text-color;
+    font-size: 1.15rem;
+    font-weight: 500;
+    line-height: 1.2;
+}
+
+.consultation-form {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.consultation-form-subblock {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    margin-right: 1.5rem;
+    height: 300px;
+}
+
+.consultation-question {
+    resize: none;
+    height: 235px;
+}
+
+.consultation-content-text {
+    flex-grow: 1;
+}
+
+.consultation-checkbox-block {
+    display: flex;
+    justify-content: space-between;
+    color: $text-color;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.consultation-read-link {
+    text-decoration: underline;
+    color: $h2-color;
+    margin: 0 auto 20px;
+}
+
+.wrong-input {
+    border: 1px solid $highlight-color;
+}
+
+.consultation-checkbox-block > span.wrong-input {
+    color: $highlight-color;
+    border: none;
+}

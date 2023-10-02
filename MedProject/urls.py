@@ -20,15 +20,23 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 from MedProject import settings
 import main.views as main
+from main.decorators import check_recaptcha
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', main.index, name='index'),
-    path('reviews/', main.reviews, name='reviews'),
-    path('faq/', main.faq, name='faq'),
+    path('reviews/', main.ReviewsList.as_view(), name='reviews'),
+    path('reviews/<int:page>/', main.ReviewsList.as_view(), name='reviews_page'),
+    path('create_review/', check_recaptcha(main.create_review), name='create_review'),
+    path('faq/', main.FaqView.as_view(), name='faq'),
+    path('faq/<int:page>/', main.FaqView.as_view(), name='faq_page'),
+    path('create_question/', check_recaptcha(main.create_question), name='create_question'),
     path('consultation/', main.consultation, name='consultation'),
+    path('create_application/', check_recaptcha(main.create_application), name='create_application'),
     path('geography/', main.geography, name='geography'),
+    path('news/', main.news, name='news'),
+    path('news/<int:pk>/', main.single_news, name='single_news'),
 
     path('custom/', include('custom.urls', namespace='custom')),
     path('authentication/', include('authentication.urls', namespace='authentication')),

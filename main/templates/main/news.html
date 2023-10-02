@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/text-adjust.js' %}"></script>
+{% endblock %}
+{% block content %}
+
+<h3 class="page-title">Новости</h3>
+<div class="news-news-block">
+    {% for n in news %}
+    <div class="separator"></div>
+    <div class="news-news-subblock">
+        <div class="news-news-color-block" style="background-color: {{ n.1 }};"></div>
+        <div class="news-news-left">
+            <a href="{% url 'single_news' pk=n.0.pk %}" class="text-to-adjust index-link" id="news-{{ n.0.pk }}">{{ n.0.title }}</a>
+            <span class="index-news-date">{{ n.0.date }}</span>
+        </div>
+        <div class="news-news-img-block">
+            <img src="/media/{{ n.0.image }}" alt="image" class="index-news-img">
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
