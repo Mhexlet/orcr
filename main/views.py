@@ -155,23 +155,27 @@ def geography(request):
     return render(request, 'main/geography.html', context)
 
 
-def news(request):
+class NewsList(ListView):
+    model = News
+    template_name = 'main/news.html'
+    paginate_by = 3
 
-    colors = ['#4F55DA', '#F06445', '#E8C444', '#B8D935', '#4FC9DA']
-    news_set = News.objects.all()
-    news_list = []
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Новости'
+        context['menu_sections'] = Section.objects.all()
+        context['menu_pages'] = Page.objects.filter(section=None)
 
-    for i, n in enumerate(news_set):
-        news_list.append((n, colors[i % 5]))
+        return context
 
-    context = {
-        'title': 'Новости',
-        'menu_sections': Section.objects.all(),
-        'menu_pages': Page.objects.filter(section=None),
-        'news': news_list
-    }
+    def get_queryset(self):
+        colors = ['#4F55DA', '#F06445', '#E8C444', '#B8D935', '#4FC9DA']
+        news_set = News.objects.all()
+        news_list = []
 
-    return render(request, 'main/news.html', context)
+        for i, n in enumerate(news_set):
+            news_list.append((n, colors[i % 5]))
+        return news_list
 
 
 def single_news(request, pk):

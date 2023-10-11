@@ -20,6 +20,7 @@ from django.conf.urls import include
 from django.conf.urls.static import static
 from MedProject import settings
 import main.views as main
+from django.views.i18n import JavaScriptCatalog
 from main.decorators import check_recaptcha
 
 urlpatterns = [
@@ -35,7 +36,8 @@ urlpatterns = [
     path('consultation/', main.consultation, name='consultation'),
     path('create_application/', check_recaptcha(main.create_application), name='create_application'),
     path('geography/', main.geography, name='geography'),
-    path('news/', main.news, name='news'),
+    path('news/', main.NewsList.as_view(), name='news'),
+    path('news/<int:page>/', main.NewsList.as_view(), name='news_page'),
     path('news/<int:pk>/', main.single_news, name='single_news'),
 
     path('custom/', include('custom.urls', namespace='custom')),
@@ -43,6 +45,7 @@ urlpatterns = [
     path('specialists/', include('specialists.urls', namespace='specialists')),
 
     path('editor/', include('django_summernote.urls')),
+    path('jsi18n', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 ]
 
 if settings.DEBUG:

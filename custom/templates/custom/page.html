@@ -15,7 +15,7 @@
             <div class="page-file-set">
                 {% for file in fileset.get_files %}
                     <div class="page-file-block">
-                        <a href="/media/{{ file.file }}" download class="page-file">{{ file.extension }}</a>
+                        <a href="/media/{{ file.file }}" target="_blank" class="page-file">{{ file.extension }}</a>
                         <span class="page-file-name">{% if file.name %}{{ file.name }}{% endif %}</span>
                     </div>
                 {% endfor %}

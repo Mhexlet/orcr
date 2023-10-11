@@ -51,6 +51,12 @@
                     <a href="{% url 'consultation' %}" class="menu-page{% if 'consultation' in request.resolver_match.url_name %} active{% endif %}">Интерактивная консультация</a>
                     <a href="{% url 'faq' %}" class="menu-page{% if 'faq' in request.resolver_match.url_name %} active{% endif %}">Вопрос - ответ</a>
                     <a href="{% url 'reviews' %}" class="menu-page{% if 'reviews' in request.resolver_match.url_name %} active{% endif %}">Отзывы</a>
+                    <a href="{% url 'specialists:specialists' %}" class="menu-page{% if 'specialists' in request.resolver_match.url_name %} active{% endif %}">Специалисты ранней помощи</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'specialists:account' %}" class="menu-page">Специалистам</a>
+                    {% else %}
+                        <a href="{% url 'authentication:login' %}" class="menu-page{% if 'authentication' in request.resolver_match.namespace %} active{% endif %}">Специалистам</a>
+                    {% endif %}
                 {% endblock %}
             </div>
         </div>

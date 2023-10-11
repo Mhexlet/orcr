@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_summernote',
+    'captcha',
     'main',
     'custom',
     'authentication',
@@ -138,3 +139,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6Lf_F2YoAAAAAAtfUfdeDfc2KOSjGgb5TeavAdco'
+RECAPTCHA_PUBLIC_KEY = '6Lf_F2YoAAAAAAVQNp1zYPQk7S5cdxh7ylOkxGCU'
+RECAPTCHA_PRIVATE_KEY = '6Lf_F2YoAAAAAAtfUfdeDfc2KOSjGgb5TeavAdco'
+SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']

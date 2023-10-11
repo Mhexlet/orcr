@@ -7,7 +7,7 @@
 
 <h3 class="page-title">Новости</h3>
 <div class="news-news-block">
-    {% for n in news %}
+    {% for n in object_list %}
     <div class="separator"></div>
     <div class="news-news-subblock">
         <div class="news-news-color-block" style="background-color: {{ n.1 }};"></div>
@@ -21,4 +21,28 @@
     </div>
     {% endfor %}
 </div>
+<div class="paginator-menu">
+    {% if page_obj.has_previous %}
+        <a href="{% url 'news_page' page_obj.previous_page_number %}" class="paginator-previous">
+            ↼&nbsp
+        </a>
+    {% else %}
+        &nbsp&nbsp&nbsp
+    {% endif %}
+      <p>
+          {% if page_obj %}
+            {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+          {% endif %}
+      </p>
+    {% if page_obj.has_next %}
+        <a href="{% url 'news_page' page_obj.next_page_number %}" class="paginator-next">
+            &nbsp⇁
+        </a>
+    {% else %}
+        &nbsp&nbsp&nbsp
+    {% endif %}
+</div>
+{% if not object_list %}
+    <div class="faq-form-notification">На данный момент тут ничего нет</div>
+{% endif %}
 {% endblock %}

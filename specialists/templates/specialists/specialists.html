@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/text-adjust.js' %}"></script>
+<!-- <script src="{% static 'js/specialists.js' %}"></script> -->
+{% endblock %}
+{% block content %}
+<h3 class="page-title">Специалисты ранней помощи</h3>
+<div class="separator"></div>
+<div class="specialists-content">
+    {% for specialist in object_list %}
+    <a href="{% url 'specialists:profile' specialist.pk %}" class="specialists-block">
+        <div class="specialists-img-block">
+            {% if specialist.registered %}
+                <div class="specialists-registered">Р</div>
+            {% endif %}
+            <img src="/media/{{ specialist.photo }}" alt="photo" class="specialists-img">
+        </div>
+        <div class="specialists-info">
+            <span class="specialists-info-label">Город: </span>{{ specialist.city }}
+        </div>
+        <div class="specialists-info">
+            <span class="specialists-info-label">Сфера деятельности: </span>{{ specialist.field_of_activity }}
+        </div>
+        <div class="specialists-info">
+            <span class="specialists-info-label">Специализация: </span>{{ specialist.profession }}
+        </div>
+    </a>
+    {% endfor %}
+</div>
+<div class="paginator-menu">
+    {% if page_obj.has_previous %}
+        <a href="{% url 'specialists:specialists_page' page_obj.previous_page_number %}" class="paginator-previous">
+            ↼&nbsp
+        </a>
+    {% else %}
+        &nbsp&nbsp&nbsp
+    {% endif %}
+      <p>
+          {% if page_obj %}
+            {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+          {% endif %}
+      </p>
+    {% if page_obj.has_next %}
+        <a href="{% url 'specialists:specialists_page' page_obj.next_page_number %}" class="paginator-next">
+            &nbsp⇁
+        </a>
+    {% else %}
+        &nbsp&nbsp&nbsp
+    {% endif %}
+</div>
+{% if not object_list %}
+    <div class="faq-form-notification">На данный момент тут ничего нет</div>
+{% endif %}
+{% endblock %}

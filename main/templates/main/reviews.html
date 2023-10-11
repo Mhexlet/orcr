@@ -43,6 +43,9 @@
         &nbsp&nbsp&nbsp
     {% endif %}
 </div>
+{% if not object_list %}
+    <div class="faq-form-notification">На данный момент тут ничего нет</div>
+{% endif %}
 <div class="faq-background">
     <div class="faq-form-block">
         {% csrf_token %}

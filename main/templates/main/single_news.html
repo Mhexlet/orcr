@@ -1,10 +1,6 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block js %}
-<script src="{% static 'js/text-adjust.js' %}"></script>
-{% endblock %}
 {% block content %}
-
 <h3 class="page-title single-news-title">{{ current_news.title }}</h3>
 <span class="index-news-date">{{ current_news.date }}</span>
 <div class="single-news-img-block">

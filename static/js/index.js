@@ -18,11 +18,11 @@ window.addEventListener('load', () => {
     currentTimer = setTimeout(timeoutChangeCurrent, 5000);
 
     $('.index-slider-left-arrow').animate({
-        'left': '4%'
+        'left': '20px'
     }, 1000);
 
     $('.index-slider-right-arrow').animate({
-        'right': '4%'
+        'right': '20px'
     }, 1000);
 
     function changeCurrent(direction=true) {

@@ -1,0 +1,22 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block js %}
+<script src="{% static 'js/login.js' %}"></script>
+{% endblock %}
+{% block content %}
+<h1 class="page-title">Авторизация</h1>
+<div class="separator"></div>
+<form action="{% url 'authentication:login' %}" class="consultation-form login-form" method="post">
+    <div class="consultation-form-subblock">
+        {% csrf_token %}
+        {% if next %}
+            <input type="hidden" name="next" value="{{ next }}">
+        {% endif %}
+        {% for field in login_form %}
+            {{ field }}
+        {% endfor %}
+        <input type="submit" class="med-button login-submit" value="Войти">
+        <a href="{% url 'authentication:register' %}" class="consultation-read-link">Зарегистрироваться</a>
+    </div>
+</form>
+{% endblock %}
