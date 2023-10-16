@@ -56,8 +56,13 @@ class FileSetFileAdmin(admin.ModelAdmin):
 
 @admin.register(Page)
 class PageAdmin(SummernoteModelAdmin):
-    list_display = [field.name for field in Page._meta.get_fields() if type(field) != ManyToOneRel]
+    list_display = ['pk', 'title', 'url', 'section', 'short_content', 'approved']
     list_filter = ('title', 'url', 'section')
     search_fields = ['title', 'url', 'section']
     summernote_fields = ('content',)
+    exclude = ('url',)
 
+    def short_content(self, obj):
+        return obj.content[:50] + '...'
+
+    short_content.short_description = 'Содержимое'

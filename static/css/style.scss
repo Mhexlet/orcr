@@ -477,24 +477,21 @@ input:focus {
     overflow: hidden;
     position: relative;
     z-index: 2;
-    border-radius: 0.95rem;
 }
 
 .index-slide-block {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: center;
     width: 100%;
     height: 100%;
-    overflow: hidden;
     position: absolute;
     top: 0;
 }
 
 .index-slide-block > img {
-    min-width: 100%;
-    min-height: 100%;
     object-fit: cover;
+    border-radius: 0.95rem;
 }
 
 .index-previous-slide {
@@ -549,10 +546,6 @@ input:focus {
     flex-direction: column;
 }
 
-.index-news-subblock > .index-link {
-    height: 60px;
-}
-
 .index-news-img-block {
     width: 100%;
     height: calc(17vw - 60px);
@@ -568,6 +561,17 @@ input:focus {
     min-width: 100%;
     min-height: 100%;
     object-fit: cover;
+}
+
+.index-news-text, .index-news-text span {
+    color: $h3-color !important;
+    font-weight: 600 !important;
+    font-size: 0.95rem !important;
+    margin-top: 5px;
+}
+
+.index-news-text img {
+    display: none;
 }
 
 .index-news-date, .index-answer {
@@ -732,7 +736,7 @@ input:focus {
     flex-direction: column;
     justify-content: space-around;
     margin-right: 20px;
-    flex-grow: 1;
+    width: calc(100% - 244px);
 }
 
 .news-news-color-block {
@@ -919,6 +923,7 @@ input:focus {
 
 .register-form textarea {
     height: 173px !important;
+    resize: none;
 }
 
 .register-form .med-button, .login-form .med-button {
@@ -1368,4 +1373,42 @@ input:focus {
 
 .create-article-notification {
     margin: 15px auto;
+}
+
+// EDIT PROFILE
+
+.edit-profile-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.edit-profile-subblock {
+    width: calc(50% - 0.75rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-profile-subblock .specialists-img-block {
+    width: 200px;
+    height: 150px;
+}
+
+.edit-profile-subblock .specialists-info {
+    display: flex;
+    font-size: 1.2rem;
+}
+
+.edit-profile-edit-img {
+    margin: 0px 5px 5px;
+    width: 20px;
+    cursor: pointer;
+}
+
+.edit-profile-change-password {
+    width: 200px;
+}
+
+.edit-profile-input, .edit-profile-textarea, .edit-profile-date-input, #edit-fake-select {
+    display: none;
+    margin-bottom: 10px;
 }

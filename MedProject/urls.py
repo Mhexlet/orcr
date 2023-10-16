@@ -38,7 +38,7 @@ urlpatterns = [
     path('geography/', main.geography, name='geography'),
     path('news/', main.NewsList.as_view(), name='news'),
     path('news/<int:page>/', main.NewsList.as_view(), name='news_page'),
-    path('news/<int:pk>/', main.single_news, name='single_news'),
+    path('single_news/<int:pk>/', main.single_news, name='single_news'),
 
     path('custom/', include('custom.urls', namespace='custom')),
     path('authentication/', include('authentication.urls', namespace='authentication')),

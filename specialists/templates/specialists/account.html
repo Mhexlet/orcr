@@ -6,7 +6,7 @@
 {% endblock %}
 {% block menu %}
 <a href="{% url 'index' %}" class="menu-page">Вернуться на сайт</a>
-<a href="{% url 'authentication:edit_profile' %}" class="menu-page">Редактировать профиль</a>
+<a href="{% url 'authentication:edit_profile_page' %}" class="menu-page">Редактировать профиль</a>
 <a href="{% url 'authentication:logout' %}" class="menu-page">Выйти</a>
 {% endblock %}
 {% block content %}
@@ -143,6 +143,6 @@
             </div>
         {% endfor %}
     </div>
-    <a href="{% url 'authentication:edit_profile' %}" class="med-button mini-med-button" style="display: block; width: 250px; margin-top: 20px;">Редактировать профиль</a>
+    <a href="{% url 'authentication:edit_profile_page' %}" class="med-button mini-med-button" style="display: block; width: 250px; margin-top: 20px;">Редактировать профиль</a>
 {% endif %}
 {% endblock %}

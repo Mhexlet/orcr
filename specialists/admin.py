@@ -5,7 +5,12 @@ from django.db.models.fields.reverse_related import ManyToOneRel
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Article._meta.get_fields() if type(field) != ManyToOneRel]
+    list_display = ['author', 'hidden', 'theme', 'title', 'short_text', 'created_at', 'approved_at', 'approved']
+
+    def short_text(self, obj):
+        return obj.text[:50] + '...'
+
+    short_text.short_description = 'Текст'
 
 
 @admin.register(ArticleFile)

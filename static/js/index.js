@@ -6,9 +6,14 @@ window.addEventListener('load', () => {
     let locked = false;
 
     function getHtmlString(position) {
-        let htmlString = `<div class="index-slide-block index-${position}-slide"><img src="/media/${slides[currentImage].fields.image}" alt="image"></div>`;
-        if(slides[currentImage].fields.link) {
-            htmlString = `<a href="${slides[currentImage].fields.link}" class="index-slide-block index-${position}-slide"><img src="/media/${slides[currentImage].fields.image}" alt="image"></a>`;
+        let style = 'width: 100%;';
+        if(slides[currentImage].vertical) {
+            style = 'height: 100%;';
+        }
+        console.log(slides[currentImage])
+        let htmlString = `<div class="index-slide-block index-${position}-slide"><img src="${slides[currentImage].image}" alt="image" style="${style}"></div>`;
+        if(slides[currentImage].link) {
+            htmlString = `<a href="${slides[currentImage].link}" class="index-slide-block index-${position}-slide" target="_blank"><img src="${slides[currentImage].image}" alt="image" style="${style}"></a>`;
         }
         return htmlString;
     }

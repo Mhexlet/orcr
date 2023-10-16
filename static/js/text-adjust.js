@@ -25,7 +25,7 @@ window.addEventListener('load', () => {
 
     function adjustText(block, text, maxLines) {
         let words = text.split(' ');
-        let blockWidth = block.clientWidth * 0.9;
+        let blockWidth = block.clientWidth;
         let currentLineLength = 0;
         let currentLineNumber = 1;
         let result = '';
@@ -67,7 +67,7 @@ window.addEventListener('load', () => {
     }
     
     $('.text-to-adjust').each((i, text) => {
-        textData[text.id] = text.innerHTML;
+        textData[text.id] = text.innerText;
     });
     adjustEventsTexts();
 

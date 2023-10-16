@@ -1,10 +1,13 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import auth
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from .forms import UserLoginForm, UserRegisterForm, UserEditForm
-from .models import UserApprovalApplication
+from .forms import UserLoginForm, UserRegisterForm
+from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
+from django.core.files.storage import default_storage, FileSystemStorage
+from MedProject.settings import MEDIA_ROOT
+import os
 
 
 def login(request):
@@ -64,35 +67,52 @@ def register(request):
 
 
 @login_required
-def edit_profile(request):
+def edit_profile_page(request):
 
-    if request.method == 'POST':
-        edit_form = UserEditForm(request.POST, request.FILES)
-
-        if edit_form.is_valid():
-            edit_form.save()
-            return HttpResponseRedirect(reverse('specialists:account'))
-    else:
-        edit_form = UserEditForm(initial={
-            'email': request.user.email,
-            'last_name': request.user.last_name,
-            'first_name': request.user.first_name,
-            'patronymic': request.user.patronymic,
-            'birthdate': request.user.birthdate,
-            'phone_number': request.user.phone_number,
-            'field_of_activity': request.user.field_of_activity,
-            'profession': request.user.profession,
-            'city': request.user.city,
-            'workplace_address': request.user.workplace_address,
-            'workplace_name': request.user.workplace_name,
-            # 'photo': request.user.photo,
-            'description': request.user.description})
-
-    edit_list = list(edit_form)
     context = {
         'title': 'Редактирование профиля',
-        'first_block': edit_list[0:6],
-        'second_block': edit_list[6:12],
-        'third_block': edit_list[-3:]
+        'fields_of_activity': FieldOfActivity.objects.all()
     }
     return render(request, 'authentication/edit_profile.html', context)
+
+
+@login_required
+def edit_profile(request):
+
+    field = request.POST.get('field')
+    new_value = request.POST.get('new_value')
+
+    if request.recaptcha_is_valid:
+        if field in ['first_name', 'patronymic', 'last_name', 'birthdate',
+                     'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
+                     'phone_number', 'email', 'photo', 'description'] and field != getattr(request.user, field):
+            
+            if field == 'photo':
+                file = request.FILES.get('photo')
+                fs = FileSystemStorage(location=os.path.join(MEDIA_ROOT, 'profile_photos'))
+                filename = fs.save(file.name, file)
+                new_value = 'profile_photos/' + filename
+            elif field == 'email' and User.objects.filter(email=new_value).exists():
+                return JsonResponse({'result': 'email'})
+
+            if field == 'field_of_activity' and not FieldOfActivity.objects.filter(pk=int(new_value)).exists():
+                return JsonResponse({'result': 'failed'})
+            elif field == 'field_of_activity':
+                new_value = f'id:{new_value}|{FieldOfActivity.objects.get(pk=int(new_value)).name}'
+
+            old_value = str(getattr(request.user, field))
+            if field == 'birthdate':
+                old_value = f'{old_value[8:]}-{old_value[5:7]}-{old_value[:4]}'
+
+            UserEditApplication.objects.create(user=request.user, field=field, new_value=new_value,
+                                               old_value=old_value)
+            return JsonResponse({'result': 'ok'})
+        else:
+            pass
+    else:
+        return JsonResponse({'result': 'captcha'})
+
+    return JsonResponse({'result': 'failed'})
+
+
+

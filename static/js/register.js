@@ -28,6 +28,7 @@ window.addEventListener('load', () => {
     $('.datepicker').datepicker({
         changeMonth: true,
         changeYear: true,
+        yearRange: "c-100:c+0",
         dateFormat: "dd-mm-yy"
     });
 

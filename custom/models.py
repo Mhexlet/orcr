@@ -1,5 +1,8 @@
 import os
 from django.db import models
+from django.dispatch import receiver
+from translate import Translator
+import secrets
 
 
 class Section(models.Model):
@@ -21,7 +24,7 @@ class Section(models.Model):
 class Page(models.Model):
 
     title = models.CharField(max_length=32, unique=True, verbose_name='Заголовок страницы')
-    url = models.CharField(max_length=16, unique=True, verbose_name='URL страницы (перевод заголовка на английский, в нижнем регистре, с _ вместо пробелов)')
+    url = models.CharField(max_length=16, unique=True, blank=True, verbose_name='URL страницы (заполняется автоматически)')
     section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Раздел меню (оставьте незаполненным, если страница не является подразделом)', related_name='pages')
     content = models.TextField(verbose_name='Содержимое')
     approved = models.BooleanField(default=False, verbose_name='Публичный доступ')
@@ -137,3 +140,13 @@ class FileSetFile(models.Model):
     def extension(self):
         name, ext = os.path.splitext(self.file.name)
         return ext
+
+
+@receiver(models.signals.pre_save, sender=Page)
+def add_url(sender, instance, raw, using, update_fields, *args, **kwargs):
+    if not instance.url:
+        translator = Translator(to_lang='en', from_lang='ru')
+        url = translator.translate(instance.title).replace(' ', '_')
+        if Page.objects.filter(url=url).exists():
+            url += secrets.token_urlsafe(5)
+        instance.url = url.lower()

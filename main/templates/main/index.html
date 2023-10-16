@@ -3,6 +3,7 @@
 {% block js %}
 <script>
     var slides = {{ slides|safe }};
+    console.log(slides)
 </script>
 <script src="{% static 'js/index.js' %}"></script>
 <script src="{% static 'js/text-adjust.js' %}"></script>
@@ -33,6 +34,7 @@
             <img src="/media/{{ n.image }}" alt="image" class="index-news-img">
         </div>
         <a href="{% url 'single_news' pk=n.pk %}" class="text-to-adjust index-link" id="news-{{ n.pk }}">{{ n.title }}</a>
+        <span class="text-to-adjust index-news-text" id="news-text-{{ n.0.pk }}">{{ n.content|safe }}</span>
         <span class="index-news-date">{{ n.date }}</span>
     </div>
     {% endfor %}
