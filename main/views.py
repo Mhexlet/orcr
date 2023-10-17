@@ -14,7 +14,8 @@ def index(request):
     for i, review in enumerate(questions_set):
         questions_list.append((review, colors[i % 5]))
 
-    slides = [{'image': i.image.url, 'link': i.link if i.link is not None else '', 'vertical': 0 if i.image.width > i.image.height else 1} for i in MainSliderImage.objects.all().order_by('-pk')]
+    slides = [{'image': i.image.url,
+               'link': i.link if i.link is not None else ''} for i in MainSliderImage.objects.all().order_by('-pk')]
 
     context = {
         'title': 'Главная',

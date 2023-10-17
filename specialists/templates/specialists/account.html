@@ -26,8 +26,8 @@
         {% for application in not_treated %}
         <div class="account-application-block" id="application-{{ application.pk }}">
             <div class="account-application-content">
-                <span class="account-application-title text-to-adjust">{{ application.article.title }}</span>
-                <span class="account-application-text text-to-adjust">{{ application.article.text }}</span>
+                <span class="account-application-title text-to-adjust" id="tta-title-{{ application.pk }}">{{ application.article.title }}</span>
+                <span class="account-application-text text-to-adjust" id="tta-text-{{ application.pk }}">{{ application.article.text }}</span>
                 {% if application.article.get_files %}
                     <div class="account-application-files">
                         {% for file in application.article.get_files %}
@@ -58,8 +58,8 @@
         {% for application in rejected %}
         <div class="account-application-block" id="application-{{ application.pk }}">
             <div class="account-application-content">
-                <span class="account-application-title text-to-adjust">{{ application.article.title }}</span>
-                <span class="account-application-text text-to-adjust">{{ application.article.text }}</span>
+                <span class="account-application-title text-to-adjust" id="tta-title-{{ application.pk }}">{{ application.article.title }}</span>
+                <span class="account-application-text text-to-adjust" id="tta-text-{{ application.pk }}">{{ application.article.text }}</span>
                 {% if application.article.get_files %}
                     <div class="account-application-files">
                         {% for file in application.article.get_files %}
@@ -96,7 +96,7 @@
                 </div>
                 <div class="account-article-content{% if article.hidden %} account-hidden{% endif %}">
                     <div class="profile-article-content">
-                        <a href="{% url 'specialists:article' article.pk %}" class="index-link profile-article-title">{{ article.title }}</a>
+                        <a href="{% url 'specialists:article' article.pk %}" class="index-link profile-article-title" id="tta-text-article-{{ article.pk }}">{{ article.title }}</a>
                         <div class="index-news-date profile-article-date">{{ article.approved_at }}</div>
                     </div>
                     <div class="account-application-buttons">

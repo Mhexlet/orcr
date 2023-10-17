@@ -105,31 +105,73 @@
             </span>
             <div class="edit-profile-edit-block"><img src="{% static '/img/application.png' %}" alt="изменить" class="edit-profile-edit-img" id="edit-description"></div>
         </div>
-        <div class="med-button mini-med-button edit-profile-change-password">Поменять пароль</div>
+        <a href="{% url 'authentication:change_password' %}" class="med-button mini-med-button edit-profile-change-password">Поменять пароль</a>
     </div>
 </div>
-<!-- <div class="separator"></div>
-<div class="profile-title">Материалы на рассмотрении</div>
-<div class="edit-profile-waiting-block"></div>
-<div class="separator"></div>
-<div class="profile-title">Материалы на рассмотрении</div> -->
+<div class="edit-profile-waiting-wrapper"{% if not user.get_waiting_edits %} style="display: none;"{% endif %}>
+    <div class="separator"></div>
+    <div class="profile-title">Заявки на рассмотрении</div>
+    <div class="edit-profile-applications edit-profile-waiting-block">
+        {% for application in user.get_waiting_edits %}
+            <div class="edit-profile-application application-{{ application.field }}" id="application-{{ application.pk }}">
+                <div class="edit-profile-application-left">
+                    <span class="specialists-info-label">{{ application.verbose_field }}: </span>
+                    {% if application.field == 'photo' %}
+                        <div class="specialists-img-block">
+                            <img src="/media/{{ application.new_value }}" alt="photo" class="specialists-img">
+                        </div>
+                    {% else %}
+                        <span class="edit-profile-application-value">{{ application.get_value }}</span>
+                    {% endif %}
+                </div>
+                <div class="med-button mini-med-button edit-profile-application-delete" id="application-delete-{{ application.pk }}">Удалить</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="edit-profile-rejected-wrapper"{% if not user.get_rejected_edits %} style="display: none;"{% endif %}>
+    <div class="separator"></div>
+    <div class="profile-title">Отклонённые заявки</div>
+    <div class="edit-profile-applications edit-profile-rejected-block">
+        {% for application in user.get_rejected_edits %}
+            <div class="edit-profile-application application-{{ application.field }}">
+                <div class="edit-profile-application-left">
+                    <span class="specialists-info-label">{{ application.verbose_field }}: </span>
+                    {% if application.field == 'photo' %}
+                        <div class="specialists-img-block">
+                            <img src="/media/{{ application.new_value }}" alt="photo" class="specialists-img">
+                        </div>
+                    {% else %}
+                        <span class="edit-profile-application-value">{{ application.get_value }}</span>
+                    {% endif %}
+                </div>
+                {% if application.comment %}
+                <div class="edit-profile-comment">Комментарий: {{ application.comment }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+</div>
 <div class="faq-background">
     <div class="faq-form-block">
         {% csrf_token %}
-        <input type="text" class="med-input edit-profile-input">
-        <input type="text" class="med-input edit-profile-date-input datepicker" id="birthdate">
-        <div class="med-input register-fake-select" id="edit-fake-select">
-            <img src="{% static 'img/menu-arrow.svg' %}" alt="+" class="register-fake-select-arrow">
-            <div class="register-selected" id="selected-{{ user.field_of_activity.pk }}">{{ user.field_of_activity }}</div>
-            <div class="register-options-block">
-                {% for field in fields_of_activity %}
-                <span class="register-option" id="option-{{ field.pk }}">{{ field.name }}</span>
-                {% endfor %}
+        <span class="faq-form-notification"></span>
+        <div class="faq-background-form-content">
+            <input type="text" class="med-input edit-profile-input">
+            <input type="text" class="med-input edit-profile-date-input datepicker" id="birthdate">
+            <div class="med-input register-fake-select" id="edit-fake-select">
+                <img src="{% static 'img/menu-arrow.svg' %}" alt="+" class="register-fake-select-arrow">
+                <div class="register-selected" id="selected-{{ user.field_of_activity.pk }}">{{ user.field_of_activity }}</div>
+                <div class="register-options-block">
+                    {% for field in fields_of_activity %}
+                    <span class="register-option" id="option-{{ field.pk }}">{{ field.name }}</span>
+                    {% endfor %}
+                </div>
             </div>
+            <textarea class="med-input edit-profile-textarea" placeholder="О себе" id="description"></textarea>
+            <div class="form-group g-recaptcha" data-sitekey="6Lf_F2YoAAAAAAVQNp1zYPQk7S5cdxh7ylOkxGCU"></div>
+            <span class="med-button edit-profile-submit">Сохранить</span>
         </div>
-        <textarea class="med-input edit-profile-textarea" placeholder="О себе" id="description"></textarea>
-        <div class="form-group g-recaptcha" data-sitekey="6Lf_F2YoAAAAAAVQNp1zYPQk7S5cdxh7ylOkxGCU"></div>
-        <span class="med-button edit-profile-submit">Сохранить</span>
     </div>
 </div>
 {% endblock %}

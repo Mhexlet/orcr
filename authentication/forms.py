@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 import django.forms as forms
 from django.contrib.admin import widgets
 from authentication.models import User
@@ -39,3 +39,20 @@ class UserRegisterForm(UserCreationForm):
             field.help_text = ''
         self.fields['field_of_activity'].widget.attrs['class'] = 'register-field-of-activity'
         self.fields['birthdate'].widget.attrs['class'] = 'med-input datepicker'
+
+
+class UserPasswordChangeForm(PasswordChangeForm):
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
+
+    class Meta:
+        model = User
+        fields = ['old_password', 'new_password1', 'new_password2', 'captcha']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'med-input'
+            field.help_text = ''
+        self.fields['old_password'].widget.attrs['placeholder'] = 'Старый пароль'
+        self.fields['new_password1'].widget.attrs['placeholder'] = 'Новый пароль'
+        self.fields['new_password2'].widget.attrs['placeholder'] = 'Подтвердите пароль'

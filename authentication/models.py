@@ -53,6 +53,14 @@ class User(AbstractUser):
         return self.approval_applications.select_related().order_by('-pk')
 
     @property
+    def get_waiting_edits(self):
+        return self.edit_applications.select_related().filter(treated=False).order_by('-pk')
+
+    @property
+    def get_rejected_edits(self):
+        return self.edit_applications.select_related().filter(treated=True, response=False).order_by('-pk')
+
+    @property
     def get_birthdate(self):
         return self.birthdate.strftime("%d-%m-%Y")
 
@@ -83,6 +91,7 @@ class UserEditApplication(models.Model):
 
     user = models.ForeignKey(User, related_name='edit_applications', on_delete=models.CASCADE, verbose_name='Специалист')
     field = models.CharField(max_length=32, verbose_name='Поле')
+    verbose_field = models.CharField(max_length=32, null=True, verbose_name='Поле')
     old_value = models.TextField(verbose_name='Старое значение')
     new_value = models.TextField(verbose_name='Новое значение')
     time = models.DateTimeField(auto_now=True, verbose_name='Время создания')
@@ -96,6 +105,13 @@ class UserEditApplication(models.Model):
 
     def __str__(self):
         return f'{self.user} - {self.field}'
+
+    @property
+    def get_value(self):
+        if self.field == 'field_of_activity':
+            return self.new_value[self.new_value.find("|") + 1:]
+        else:
+            return self.new_value
 
 
 @receiver(models.signals.pre_save, sender=UserApprovalApplication)

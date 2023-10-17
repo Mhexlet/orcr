@@ -24,6 +24,7 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(UserApprovalApplication)
 class UserApprovalApplicationAdmin(admin.ModelAdmin):
     list_display = [field.name for field in UserApprovalApplication._meta.get_fields()]
+    exclude = ('field',)
 
 
 @admin.register(UserEditApplication)

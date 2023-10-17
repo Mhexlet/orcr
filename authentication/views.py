@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from .forms import UserLoginForm, UserRegisterForm
+from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
 from django.core.files.storage import default_storage, FileSystemStorage
 from MedProject.settings import MEDIA_ROOT
@@ -85,8 +85,15 @@ def edit_profile(request):
     if request.recaptcha_is_valid:
         if field in ['first_name', 'patronymic', 'last_name', 'birthdate',
                      'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
-                     'phone_number', 'email', 'photo', 'description'] and field != getattr(request.user, field):
-            
+                     'phone_number', 'email', 'photo', 'description']:
+
+            old_value = str(getattr(request.user, field))
+            if field == 'birthdate':
+                old_value = f'{old_value[8:]}-{old_value[5:7]}-{old_value[:4]}'
+
+            if old_value == new_value:
+                return JsonResponse({'result': 'ok'})
+
             if field == 'photo':
                 file = request.FILES.get('photo')
                 fs = FileSystemStorage(location=os.path.join(MEDIA_ROOT, 'profile_photos'))
@@ -100,13 +107,14 @@ def edit_profile(request):
             elif field == 'field_of_activity':
                 new_value = f'id:{new_value}|{FieldOfActivity.objects.get(pk=int(new_value)).name}'
 
-            old_value = str(getattr(request.user, field))
-            if field == 'birthdate':
-                old_value = f'{old_value[8:]}-{old_value[5:7]}-{old_value[:4]}'
+            verbose_field = User._meta.get_field(field).verbose_name
 
-            UserEditApplication.objects.create(user=request.user, field=field, new_value=new_value,
-                                               old_value=old_value)
-            return JsonResponse({'result': 'ok'})
+            UserEditApplication.objects.filter(field=field, user__pk=request.user.pk).delete()
+            application = UserEditApplication.objects.create(user=request.user, field=field, new_value=new_value,
+                                               old_value=old_value, verbose_field=verbose_field)
+
+            return JsonResponse({'result': 'ok', 'pk': application.pk, 'verbose_field': verbose_field,
+                                 'new_value': new_value})
         else:
             pass
     else:
@@ -115,4 +123,30 @@ def edit_profile(request):
     return JsonResponse({'result': 'failed'})
 
 
+@login_required
+def delete_application(request):
+    pk = request.POST.get('pk')
+    try:
+        UserEditApplication.objects.get(pk=int(pk)).delete()
+    except:
+        pass
+    return JsonResponse({'result': 'ok'})
 
+
+@login_required
+def change_password(request):
+    if request.method == 'POST':
+        form = UserPasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth.update_session_auth_hash(request, user)
+            return HttpResponseRedirect(reverse('specialists:account'))
+    else:
+        form = UserPasswordChangeForm(request.user)
+
+    context = {
+        'title': 'Смена пароля',
+        'form': form
+    }
+
+    return render(request, 'authentication/change_password.html', context=context)

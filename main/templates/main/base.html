@@ -13,6 +13,7 @@
         <link type="image/x-icon" href="/static/img/logo.png" rel="shortcut icon" id="head_icon">
         <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
         <script src="{% static 'js/base.js' %}"></script>
+        <script async src="https://cse.google.com/cse.js?cx=92e3da7a8ab554250"></script>
         {% block js %}
         {% endblock %}
     </head>
@@ -22,7 +23,8 @@
                 <img src="{% static 'img/logo.png' %}" alt="logo" class="base-logo">
             </a>
             <div class="base-search-block">
-                <input type="text" class="base-search" placeholder="Поиск">
+                <!-- <input type="text" class="base-search" placeholder="Поиск"> -->
+                <div class="gcse-search"></div>
             </div>
             <div class="base-menu">
                 {% block menu %}
