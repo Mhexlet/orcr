@@ -392,7 +392,7 @@ input:focus {
 .page-album {
   margin-bottom: 1.5rem;
   display: grid;
-  grid-template-columns: 22% 22% 22% 22%;
+  grid-template-columns: 30% 30% 30%;
   grid-gap: 3%;
 }
 
@@ -431,15 +431,16 @@ input:focus {
 
 .page-file-set {
   margin-bottom: 1.5rem;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 17% 17% 17% 17% 17%;
+  gap: 3%;
 }
 
 .page-file-block {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 22%;
+  width: 100%;
 }
 
 .page-file {
@@ -1034,7 +1035,7 @@ input:focus {
 
 .specialists-content {
   display: grid;
-  grid-template-columns: 30% 30% 30% 30%;
+  grid-template-columns: 30% 30% 30%;
   grid-gap: 3%;
   margin-bottom: 1rem;
 }
@@ -1515,6 +1516,9 @@ input:focus {
   .header-poor-vision-img {
     display: block;
   }
+  .page-file-set {
+    grid-template-columns: 22% 22% 22% 22%;
+  }
   .consultation-form {
     display: grid;
     grid-template-columns: 49% 49%;
@@ -1533,11 +1537,11 @@ input:focus {
   .consultation-form > .consultation-form-subblock:last-child {
     grid-area: sub-3;
   }
-  .specialists-content {
+  .specialists-content, .page-album {
     grid-template-columns: 48% 48%;
   }
-  .specialists-img-block {
-    height: calc(27vw - 17px);
+  .specialists-img-block, .page-album-img-block {
+    height: calc(27vw - 96px);
   }
   .account-application-content {
     width: calc(100% - 330px);
@@ -1621,8 +1625,14 @@ input:focus {
   .profile-top-left .specialists-img-block {
     height: calc(27vw - 16px);
   }
+  .specialists-img-block, .page-album-img-block {
+    height: calc(27vw - 17px);
+  }
 }
 @media (max-width: 800px) {
+  .page-file-set {
+    grid-template-columns: 30% 30% 30%;
+  }
   .index-news-block {
     grid-template-columns: 49% 49%;
   }
@@ -1639,7 +1649,7 @@ input:focus {
   .consultation-form-subblock:last-child {
     height: 250px;
   }
-  .specialists-content {
+  .specialists-content, .page-album {
     grid-template-columns: 100%;
   }
   .specialists-block {
@@ -1647,9 +1657,11 @@ input:focus {
     width: 100%;
     margin: 0 auto;
   }
-  .specialists-img-block {
+  .specialists-img-block, .page-album-img-block {
     height: calc(56vw - 17px);
     max-height: 280px;
+    max-width: 500px;
+    margin: 0 auto;
   }
   .account-application-block {
     flex-direction: column;
@@ -1716,6 +1728,9 @@ input:focus {
   .header-title-block {
     grid-area: title;
     width: 100%;
+  }
+  .page-file-set {
+    grid-template-columns: 48% 48%;
   }
   .profile-top {
     flex-direction: column;
@@ -1850,6 +1865,9 @@ input:focus {
   .g-recaptcha {
     transform: scale(0.77);
     transform-origin: 0 0;
+  }
+  .page-file-set {
+    grid-template-columns: 100%;
   }
   .index-faq-block > .index-link {
     font-size: 1rem;
