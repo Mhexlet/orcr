@@ -27,5 +27,25 @@ window.addEventListener('load', () => {
         }
     })
 
+    $('.header-menu-show').on('click', () => {
+        $('.base-sidebar').animate({
+            'left': 0
+        }, 500)
+        $('.base-background').css('display', 'block');
+    })
+
+    $('.base-background').on('click', () => {
+        $('.base-sidebar').animate({
+            'left': '-300px'
+        }, 500)
+        $('.base-background').css('display', '');
+    })
+
+    window.addEventListener('resize', () => {
+        if(window.innerWidth >= 1024) {
+            $('.base-sidebar').css('left', '');
+            $('.base-background').css('display', '');
+        } 
+    })
 })
 

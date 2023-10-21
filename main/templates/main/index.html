@@ -42,7 +42,6 @@
 <div class="separator"></div>
 <a href="{% url 'faq' %}" class="index-link">Вопрос - Ответ</a>
 {% for question in questions %}
-<div class="separator"></div>
 <div class="index-faq-block">
     <div class="index-faq-color-block" style="background-color: {{ question.1 }};"></div>
     <a href="{% url 'faq' %}" class="text-to-adjust index-link" id="question-{{ question.0.pk }}">{{ question.0.question }}</a>

@@ -17,12 +17,13 @@ window.addEventListener('load', () => {
     
     currentTimer = setTimeout(timeoutChangeCurrent, 5000);
 
+    let position = window.innerWidth <= 540 ? '-10px' : '20px';
     $('.index-slider-left-arrow').animate({
-        'left': '20px'
+        'left': position
     }, 1000);
 
     $('.index-slider-right-arrow').animate({
-        'right': '20px'
+        'right': position
     }, 1000);
 
     function changeCurrent(direction=true) {

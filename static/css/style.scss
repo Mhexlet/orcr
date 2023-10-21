@@ -245,6 +245,59 @@ input:focus {
     justify-content: space-between;
 }
 
+.header-menu-show {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 20px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.header-menu-show-subblock {
+    height: 4px;
+    width: 100%;
+    border-radius: 0.95rem;
+}
+
+.header-menu-show-subblock:first-child {
+    background-color: $h3-color;
+}
+
+.header-menu-show-subblock:nth-child(2) {
+    background-color: $h2-color;
+}
+
+.header-menu-show-subblock:last-child {
+    background-color: $border-color;
+}
+
+.header-menu-show:hover .header-menu-show-subblock:first-child {
+    background-color: $highlight-color-hover;
+    opacity: 0.9;
+}
+
+.header-menu-show:hover .header-menu-show-subblock:nth-child(2) {
+    background-color: $highlight-color;
+    opacity: 0.6;
+}
+
+.header-menu-show:hover .header-menu-show-subblock:last-child {
+    background-color: #4FC9DA;
+    opacity: 0.4;
+}
+
+.base-background {
+    position: fixed;
+    display: none;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: 30;
+    background-color: rgba(166, 166, 166, 0.6);
+}
+
 .header-title-block {
     width: 700px;
     color: $highlight-color;
@@ -271,6 +324,11 @@ input:focus {
     background-color: $highlight-color;
     border-radius: 0.95rem;
     width: 200px;
+}
+
+.header-poor-vision-img {
+    display: none;
+    width: 25px;
 }
 
 .base-content {
@@ -318,7 +376,7 @@ input:focus {
 
 .page-img-block {
     width: 100%;
-    height: calc(56vw - 202px);
+    height: calc(45vw - 161px);
     max-width: 800px;
     max-height: 448px;
     display: flex;
@@ -470,7 +528,7 @@ input:focus {
 
 .index-slides-block {
     width: 100%;
-    height: calc(56vw - 202px);
+    height: calc(45vw - 161px);;
     max-width: 1000px;
     max-height: 560px;
     overflow: hidden;
@@ -535,14 +593,13 @@ input:focus {
 
 .index-news-block {
     margin: 1rem 0;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 32% 32% 32%;
     justify-content: space-between;
 }
 
 .index-news-subblock {
-    width: 30%;
-    margin-bottom: 0.5rem;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: column;
 }
@@ -583,7 +640,7 @@ input:focus {
 }
 
 .index-faq-block {
-    margin-bottom: 1.5rem;
+    margin-top: 1.5rem;
     display: flex;
     flex-direction: column;
     border-radius: 0.95rem;
@@ -891,16 +948,25 @@ input:focus {
 
 .consultation-checkbox-block {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     color: $text-color;
     font-size: 1rem;
     font-weight: 500;
+}
+
+.consultation-checkbox-block span {
+    text-align: center;
+}
+
+.consultation-checkbox {
+    margin-right: 10px;
 }
 
 .consultation-read-link {
     text-decoration: underline;
     color: $h2-color;
     margin: 0 auto 20px;
+    text-align: center;
 }
 
 .wrong-input {
@@ -998,7 +1064,7 @@ input:focus {
 
 .specialists-content {
     display: grid;
-    grid-template-columns: 22% 22% 22% 22%;
+    grid-template-columns: 30% 30% 30% 30%;
     grid-gap: 3%;
     margin-bottom: 1rem;
 }
@@ -1010,7 +1076,7 @@ input:focus {
 
 .specialists-img-block {
     width: 100%;
-    height: calc(12vw - 44px);
+    height: calc(17vw - 60px);
     margin-bottom: 20px;
     display: flex;
     align-items: flex-start;
@@ -1305,6 +1371,7 @@ input:focus {
     min-width: 400px;
     height: 2.3rem;
     margin-top: 0;
+    margin-left: 10px;
 }
 
 .account-hidden {
@@ -1472,4 +1539,626 @@ input:focus {
 
 .change-password-form .med-input {
     margin-bottom: 10px;
+}
+
+@media (max-width: 1300px) {
+
+    // BASE
+
+    .header-title-block {
+        width: calc(100% - 50px);
+    }
+
+    .header-poor-vision {
+        width: 40px;
+    }
+
+    .header-poor-vision > span {
+        display: none;
+    }
+
+    .header-poor-vision-img {
+        display: block;
+    }
+
+    // CONSULTATION
+
+    .consultation-form {
+        display: grid;
+        grid-template-columns: 49% 49%;
+        grid-template-areas: 
+        'sub-1 sub-3'
+        'sub-2 sub-3';
+        gap: 20px;
+    }
+
+    .consultation-form-subblock {
+        width: auto;
+    }
+
+    .consultation-form > .consultation-form-subblock:nth-child(2) {
+        grid-area: sub-1;
+    }
+
+    .consultation-form > .consultation-form-subblock:nth-child(3) {
+        grid-area: sub-2;
+    }
+
+    .consultation-form > .consultation-form-subblock:last-child {
+        grid-area: sub-3;
+    }
+
+    // SPECIALISTS
+
+    .specialists-content {
+        grid-template-columns: 48% 48%;
+    }
+
+    .specialists-img-block {
+        height: calc(27vw - 17px);
+    }
+
+    // ACCOUNT
+
+    .account-application-content {
+        width: calc(100% - 330px);
+    }
+
+    .account-application-options {
+        width: 300px;
+    }
+
+    .account-article-content {
+        flex-direction: column;
+    }
+
+    .account-article-content .account-application-buttons {
+        margin-left: 0;
+        margin-top: 20px;
+    }
+
+    .account-application-files {
+        grid-template-columns: 50% 50%;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    // BASE
+    
+    .base-sidebar {
+        left: -300px;
+    }
+
+    .base-container {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .base-header, .base-logo-block {
+        height: 130px;
+    }
+
+    .header-menu-show {
+        display: flex;
+    }
+
+    .header-title-block {
+        width: calc(100% - 100px);
+    }
+
+    .header-title-block > h1 {
+        font-size: 1.1rem;
+    }
+
+    // INDEX
+
+    .index-slider-block {
+        width: 100%;
+    }
+
+    .index-slides-block {
+        height: calc(56vw - 60px);
+    }
+
+    .index-news-img-block {
+        height: calc(17vw - 11px);
+    }
+
+    .index-link {
+        font-size: 1.1rem;
+        line-height: 1.1;
+    }
+
+    .index-news-text {
+        font-size: 0.9rem !important;
+    }
+
+    .index-news-date {
+        font-size: 0.85rem;
+    }
+
+    // PAGE
+
+    .page-title {
+        font-size: 2rem;
+    }
+
+    // NEWS
+
+    .news-news-img-block {
+        max-width: none;
+        max-height: none;
+        height: calc(17vw - 10px);
+    }
+
+    .news-news-left {
+        width: calc(70% - 44px);
+    }
+
+    // GEOGRAPHY
+
+    .geo-content {
+        flex-direction: column;
+    }
+
+    .geo-names {
+        width: 100%;
+        height: 200px;
+        margin-bottom: 20px;
+        margin-right: 0;
+    }
+
+    .geo-places {
+        height: auto;
+    }
+
+    // PROFILE
+
+    .profile-top-left .specialists-img-block {
+        height: calc(27vw - 16px);
+    }
+}
+
+@media (max-width: 800px) {
+    
+    // INDEX 
+
+    .index-news-block {
+        grid-template-columns: 49% 49%;
+    }
+
+    .index-news-img-block {
+        height: calc(27vw - 16px);
+    }
+
+    // CONSULTATION
+
+    .consultation-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .consultation-form > .consultation-form-subblock {
+        margin-right: 0;
+    }
+
+    .consultation-form-subblock:last-child {
+        height: 250px;
+    }
+
+    // SPECIALISTS
+
+    .specialists-content {
+        grid-template-columns: 100%;
+    }
+
+    .specialists-block {
+        max-width: 500px;
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .specialists-img-block {
+        height: calc(56vw - 17px);
+        max-height: 280px;
+    }
+
+    // ACCOUNT
+
+    .account-application-block {
+        flex-direction: column;
+    }
+
+    .account-application-content, .account-application-options {
+        width: 100%;
+    }
+
+    .account-article-content .account-application-buttons {
+        width: 330px;
+        min-width: 330px;
+    }
+
+    // CREATE ARTICLE
+
+    .create-article-files {
+        width: 300px;
+    }
+
+    .create-article-file-block {
+        display: grid;
+        grid-template-columns: 250px 50px;
+        grid-template-areas: 
+        'file file'
+        'name remove';
+    }
+
+    .create-article-file {
+        grid-area: file;
+    }
+
+    .create-article-file-name {
+        grid-area: name;
+        width: 100%;
+    }
+
+    .create-article-remove-file {
+        grid-area: remove;
+        padding: 10px 0;
+        text-align: center;
+    }
+
+    .create-article-add-file {
+        left: 310px;
+        bottom: 20px;
+    }
+
+    // EDIT PROFILE
+
+    .edit-profile-content {
+        flex-direction: column;
+        margin-bottom: 1rem;
+    }
+
+    .edit-profile-subblock {
+        width: 100%;
+    }
+
+    .edit-profile-application {
+        grid-template-columns: calc(100% - 200px) 200px;
+    }
+}
+
+@media (max-width: 620px) {
+
+    // BASE
+
+    .base-header {
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas: 
+        'menu vision'
+        'title title';
+        height: auto;
+        margin: 10px 0 20px;
+        gap: 10px;
+    }
+
+    .header-menu-show {
+        grid-area: menu;
+    }
+
+    .header-right-block {
+        grid-area: vision;
+        display: flex;
+        justify-content: end;
+    }
+
+    .header-title-block {
+        grid-area: title;
+        width: 100%;
+    }
+
+    // PROFILE
+
+    .profile-top {
+        flex-direction: column;
+    }
+
+    .profile-top-left, .profile-top-right {
+        width: 100%;
+    }
+
+    .profile-top-left > .specialists-img-block {
+        height: calc(56vw - 17px);
+    }
+
+    // ACCOUNT
+
+    .account-dashboard {
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: flex-start;
+        height: 70px;
+    }
+
+    .account-button {
+        margin-left: 0;
+    }
+
+    // EDIT PROFILE
+
+    .edit-profile-application {
+        grid-template-columns: 100%;
+        gap: 10px;
+        margin-bottom: 30px;
+    }
+
+    .edit-profile-application .med-button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+
+    .separator {
+        margin-bottom: 1.25rem;
+    }
+
+    // BASE
+
+    .base-container {
+        padding: 0 15px;
+    }
+
+    .header-title-block > h1 {
+        font-size: 0.95rem;
+    }
+
+    .header-title-block > h2 {
+        font-size: 0.7rem;
+    }
+
+    .base-content {
+        padding: 1rem;
+    }
+
+    // INDEX
+
+    .index-slide-block {
+        margin-bottom: 1.25rem;
+    }
+
+    .index-slider-left-arrow, .index-slider-right-arrow {
+        width: 50px;
+        height: 50px;
+        left: -100px;
+    }
+
+    .index-slider-right-arrow {
+        left: auto;
+        right: -100px;
+    }
+
+    .index-slider-left-arrow-img, .index-slider-right-arrow-img {
+        width: 25px;
+    }
+
+    .index-links-block {
+        flex-direction: column;
+        margin-bottom: 1.25rem;
+    }
+
+    .index-links-block > .index-link {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .index-news-block {
+        grid-template-columns: 100%;
+    }
+
+    .index-news-subblock {
+        max-width: 300px;
+        width: 100%;
+        margin: 0 auto 2rem;
+    }
+
+    .index-news-img-block {
+        max-width: 300px;
+        max-height: 168px;
+        height: calc(56vw - 16px);
+    }
+
+    .index-faq-block > .index-link, .faq-question {
+        font-size: 1.1rem;
+        line-height: 1.1;
+    }
+
+    .index-answer {
+        line-height: 1.1;
+        margin-top: 5px;
+    }
+
+    // PAGE
+
+    .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    // NEWS
+
+    .news-news-subblock {
+        align-items: center;
+        height: 115px;
+    }
+
+    .news-news-img-block {
+        width: 125px;
+        height: 70px;
+    }
+
+    .news-news-left {
+        width: calc(100% - 159px);
+        margin-right: 15px;
+    }
+
+    .news-news-color-block {
+        margin-right: 15px;
+        height: 100%;
+    }
+
+    // FAQ
+
+    .faq-header {
+        flex-direction: column;
+        margin-bottom: 1.25rem;
+        align-items: flex-start;
+    }
+
+    .faq-faq-block {
+        margin-bottom: 1.5rem;
+    }
+
+    .faq-asking-name {
+        margin-bottom: 5px;
+    }
+
+    // ACCOUNT
+
+    .account-application-buttons, .account-article-content .account-application-buttons {
+        width: auto;
+        min-width: auto;
+        grid-template-columns: 100%;
+        height: auto;
+    }
+
+    .account-application-buttons .med-button {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .g-recaptcha {
+        transform:scale(0.77);
+        transform-origin:0 0;
+    }
+
+    // INDEX
+
+    .index-faq-block > .index-link {
+        font-size: 1rem;
+    }
+
+    .index-answer {
+        font-size: 0.9rem;
+    }
+
+    // NEWS
+
+    .news-news-subblock {
+        display: grid;
+        grid-template-columns: 19px calc(100% - 19px);
+        grid-template-areas: 
+        'color text'
+        'color img';
+        height: auto;
+    }
+
+    .news-news-color-block {
+        grid-area: color;
+    }
+
+    .news-news-left {
+        grid-area: text;
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .news-news-img-block {
+        width: 100%;
+        height: calc(56vw - 28px - 0.56rem);
+        margin-top: 15px;
+    }
+
+    // FAQ
+
+    .faq-form-block {
+        width: calc(100% - 20px);
+        box-sizing: border-box;
+    }
+
+    // CONSULTATION
+
+    .consultation-intro {
+        font-size: 1rem;
+    }
+
+    // PROFILE
+
+    .profile-title {
+        font-size: 1.2rem;
+    }
+
+    .profile-article-icon-block {
+        margin-right: 10px;
+    }
+
+    // ACCOUNT
+
+    .account-application-files {
+        grid-template-columns: 100%;
+    }
+
+    // CREATE FILE
+
+    .create-article-files {
+        width: 100%;
+    }
+
+    .create-article-file-block {
+        grid-template-columns: calc(100% - 50px) 50px;
+    }
+
+    .create-article-add-file {
+        position: static;
+        margin: 0 auto 10px;
+    }
+
+    // EDIT PROFILE
+
+    .edit-profile-application-left {
+        flex-direction: column;
+    }
+
+    .edit-profile-application-left .specialists-img-block {
+        margin-left: 0;
+        margin-top: 10px;
+    }
+
+    .edit-profile-change-password {
+        width: 100%;
+    }
+
+    .edit-profile-subblock .specialists-info {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+
+    // BASE
+
+    .base-sidebar {
+        width: calc(100vw - 40px);
+    }
+
+    // ACCOUNT
+
+    .account-button {
+        font-size: 0.8rem;
+    }
 }
