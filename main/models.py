@@ -6,6 +6,7 @@ class QuestionAnswer(models.Model):
     name = models.CharField(max_length=64, verbose_name='Имя задавшего вопрос')
     question = models.TextField(verbose_name='Вопрос')
     answer = models.TextField(blank=True, null=True, verbose_name='Ответ')
+    treated = models.BooleanField(default=False, verbose_name='Обработано')
     approved = models.BooleanField(default=False, verbose_name='Одобрено')
 
     class Meta:
@@ -20,6 +21,7 @@ class Review(models.Model):
 
     name = models.CharField(max_length=64, verbose_name='Имя оставившего отзыв')
     text = models.TextField(verbose_name='Отзыв')
+    treated = models.BooleanField(default=False, verbose_name='Обработано')
     approved = models.BooleanField(default=False, verbose_name='Одобрено')
 
     class Meta:
@@ -32,12 +34,26 @@ class Review(models.Model):
 
 class MainSliderImage(models.Model):
 
-    image = models.ImageField(upload_to='images/', verbose_name='Изображение')
+    image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
     link = models.TextField(null=True, blank=True, verbose_name='Ссылка при клике (необязательно)')
 
     class Meta:
         verbose_name = 'Слайд с главной'
         verbose_name_plural = 'Слайды с главной'
+
+
+class Banner(models.Model):
+
+    image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
+    name = models.CharField(max_length=128, verbose_name='Название')
+    link = models.TextField(verbose_name='Ссылка')
+
+    class Meta:
+        verbose_name = 'Баннер-ссылка'
+        verbose_name_plural = 'Баннеры-ссылки'
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Application(models.Model):
@@ -51,7 +67,7 @@ class Application(models.Model):
     text = models.TextField(verbose_name='Текст обращения')
     answer = models.TextField(null=True, blank=True, verbose_name='Ответ')
     answering = models.CharField(max_length=64, null=True, blank=True, verbose_name='Имя ответившего')
-    answered = models.BooleanField(default=False, verbose_name='Отвечено')
+    treated = models.BooleanField(default=False, verbose_name='Обработано')
 
     class Meta:
         verbose_name = 'Заявка на консультацию'
@@ -78,7 +94,7 @@ class News(models.Model):
 
     title = models.CharField(max_length=64, verbose_name='Заголовок')
     content = models.TextField(verbose_name='Содержимое')
-    image = models.ImageField(upload_to='images/', verbose_name='Изображение')
+    image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
     date = models.DateTimeField(auto_now=True, verbose_name='Дата публикации')
 
     class Meta:
@@ -88,3 +104,15 @@ class News(models.Model):
     def __str__(self):
         return self.title
 
+
+class SiteContent(models.Model):
+
+    name = models.CharField(unique=True, max_length=64, verbose_name='Название')
+    content = models.TextField(verbose_name='Содержимое')
+
+    class Meta:
+        verbose_name = 'Наполнение сайта'
+        verbose_name_plural = 'Наполнения сайта'
+
+    def __str__(self):
+        return self.content

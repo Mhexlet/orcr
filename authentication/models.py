@@ -4,6 +4,9 @@ from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
 from datetime import datetime, timedelta
 import pytz
+from django_summernote.models import Attachment
+from PIL import Image
+from MedProject.settings import BASE_DIR
 
 
 class FieldOfActivity(models.Model):
@@ -26,7 +29,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=64, verbose_name='Фамилия')
     field_of_activity = models.ForeignKey(FieldOfActivity, on_delete=models.SET_NULL, null=True, verbose_name='Сфера деятельности')
     profession = models.CharField(max_length=64, verbose_name='Профессия')
-    photo = models.ImageField(upload_to='profile_photos/', verbose_name='Фото')
+    photo = models.ImageField(upload_to='tmp/', verbose_name='Фото')
     city = models.CharField(max_length=128, verbose_name='Город')
     birthdate = models.DateField(null=True, verbose_name='Дата рождения')
     workplace_address = models.CharField(max_length=128, verbose_name='Адрес места работы')
@@ -139,3 +142,29 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
         instance.user.save()
     if instance.response or instance.comment:
         instance.treated = True
+
+
+@receiver(models.signals.post_save, sender=Attachment)
+def compress_attachment(sender, instance, **kwargs):
+    file = instance.file.name
+    ext = f'.{file.split(".")[-1]}'
+    exts = Image.registered_extensions()
+    supported_extensions = {ex for ex, f in exts.items() if f in Image.OPEN}
+    if ext in supported_extensions:
+        img = Image.open(instance.file)
+        file_name = '.'.join([*instance.file.name.split('.')[:-1], 'jpg']).split('/')[-1]
+        new_file_path = os.path.join(BASE_DIR, 'media', 'attachments', file_name)
+        width = img.size[0]
+        height = img.size[1]
+        ratio = width / height
+        if ratio > 1 and width > 1024:
+            sizes = [1024, int(1024 / ratio)]
+            img = img.resize(sizes)
+        elif height > 1024:
+            sizes = [int(1024 * ratio), 1024]
+            img = img.resize(sizes)
+        try:
+            img.save(new_file_path, quality=90, optimize=True)
+        except OSError:
+            img = img.convert("RGB")
+            img.save(new_file_path, quality=90, optimize=True)

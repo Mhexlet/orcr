@@ -7,9 +7,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}{{ title|title }}{% endblock %}</title>
         {% block css %}
-        <link rel="stylesheet" href="{% static 'css/fonts.css'%}">
-        <link rel="stylesheet" href="{% static 'css/style.css'%}">
         {% endblock %}
+        <link rel="stylesheet" href="{% static 'css/style.css'%}">
         <link type="image/x-icon" href="/static/img/logo.png" rel="shortcut icon" id="head_icon">
         <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
         <script src="{% static 'js/base.js' %}"></script>
@@ -76,6 +75,16 @@
                     <h2>На базе ОГБУСО «Реабилитационный центр для детей и подростков с ограниченными возможностями»</h2>
                 </div>
                 <div class="header-right-block">
+                    <div class="header-contacts-block">
+                        <a href="mailto:{{ header_content.0 }}">{{ header_content.0 }}</a>
+                        <a href="tel:{{ header_content.2 }}">{{ header_content.1 }}</a>
+                    </div>
+                    <a href="mailto:{{ header_content.0 }}" class="header-img-block">
+                        <img src="{% static 'img/email.png' %}" class="header-img">
+                    </a>
+                    <a href="tel:{{ header_content.2 }}" class="header-img-block">
+                        <img src="{% static 'img/phone.png' %}" class="header-img">
+                    </a>
                     <div class="header-poor-vision">
                         <span>Версия для слабовидящих</span>
                         <img src="{% static 'img/poor_vision.png' %}" class="header-poor-vision-img">

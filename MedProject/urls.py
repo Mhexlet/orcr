@@ -25,6 +25,7 @@ from main.decorators import check_recaptcha
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('admin_tools/', include('admin_tools.urls')),
 
     path('', main.index, name='index'),
     path('reviews/', main.ReviewsList.as_view(), name='reviews'),

@@ -1,8 +1,31 @@
 {% extends 'main/base.html' %}
 {% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+<link rel="stylesheet" href="{% static 'css/summernote.min.css'%}">
+<style>
+    html, body {
+        font-size: 16px;
+        line-height: 1;
+        font-family: serif;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    h1, h2, h3 {
+        font-weight: bolder;
+        margin: 0;
+    }
+</style>
+{% endblock %}
 {% block js %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script src="{% static 'js/create_article.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/summernote.min.js' %}"></script>
+<script src="{% static 'js/summernote-ru-RU.min.js' %}"></script>
 {% endblock %}
 {% block menu %}
 <a href="{% url 'index' %}" class="menu-page">Вернуться на сайт</a>
@@ -16,7 +39,8 @@
 <div class="create-article-form">
     <input type="text" class="med-input create-article-theme" placeholder="Тема">
     <input type="text" class="med-input create-article-title" placeholder="Название">
-    <textarea class="med-input create-article-text" placeholder="Текст статьи"></textarea>
+    <!-- <textarea class="med-input create-article-text" placeholder="Текст статьи"></textarea> -->
+    <div class="summernote"></div>
 </div>
 <div class="separator"></div>
 <h3 class="page-label">Прикрепить файлы</h3>

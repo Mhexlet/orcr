@@ -1,7 +1,9 @@
 import re
 
 from django.contrib import admin
-from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News
+
+from authentication.admin import compress_img
+from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -15,7 +17,9 @@ class QuestionAnswerAdmin(admin.ModelAdmin):
     short_question.short_description = 'Вопрос'
 
     def short_answer(self, obj):
-        return obj.answer[:50] + '...'
+        if obj.answer is not None:
+            return obj.answer[:50] + '...'
+        return obj.answer
 
     short_answer.short_description = 'Ответ'
 
@@ -33,6 +37,21 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(MainSliderImage)
 class MainSliderImageAdmin(admin.ModelAdmin):
     list_display = [field.name for field in MainSliderImage._meta.get_fields()]
+
+    def save_model(self, request, obj, form, change):
+        if change and 'image' in form.changed_data:
+            compress_img(form.instance, 'image', 'images')
+        return super(MainSliderImageAdmin, self).save_model(request, obj, form, change)
+
+
+@admin.register(Banner)
+class BannerAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Banner._meta.get_fields()]
+
+    def save_model(self, request, obj, form, change):
+        if change and 'image' in form.changed_data:
+            compress_img(form.instance, 'image', 'images')
+        return super(BannerAdmin, self).save_model(request, obj, form, change)
 
 
 @admin.register(Application)
@@ -65,3 +84,13 @@ class NewsAdmin(SummernoteModelAdmin):
         return obj.content[:50] + '...'
 
     short_content.short_description = 'Содержимое'
+
+    def save_model(self, request, obj, form, change):
+        if change and 'image' in form.changed_data:
+            compress_img(form.instance, 'image', 'images')
+        return super(NewsAdmin, self).save_model(request, obj, form, change)
+
+
+@admin.register(SiteContent)
+class SiteContentImageAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in SiteContent._meta.get_fields()]

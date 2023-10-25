@@ -31,6 +31,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -142,3 +146,20 @@ GOOGLE_RECAPTCHA_SECRET_KEY = '6Lf_F2YoAAAAAAtfUfdeDfc2KOSjGgb5TeavAdco'
 RECAPTCHA_PUBLIC_KEY = '6Lf_F2YoAAAAAAVQNp1zYPQk7S5cdxh7ylOkxGCU'
 RECAPTCHA_PRIVATE_KEY = '6Lf_F2YoAAAAAAtfUfdeDfc2KOSjGgb5TeavAdco'
 SILENCED_SYSTEM_CHECKS = ['captcha.recaptcha_test_key_error']
+
+ADMIN_TOOLS_INDEX_DASHBOARD = 'dashboard.CustomIndexDashboard'
+ADMIN_TOOLS_APP_INDEX_DASHBOARD = 'dashboard.CustomAppIndexDashboard'
+
+SUMMERNOTE_CONFIG = {
+    'attachment_filesize_limit': 30000000,
+    'toolbar': [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture']],
+                ['view', ['fullscreen', 'codeview', 'help']],
+            ],
+}

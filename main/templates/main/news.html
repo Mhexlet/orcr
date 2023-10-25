@@ -32,7 +32,7 @@
     {% endif %}
       <p>
           {% if page_obj %}
-            {{ page_obj.number }}/{{ page_obj.paginator.num_pages }}
+            {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}
           {% endif %}
       </p>
     {% if page_obj.has_next %}

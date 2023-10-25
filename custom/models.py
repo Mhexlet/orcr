@@ -111,7 +111,7 @@ class FileSetBlock(models.Model):
 
 class AlbumImage(models.Model):
 
-    image = models.ImageField(upload_to='images/', verbose_name='Изображение')
+    image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
     album = models.ForeignKey(AlbumBlock, on_delete=models.SET_NULL, null=True, related_name='images', verbose_name='Альбом')
     name = models.CharField(max_length=128, null=True, blank=True, verbose_name='Название (необязательно)')
 

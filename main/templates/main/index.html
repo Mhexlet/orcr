@@ -3,7 +3,7 @@
 {% block js %}
 <script>
     var slides = {{ slides|safe }};
-    console.log(slides)
+    var banners = {{ banners|safe }};
 </script>
 <script src="{% static 'js/index.js' %}"></script>
 <script src="{% static 'js/text-adjust.js' %}"></script>
@@ -38,6 +38,17 @@
         <span class="index-news-date">{{ n.date }}</span>
     </div>
     {% endfor %}
+</div>
+<div class="separator"></div>
+<div class="index-banners-block">
+    <div class="index-banner-left-arrow">
+        <img src="{% static 'img/menu-arrow.svg' %}" alt="<" class="index-banner-left-arrow-img">
+    </div>
+    <div class="index-banners">
+    </div>
+    <div class="index-banner-right-arrow">
+        <img src="{% static 'img/menu-arrow.svg' %}" alt=">" class="index-banner-right-arrow-img">
+    </div>
 </div>
 <div class="separator"></div>
 <a href="{% url 'faq' %}" class="index-link">Вопрос - Ответ</a>

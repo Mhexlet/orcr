@@ -1,9 +1,31 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% load tags %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+<link rel="stylesheet" href="{% static 'css/summernote.min.css'%}">
+<style>
+    html, body {
+        font-size: 16px;
+        line-height: 1;
+        font-family: serif;
+    }
+
+    a:hover {
+        text-decoration: none;
+    }
+
+    h1, h3 {
+        font-weight: bolder;
+    }
+</style>
+{% endblock %}
 {% block js %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script src="{% static 'js/create_article.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script src="{% static 'js/summernote.min.js' %}"></script>
+<script src="{% static 'js/summernote-ru-RU.min.js' %}"></script>
 {% endblock %}
 {% block menu %}
 <a href="{% url 'index' %}" class="menu-page">Вернуться на сайт</a>
@@ -17,7 +39,8 @@
 <div class="create-article-form">
     <input type="text" class="med-input create-article-theme" placeholder="Тема" value="{{ article.theme }}">
     <input type="text" class="med-input create-article-title" placeholder="Название" value="{{ article.title }}">
-    <textarea class="med-input create-article-text" placeholder="Текст статьи">{{ article.text }}</textarea>
+    <textarea class="med-input create-article-text" placeholder="Текст статьи" style="display: none;">{{ article.text }}</textarea>
+    <div class="summernote"></div>
 </div>
 <div class="separator"></div>
 <h3 class="page-label">Прикреплённые файлы</h3>
@@ -30,6 +53,11 @@
         <div class="create-article-remove-file">+</div>
     </div>
     {% endfor %}
+    <div class="create-article-file-block">
+        <input type="text" class="med-input create-article-file-name" placeholder="Подпись к файлу" id="name-0">
+        <input type="file" class="med-input create-article-file" id="file-0">
+        <div class="create-article-remove-file">+</div>
+    </div>
 </div>
 <div class="separator"></div>
 {% csrf_token %}

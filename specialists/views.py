@@ -3,7 +3,9 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.generic import ListView
 from authentication.models import User
+from main.models import SiteContent
 from .models import Article, ArticleFile, ArticleApprovalApplication
+from custom.models import Section, Page
 
 
 @login_required
@@ -16,6 +18,10 @@ def account(request):
         'title': 'Личный кабинет',
         'not_treated': not_treated,
         'rejected': rejected,
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
     }
 
     return render(request, 'specialists/account.html', context)
@@ -27,7 +33,13 @@ def profile(request, pk):
 
     context = {
         'title': f'{specialist}',
-        'specialist': specialist
+        'specialist': specialist,
+        'menu_sections': Section.objects.all(),
+        'menu_pages': Page.objects.filter(section=None),
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
     }
 
     return render(request, 'specialists/profile.html', context)
@@ -40,7 +52,13 @@ def article(request, pk):
     context = {
         'title': f'{art}',
         'article': art,
-        'files': len(art.get_files) > 0
+        'files': len(art.get_files) > 0,
+        'menu_sections': Section.objects.all(),
+        'menu_pages': Page.objects.filter(section=None),
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
     }
 
     return render(request, 'specialists/article.html', context)
@@ -53,7 +71,13 @@ class SpecialistsList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['title'] = 'Специалисты ранней помощи'
+        context['title'] = 'Специалисты ранней помощи',
+        context['menu_sections'] = Section.objects.all()
+        context['menu_pages'] = Page.objects.filter(section=None)
+        context['header_content'] = [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
 
         return context
 
@@ -66,6 +90,7 @@ def create_article_page(request):
 
     context = {
         'title': 'Новый материал',
+        'header_content': [SiteContent.objects.get(name='phone').content, SiteContent.objects.get(name='email').content]
     }
 
     return render(request, 'specialists/create_article_page.html', context)
@@ -101,7 +126,11 @@ def edit_article_page(request, pk):
 
     context = {
         'title': 'Редактирование материала',
-        'article': art if not art.approved else None
+        'article': art if not art.approved else None,
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
     }
 
     return render(request, 'specialists/edit_article_page.html', context)

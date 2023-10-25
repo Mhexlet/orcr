@@ -1,7 +1,13 @@
+import shutil
+
 from django.contrib import admin
+
+from authentication.admin import compress_img
 from .models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
 from django.db.models.fields.reverse_related import ManyToOneRel
 from django_summernote.admin import SummernoteModelAdmin
+from MedProject.settings import BASE_DIR
+import os
 
 
 @admin.register(Section)
@@ -48,6 +54,11 @@ class FileSetBlockAdmin(admin.ModelAdmin):
 class AlbumImageAdmin(admin.ModelAdmin):
     list_display = [field.name for field in AlbumImage._meta.get_fields()]
 
+    def save_model(self, request, obj, form, change):
+        if change and 'image' in form.changed_data:
+            compress_img(form.instance, 'image', 'images')
+        return super(AlbumImageAdmin, self).save_model(request, obj, form, change)
+
 
 @admin.register(FileSetFile)
 class FileSetFileAdmin(admin.ModelAdmin):
@@ -66,3 +77,11 @@ class PageAdmin(SummernoteModelAdmin):
         return obj.content[:50] + '...'
 
     short_content.short_description = 'Содержимое'
+
+    def save_model(self, request, obj, form, change):
+        try:
+            shutil.rmtree(os.path.join(BASE_DIR, 'media', 'django-summernote'))
+        except (FileNotFoundError, PermissionError):
+            pass
+        return super().save_model(request, obj, form, change)
+

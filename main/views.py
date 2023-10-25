@@ -3,7 +3,7 @@ from django.core import serializers
 from django.http import JsonResponse
 from django.views.generic import ListView
 from custom.models import Page, Section
-from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News
+from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner
 
 
 def index(request):
@@ -16,12 +16,18 @@ def index(request):
 
     slides = [{'image': i.image.url,
                'link': i.link if i.link is not None else ''} for i in MainSliderImage.objects.all().order_by('-pk')]
+    banners = [{'image': i.image.url, 'link': i.link, 'name': i.name} for i in Banner.objects.all().order_by('-pk')]
 
     context = {
         'title': 'Главная',
         'menu_sections': Section.objects.all(),
         'menu_pages': Page.objects.filter(section=None),
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
         'slides': slides,
+        'banners': banners,
         'news': News.objects.all().order_by('-id')[0:5:1],
         'questions': questions_list
     }
@@ -39,6 +45,10 @@ class ReviewsList(ListView):
         context['title'] = 'Отзывы'
         context['menu_sections'] = Section.objects.all()
         context['menu_pages'] = Page.objects.filter(section=None)
+        context['header_content'] = [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
 
         return context
 
@@ -80,6 +90,10 @@ class FaqView(ListView):
         context['title'] = 'Вопрос - ответ'
         context['menu_sections'] = Section.objects.all()
         context['menu_pages'] = Page.objects.filter(section=None)
+        context['header_content'] = [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
 
         return context
 
@@ -116,7 +130,11 @@ def consultation(request):
     context = {
         'title': 'Интерактивная консультация',
         'menu_sections': Section.objects.all(),
-        'menu_pages': Page.objects.filter(section=None)
+        'menu_pages': Page.objects.filter(section=None),
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
     }
 
     return render(request, 'main/consultation.html', context)
@@ -152,6 +170,10 @@ def geography(request):
         'title': 'География ранней помощи',
         'menu_sections': Section.objects.all(),
         'menu_pages': Page.objects.filter(section=None),
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
         'places': Place.objects.all()
     }
 
@@ -168,6 +190,10 @@ class NewsList(ListView):
         context['title'] = 'Новости'
         context['menu_sections'] = Section.objects.all()
         context['menu_pages'] = Page.objects.filter(section=None)
+        context['header_content'] = [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
 
         return context
 
@@ -189,6 +215,10 @@ def single_news(request, pk):
         'title': current_news.title,
         'menu_sections': Section.objects.all(),
         'menu_pages': Page.objects.filter(section=None),
+        'header_content': [SiteContent.objects.get(name='email').content,
+                                     SiteContent.objects.get(name='phone').content,
+                                     SiteContent.objects.get(name='phone').content.translate(
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
         'current_news': current_news
     }
 

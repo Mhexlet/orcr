@@ -1,5 +1,22 @@
 window.addEventListener('load', () => {
 
+    $('.summernote').summernote({
+        height: 300,
+        lang: "ru-RU",
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['table', ['table']],
+            ['insert', ['link', 'picture']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+    });
+
+    $('.note-editable').html($('.create-article-text').val());
+
     $('.create-article-add-file').on('click', () => {
         let pk = $('.create-article-file-block').length;
         $('.create-article-files').append(`<div class="create-article-file-block">
@@ -31,7 +48,7 @@ window.addEventListener('load', () => {
         const token = $('input[name=csrfmiddlewaretoken]').val();
         let theme = $('.create-article-theme').val();
         let title = $('.create-article-title').val();
-        let text = $('.create-article-text').val();
+        let text = $('.note-editable').html();
         let validated = true;
 
         $('.wrong-input').removeClass('wrong-input');
@@ -48,7 +65,7 @@ window.addEventListener('load', () => {
 
         if(!text) {
             validated = false;
-            $('.create-article-text').addClass('wrong-input');
+            $('.summernote').addClass('wrong-input');
         }
 
         if(validated) {

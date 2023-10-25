@@ -1,11 +1,13 @@
 from django.contrib import admin
 from .models import Article, ArticleFile, ArticleApprovalApplication
 from django.db.models.fields.reverse_related import ManyToOneRel
+from django_summernote.admin import SummernoteModelAdmin
 
 
 @admin.register(Article)
-class ArticleAdmin(admin.ModelAdmin):
+class ArticleAdmin(SummernoteModelAdmin):
     list_display = ['author', 'hidden', 'theme', 'title', 'short_text', 'created_at', 'approved_at', 'approved']
+    summernote_fields = ('text',)
 
     def short_text(self, obj):
         return obj.text[:50] + '...'
