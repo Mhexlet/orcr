@@ -12,6 +12,17 @@
 {% block content %}
 <h3 class="page-title">Личный кабинет</h3>
 <div class="separator"></div>
+{% if not user.email_verified %}
+    <div class="account-email-verification-block">
+    {% if not user.is_verification_key_expired %}
+        Ваш адрес электронной почты не подтверждён. Письмо со ссылкой для подтверждения уже было отправлено на указанный вами адрес. 
+        <a href="{% url 'authentication:send_verify_email_page' %}" class="consultation-read-link">Нажмите, чтобы отправить письмо повторно.</a>
+    {% else %}
+        Ваш адрес электронной почты не подтверждён. Ключ подтверждения истёк. 
+        <a href="{% url 'authentication:renew_verification_key' %}" class="consultation-read-link">Нажмите, чтобы обновить ключ и отправить письмо со ссылкой для подтверждения на ваш адрес электронной почты.</a>
+    {% endif %}
+    </div>
+{% endif %}
 {% if user.approved %}
     {% csrf_token %}
     <div class="account-dashboard">

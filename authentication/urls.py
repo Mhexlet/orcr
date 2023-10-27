@@ -12,4 +12,7 @@ urlpatterns = [
     path('edit_profile/', check_recaptcha(auth.edit_profile), name='edit_profile'),
     path('delete_application/', auth.delete_application, name='delete_application'),
     path('change_password/', auth.change_password, name='change_password'),
+    path('verify/<str:email>/<str:key>/', auth.verify, name='verify'),
+    path('send_verify_email_page/', auth.send_verify_email_page, name='send_verify_email_page'),
+    path('renew_verification_key/', auth.renew_verification_key, name='renew_verification_key'),
 ]

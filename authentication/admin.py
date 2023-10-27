@@ -46,8 +46,9 @@ class FieldOfActivityAdmin(admin.ModelAdmin):
 class UserAdmin(admin.ModelAdmin):
     list_display = ['username', 'last_login', 'first_name', 'patronymic', 'last_name', 'birthdate',
                     'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
-                    'phone_number', 'email', 'photo', 'short_description']
-    exclude = ('groups', 'is_superuser', 'is_staff', 'user_permissions', 'password',)
+                    'phone_number', 'email', 'photo', 'short_description', 'email_verified']
+    exclude = ('groups', 'is_superuser', 'is_staff', 'user_permissions', 'password', 'verification_key',
+               'verification_key_expires')
 
     def short_description(self, obj):
         return obj.description[:50] + '...'

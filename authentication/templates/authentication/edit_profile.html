@@ -6,6 +6,12 @@
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}
+{% block menu %}
+<a href="{% url 'index' %}" class="menu-page">Вернуться на сайт</a>
+<a href="{% url 'specialists:account' %}" class="menu-page">Личный кабинет</a>
+<a href="{% url 'authentication:edit_profile_page' %}" class="menu-page">Редактировать профиль</a>
+<a href="{% url 'authentication:logout' %}" class="menu-page">Выйти</a>
+{% endblock %}
 {% block content %}
 <input type="hidden" value="{{ user.field_of_activity.pk }}" id="user_field_of_activity">
 <input type="hidden" value="{{ user.get_birthdate }}" id="user_birthdate">

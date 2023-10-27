@@ -1169,6 +1169,16 @@ input:focus {
   list-style: none;
 }
 
+.account-email-verification-block {
+  margin-bottom: 1rem;
+  border: 1px dashed #DAD3C3;
+  padding: 10px 20px;
+  border-radius: 0.95rem;
+  font-size: 1.075rem;
+  font-weight: 500;
+  color: #211F1C;
+}
+
 .specialists-content {
   display: grid;
   grid-template-columns: 30% 30% 30%;

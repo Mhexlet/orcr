@@ -7,6 +7,7 @@ import pytz
 from django_summernote.models import Attachment
 from PIL import Image
 from MedProject.settings import BASE_DIR
+from django.conf import settings
 
 
 class FieldOfActivity(models.Model):
@@ -38,6 +39,9 @@ class User(AbstractUser):
     description = models.TextField(verbose_name='О себе')
     registered = models.BooleanField(default=False, verbose_name='Реестровый специалист')
     approved = models.BooleanField(default=False, verbose_name='Одобрен')
+    email_verified = models.BooleanField(default=True, verbose_name='Почта подтверждена')
+    verification_key = models.CharField(max_length=128, blank=True, null=True, verbose_name='Ключ подтверждения почты')
+    verification_key_expires = models.DateTimeField(blank=True, null=True, verbose_name='Ключ истекает')
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -66,6 +70,12 @@ class User(AbstractUser):
     @property
     def get_birthdate(self):
         return self.birthdate.strftime("%d-%m-%Y")
+
+    @property
+    def is_verification_key_expired(self):
+        if datetime.now(pytz.timezone(settings.TIME_ZONE)) > self.verification_key_expires + timedelta(hours=48):
+            return True
+        return False
 
     def __str__(self):
         try:

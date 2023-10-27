@@ -1,6 +1,9 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, PasswordChangeForm
 import django.forms as forms
-from django.contrib.admin import widgets
+from datetime import datetime
+import pytz
+from django.conf import settings
+import hashlib
 from authentication.models import User
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
@@ -39,6 +42,15 @@ class UserRegisterForm(UserCreationForm):
             field.help_text = ''
         self.fields['field_of_activity'].widget.attrs['class'] = 'register-field-of-activity'
         self.fields['birthdate'].widget.attrs['class'] = 'med-input datepicker'
+
+    def save(self, *args, **kwargs):
+        user = super().save(*args, **kwargs)
+        user.email_verified = False
+        user.verification_key = hashlib.sha1(user.email.encode('utf8')).hexdigest()
+        user.verification_key_expires = datetime.now(pytz.timezone(settings.TIME_ZONE))
+        user.save()
+
+        return user
 
 
 class UserPasswordChangeForm(PasswordChangeForm):

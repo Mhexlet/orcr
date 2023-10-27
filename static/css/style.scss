@@ -1198,6 +1198,16 @@ input:focus {
     list-style: none;
 }
 
+.account-email-verification-block {
+    margin-bottom: 1rem;
+    border: 1px dashed $border-color;
+    padding: 10px 20px;
+    border-radius: 0.95rem;
+    font-size: 1.075rem;
+    font-weight: 500;
+    color: $h1-color;
+}
+
 // SPECIALISTS
 
 .specialists-content {
