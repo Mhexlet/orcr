@@ -4,6 +4,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
+
+from .admin import compress_img
 from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
 import os
@@ -64,7 +66,8 @@ def register(request):
             user.username = user.email
             user.save()
             UserApprovalApplication.objects.create(user=user)
-            send_verify_email(user)
+            # send_verify_email(user)
+            compress_img(user, 'photo', 'profile_photos')
             user = auth.authenticate(username=request.POST.get('email'), password=request.POST.get('password1'))
             if user:
                 auth.login(request, user)

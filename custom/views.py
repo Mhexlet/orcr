@@ -5,7 +5,6 @@ from django.shortcuts import render
 from authentication.admin import compress_img
 from custom.models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
 from main.models import SiteContent
-from PIL import Image
 
 
 def constructor(request, url):

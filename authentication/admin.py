@@ -1,4 +1,6 @@
 import os
+import shutil
+
 from PIL import Image
 from django.contrib import admin
 from MedProject.settings import BASE_DIR
@@ -31,9 +33,10 @@ def compress_img(instance, field, directory):
         img = img.convert("RGB")
         img.save(new_file_path, quality=90, optimize=True)
     try:
-        os.remove(os.path.join(BASE_DIR, 'media', 'tmp', file.name))
-    except FileNotFoundError:
+        shutil.rmtree(os.path.join(BASE_DIR, 'media', 'tmp'))
+    except (FileNotFoundError, PermissionError):
         pass
+    os.mkdir(os.path.join(BASE_DIR, 'media', 'tmp'))
     setattr(instance, field, os.path.join(directory, file_name))
 
 

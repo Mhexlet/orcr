@@ -1,0 +1,11 @@
+#ls-medium {
+    background-color: rgba(122, 122, 122, 0.5);
+}
+
+#ls-off {
+    background-color: unset;
+}
+
+body {
+    letter-spacing: 0.15em;
+}

@@ -1,0 +1,88 @@
+#bg-blue {
+    background-color: rgba(122, 122, 122, 0.5);
+}
+
+#bg-off {
+    background-color: unset;
+}
+
+body, a, .med-button, .med-input, .med-input::placeholder, .paginator-menu, .base-search, .base-search::placeholder, .menu-section, .menu-page, 
+.menu-section:hover, .menu-page:hover, .menu-section-block.active .menu-section, .menu-section-page.active, 
+.menu-page.active, .menu-section-page:hover:not(.active), .header-title-block, .header-contacts-block,
+.header-poor-vision, .page-title, .page-text, .page-img-description, .page-album-img-name, .page-file-name,
+.index-link, .index-link:hover, .index-news-text, .index-news-text span, .index-news-date, .index-answer,
+.faq-asking-name, .faq-question, .faq-ask-question, .faq-ask-question:hover, .faq-form-notification,
+.geo-name, .geo-name:hover, .geo-name.selected, .consultation-intro, .consultation-content-text,
+.consultation-checkbox-block, .consultation-read-link, .consultation-checkbox-block > span.wrong-input,
+.register-options-block, .register-errors-block, .account-email-verification-block, .specialists-registered,
+.specialists-info, .specialists-info-label, .profile-title, .article-text, .account-application-title,
+.account-application-text, .account-application-file-name, .account-application-comment, .create-article-add-file,
+.create-article-remove-file, .edit-profile-applications, .gsc-control-cse, .page-content span, .page-content p, .poor-vision-block,
+.news-news-content span, .news-news-content p, .article-text span, .article-text p {
+    color: #0a82a8 !important;
+}
+
+body, .med-button, .med-button:hover, .med-input, .base-sidebar, .base-search,.menu-section-page.active, 
+.menu-page.active, .menu-section-page.active .menu-section-page-circle, .menu-section-page-circle,
+.menu-section-page:hover:not(.active) .menu-section-page-circle, .header-img-block, .header-poor-vision, .base-content, 
+.faq-form-block, .geo-name, .geo-name:hover, .geo-name.selected, .register-options-block, .specialists-registered,
+.profile-description, .gsc-control-cse, .gsc-search-button-v2, .gsc-search-button-v2:hover, 
+.gsc-search-button-v2:focus, .page-content span, .page-content p, .poor-vision-block {
+    background-color: #8ad4ff !important;
+}
+
+.header-menu-show-subblock, .header-menu-show:hover {
+    background-color: #0a82a8 !important;
+}
+
+.header-img, .index-slider-left-arrow-img, .index-slider-right-arrow-img, .index-banner-left-arrow-img, .index-banner-right-arrow-img {
+    filter: none;
+}
+
+.header-poor-vision-img {
+    filter: invert(1);
+}
+
+.header-img-block, .header-poor-vision {
+    border: 1px solid #0a82a8;
+}
+
+.gsc-control-cse {
+    border: none !important;
+}
+
+.gsc-search-button-v2, .gsc-search-button-v2:hover, .gsc-search-button-v2:focus {
+    border-color: #0a82a8 !important;
+}
+
+.gsc-search-button-v2 svg {
+    fill: #0a82a8 !important;
+}
+
+.med-button:hover, .menu-section:hover, .menu-page:hover, .menu-section-page:hover:not(.active), .index-link:hover,
+.faq-ask-question:hover, .geo-name:hover, .geo-name.selected {
+    font-weight: 600;
+}
+
+.geo-name:hover, .geo-name.selected, .menu-section-page.active, .menu-page.active, 
+.consultation-checkbox-block > span.wrong-input, .med-button, .change-password-form .med-button,
+.register-form .med-button, .login-form .med-button {
+    border: 1px solid #0a82a8;
+}
+
+.med-input, .base-search, .base-content, .page-file, .index-slider-left-arrow, .index-slider-right-arrow,
+.index-banner-left-arrow, .index-banner-right-arrow, .faq-form-block,
+.account-email-verification-block, .profile-article-icon-block, .account-application-block, .account-application-file,
+.poor-vision-block, .poor-vision-normal, #images-off, #images-on, .separator, .base-search-block, .geo-separator {
+    border-color: #0a82a8 !important;
+}
+
+.wrong-input {
+    border: 2px solid #0a82a8;
+}
+
+@media (max-width: 500px) {
+    .poor-vision-subblock {
+        border-bottom: 1px solid #0a82a8;
+    }
+}

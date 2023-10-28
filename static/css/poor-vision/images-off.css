@@ -1,0 +1,8 @@
+.page-img-block, .page-album-img-block, .index-slider-block, .index-news-img-block,
+.index-banner-img-block, .news-news-img-block, .single-news-img-block, .specialists-img-block {
+    display: none;
+}
+
+.news-news-left, .index-banner .index-answer {
+    width: 100%;
+}

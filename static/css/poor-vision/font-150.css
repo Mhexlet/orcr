@@ -1,0 +1,240 @@
+#font-150 {
+    background-color: rgba(122, 122, 122, 0.5);
+}
+
+#font-off {
+    background-color: unset;
+}
+
+.base-header {
+    height: auto;
+}
+
+body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-img-name, .index-answer,
+.consultation-checkbox-block, .register-options-block, .edit-profile-comment {
+    font-size: 1.5rem !important;
+}
+
+.paginator-menu, .header-contacts-block, .index-news-date, .index-answer,
+.faq-form-notification, .geo-name, .account-email-verification-block, .specialists-info,
+.profile-description, .profile-article-title, .article-text, .page-content span,
+.page-content p, .news-news-content span, .news-news-content p, .article-text span, .article-text p {
+    font-size: 1.6rem !important;
+}
+
+.menu-section, .menu-page, .page-text, .index-faq-block > .index-link, 
+.consultation-intro, .consultation-content-text {
+    font-size: 1.73rem !important;
+}
+
+.menu-section-page, .page-file-name, .index-news-text, .index-news-text span, .faq-asking-name,
+.profile-article-date, .account-application-title, .account-application-comment {
+    font-size: 1.43rem !important;
+}
+
+.header-title-block > h1 {
+    font-size: 2.25rem !important;
+}
+
+.header-title-block > h2 {
+    font-size: 1.2rem !important;
+}
+
+.page-title {
+    font-size: 3.3rem !important;
+}
+
+.page-img-description, .edit-profile-applications {
+    font-size: 1.65rem !important;
+}
+
+.index-link, .faq-question, .faq-question, .faq-ask-question {
+    font-size: 1.88rem !important;
+}
+
+.profile-title {
+    font-size: 2.1rem !important;
+}
+
+.account-application-text {
+    font-size: 1.35rem !important;
+}
+
+.account-application-file-name {
+    font-size: 1.28rem !important;
+}
+
+.edit-profile-subblock .specialists-info {
+    font-size: 1.8rem !important;
+}
+
+.consultation-form {
+    display: grid;
+    grid-template-columns: 49% 49%;
+    grid-template-areas: 
+    'sub-1 sub-3'
+    'sub-2 sub-3';
+    gap: 20px;
+}
+
+.consultation-form-subblock {
+    width: auto;
+    height: 400px;
+}
+
+.consultation-question {
+    height: 310px;
+}
+
+.consultation-form > .consultation-form-subblock:nth-child(2) {
+    grid-area: sub-1;
+}
+
+.consultation-form > .consultation-form-subblock:nth-child(3) {
+    grid-area: sub-2;
+}
+
+.consultation-form > .consultation-form-subblock:last-child {
+    grid-area: sub-3;
+}
+
+.change-password-form, .login-form {
+    display: flex;
+}
+
+.login-form .consultation-form-subblock {
+    height: 400px;
+}
+
+.register-form {
+    height: auto;
+}
+
+.index-links-block {
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+    align-items: center;
+}
+
+.index-links-block > .index-link {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.account-application-block {
+    flex-direction: column;
+}
+
+.account-application-content, .account-application-options {
+    width: 100%;
+}
+
+.account-article-content .account-application-buttons {
+    width: 330px;
+    min-width: 330px;
+}
+
+.account-article-content .account-application-buttons {
+    width: 100%;
+}
+
+.change-password-form {
+    height: 450px;
+}
+
+.edit-profile-change-password {
+    width: 100%;
+}
+
+@media (max-width: 1300px) {
+    .consultation-form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .consultation-form > .consultation-form-subblock {
+        margin-right: 0;
+    }
+
+    .consultation-form-subblock:last-child {
+        height: 550px;
+    }
+
+    .login-form .consultation-form-subblock:last-child {
+        height: 400px;
+    }
+}
+
+@media (max-width: 1024px) {
+
+    .header-title-block > h1, .index-link {
+        font-size: 1.88rem !important;
+    }
+
+    .index-news-text {
+        font-size: 1.35rem !important;
+    }
+
+    .index-news-date {
+        font-size: 1.28rem !important;
+    }
+
+    .page-title {
+        font-size: 3rem !important;
+    }
+}
+
+@media (max-width: 800px) {
+    .account-application-buttons, .account-article-content .account-application-buttons {
+        width: auto;
+        min-width: auto;
+        grid-template-columns: 100%;
+        height: auto;
+    }
+
+    .account-application-buttons .med-button {
+        display: block;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 540px) {
+
+    .header-title-block > h1 {
+        font-size: 1.43rem !important;
+    }
+
+    .header-title-block > h2 {
+        font-size: 1.05rem !important;
+    }
+
+    .index-faq-block > .index-link, .faq-question {
+        font-size:1.65rem !important;
+    }
+
+    .page-title {
+        font-size: 2.25rem !important;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .index-faq-block > .index-link, .consultation-intro, .edit-profile-subblock .specialists-info {
+        font-size: 1.5rem !important;
+    }
+
+    .index-answer {
+        font-size: 1.35rem !important;
+    }
+
+    .profile-title {
+        font-size: 1.8rem !important;
+    }
+}
+
+@media (max-width: 320px) {
+
+    .account-button {
+        font-size: 1.2rem !important;
+    }
+}

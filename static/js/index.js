@@ -136,7 +136,7 @@ window.addEventListener('load', () => {
     };
 
     function timeoutChangeCurrentBanner() {
-        if(currentBanner + bannersPerBlock == bannersCount) {
+        if(currentBanner + bannersPerBlock >= bannersCount) {
             currentBanner = 0;
         } else {
             currentBanner += bannersPerBlock;
@@ -179,7 +179,7 @@ window.addEventListener('load', () => {
 
     $(document).on('click', '.index-banner-right-arrow', () => {
         if(!bannersLock) {
-            if(currentBanner + bannersPerBlock > bannersCount) {
+            if(currentBanner + bannersPerBlock >= bannersCount) {
                 currentBanner = 0;
             } else {
                 currentBanner += bannersPerBlock;

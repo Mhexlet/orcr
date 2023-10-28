@@ -139,6 +139,10 @@ input:focus {
   overflow: auto;
 }
 
+.menu-page:last-child {
+  margin-bottom: 1rem;
+}
+
 .menu-section, .menu-page {
   font-size: 1.15rem;
   color: #716D66;
@@ -191,7 +195,7 @@ input:focus {
   padding: 0.775rem 0;
   position: relative;
   padding-left: 40px;
-  font-size: 14px;
+  font-size: 0.95rem;
   text-transform: capitalize;
   transition: all 0.2s ease;
 }
@@ -230,6 +234,10 @@ input:focus {
   overflow: hidden;
   padding: 0 30px;
   box-sizing: border-box;
+}
+
+.poor-vision-block {
+  display: none;
 }
 
 .base-header {
@@ -350,6 +358,7 @@ input:focus {
   background-color: #00aeef;
   border-radius: 0.95rem;
   width: 200px;
+  cursor: pointer;
 }
 
 .header-poor-vision-img {
@@ -362,7 +371,7 @@ input:focus {
   background-color: #F8F6F2;
   border: 1px dashed #E0E0DE;
   border-radius: 0.95rem;
-  margin-top: 10px;
+  margin: 10px 0;
 }
 
 .page-title {
@@ -376,6 +385,10 @@ input:focus {
 .page-content img {
   border-radius: 0.95rem;
   cursor: pointer;
+}
+
+.page-content {
+  margin-bottom: 1rem;
 }
 
 .page-background-img {
@@ -830,7 +843,7 @@ input:focus {
 
 .faq-ask-question {
   color: #211F1C;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
   transition: color 0.2s ease;
   cursor: pointer;
@@ -1645,6 +1658,10 @@ input:focus {
   border: none;
 }
 
+.change-password-form .consultation-form-subblock {
+  height: auto !important;
+}
+
 .change-password-form .med-input {
   margin-bottom: 10px;
 }
@@ -1719,6 +1736,12 @@ input:focus {
   }
   .account-application-files {
     grid-template-columns: 50% 50%;
+  }
+  .change-password-form, .login-form {
+    display: flex;
+  }
+  .register-form {
+    height: auto;
   }
 }
 @media (max-width: 1024px) {
@@ -1817,6 +1840,9 @@ input:focus {
   .consultation-form-subblock:last-child {
     height: 250px;
   }
+  .register-form .consultation-form-subblock:last-child {
+    height: 400px;
+  }
   .specialists-content, .page-album {
     grid-template-columns: 100%;
   }
@@ -1848,6 +1874,7 @@ input:focus {
     display: grid;
     grid-template-columns: 250px 50px;
     grid-template-areas: "file file" "name remove";
+    gap: 5px;
   }
   .create-article-file {
     grid-area: file;
@@ -1920,12 +1947,11 @@ input:focus {
   }
   .account-dashboard {
     flex-direction: column;
-    justify-content: space-between;
     align-items: flex-start;
-    height: 70px;
   }
   .account-button {
     margin-left: 0;
+    margin-top: 10px;
   }
   .edit-profile-application {
     grid-template-columns: 100%;

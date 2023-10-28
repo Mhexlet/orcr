@@ -1,0 +1,18 @@
+.poor-vision-hide {
+    transform: rotate(90deg);
+    top: calc(50% - 15px);
+}
+
+.poor-vision-settings {
+    display: inline;
+}
+
+.poor-vision-subblock {
+    display: none;
+}
+
+.poor-vision-block {
+    padding: 20px 40px;
+    display: flex;
+    justify-content: center;
+}

@@ -63,6 +63,44 @@
             </div>
         </div>
         <div class="base-container">
+            <div class="poor-vision-block">
+                <img src="{% static 'img/menu-arrow.svg' %}" alt="скрыть/показать" class="poor-vision-hide">
+                <span class="poor-vision-settings">Настройки версии для слабовидящих</span>
+                <div class="poor-vision-subblock">
+                    <span>Шрифт:</span>
+                    <div class="poor-vision-options">
+                        <div class="poor-vision-option" id="font-off">100%</div>
+                        <div class="poor-vision-option" id="font-150">150%</div>
+                        <div class="poor-vision-option" id="font-200">200%</div>
+                    </div>
+                </div>
+                <div class="poor-vision-subblock">
+                    <span>Цвет:</span>
+                    <div class="poor-vision-options">
+                        <div class="poor-vision-option" id="bg-off"><span>Обычный</span></div>
+                        <div class="poor-vision-option" id="bg-white"><span>H</span></div>
+                        <div class="poor-vision-option" id="bg-black"><span>H</span></div>
+                        <div class="poor-vision-option" id="bg-blue"><span>H</span></div>
+                    </div>
+                </div>
+                <div class="poor-vision-subblock">
+                    <span>Интервал:</span>
+                    <div class="poor-vision-options">
+                        <div class="poor-vision-option" id="ls-off">Обычный</div>
+                        <div class="poor-vision-option" id="ls-medium">Средний</div>
+                        <div class="poor-vision-option" id="ls-big">Большой</div>
+                    </div>
+                </div>
+                <div class="poor-vision-subblock">
+                    <span>Изображения:</span>
+                    <div class="poor-vision-options">
+                        <div class="poor-vision-option" id="images-off">Отключить</div>
+                    </div>
+                </div>
+                <div class="poor-vision-subblock">
+                    <span class="poor-vision-normal">Обычная версия</span>
+                </div>
+            </div>
             <div class="base-header">
                 {% block header %}
                 <div class="header-menu-show">
