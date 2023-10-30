@@ -205,10 +205,10 @@ def edit_profile(request):
                     img = img.convert("RGB")
                     img.save(new_file_path, quality=90, optimize=True)
                 new_value = 'profile_photos/' + file_name
-                old = UserEditApplication.objects.filter(field=field, user__pk=request.user.pk)
-                if old.exists():
+                previous = UserEditApplication.objects.filter(field=field, user__pk=request.user.pk)
+                if previous.exists() and not previous.last().response:
                     try:
-                        os.remove(os.path.join(BASE_DIR, 'media', *old.last().new_value.split('/')))
+                        os.remove(os.path.join(BASE_DIR, 'media', *previous.last().new_value.split('/')))
                     except FileNotFoundError:
                         pass
             elif field == 'email' and User.objects.filter(email=new_value).exists():

@@ -155,6 +155,7 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
             new_value = instance.new_value[instance.new_value.find(":") + 1:instance.new_value.find("|")]
             instance.user.field_of_activity = FieldOfActivity.objects.get(pk=int(new_value))
         elif instance.field == 'photo':
+            os.remove(os.path.join(BASE_DIR, 'media', instance.user.photo.name))
             instance.user.photo = instance.new_value
         elif instance.field == 'birthdate':
             instance.user.birthdate = f'{instance.new_value[6:]}-{instance.new_value[3:5]}-{instance.new_value[:2]}'
