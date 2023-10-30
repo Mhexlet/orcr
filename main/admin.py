@@ -12,7 +12,7 @@ from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(QuestionAnswer)
 class QuestionAnswerAdmin(admin.ModelAdmin):
-    list_display = ['name', 'short_question', 'short_answer', 'approved']
+    list_display = ['name', 'short_question', 'short_answer', 'treated', 'approved']
 
     def short_question(self, obj):
         return obj.question[:50] + '...'

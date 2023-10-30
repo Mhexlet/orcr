@@ -155,5 +155,8 @@
         {% endfor %}
     </div>
     <a href="{% url 'authentication:edit_profile_page' %}" class="med-button mini-med-button" style="display: block; width: 250px; margin-top: 20px;">Редактировать профиль</a>
+    {% if not user.application_exists %}
+        <a href="{% url 'authentication:send_application' %}" class="med-button mini-med-button" style="display: block; width: 250px; margin-top: 20px;">Отправить заявку</a>
+    {% endif %}
 {% endif %}
 {% endblock %}

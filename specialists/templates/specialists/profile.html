@@ -27,7 +27,7 @@
 <div class="separator"></div>
 <div class="profile-title">Публикации специалиста</div>
 <div class="profile-articles-block">
-    {% for article in specialist.get_articles %}
+    {% for article in specialist.get_open_articles %}
         <a href="{% url 'specialists:article' article.pk %}" class="profile-article-block">
             <div class="profile-article-vertical-line"></div>
             <div class="profile-article-icon-block">

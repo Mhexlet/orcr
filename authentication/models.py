@@ -8,6 +8,9 @@ from django_summernote.models import Attachment
 from PIL import Image
 from MedProject.settings import BASE_DIR
 from django.conf import settings
+import calendar
+import time
+from uuid import uuid4
 
 
 class FieldOfActivity(models.Model):
@@ -56,6 +59,10 @@ class User(AbstractUser):
         return self.articles.select_related().filter(approved=True).order_by('-pk')
 
     @property
+    def get_open_articles(self):
+        return self.articles.select_related().filter(approved=True, hidden=False).order_by('-pk')
+
+    @property
     def get_applications(self):
         return self.approval_applications.select_related().order_by('-pk')
 
@@ -70,6 +77,10 @@ class User(AbstractUser):
     @property
     def get_birthdate(self):
         return self.birthdate.strftime("%d-%m-%Y")
+
+    @property
+    def application_exists(self):
+        return UserApprovalApplication.objects.filter(treated=False).exists()
 
     @property
     def is_verification_key_expired(self):
@@ -170,7 +181,9 @@ def compress_attachment(sender, instance, **kwargs):
     supported_extensions = {ex for ex, f in exts.items() if f in Image.OPEN}
     if ext in supported_extensions:
         img = Image.open(instance.file)
-        file_name = '.'.join([*instance.file.name.split('.')[:-1], 'jpg']).split('/')[-1]
+        current_gmt = time.gmtime()
+        time_stamp = calendar.timegm(current_gmt)
+        file_name = f'{time_stamp}-{uuid4().hex}.jpg'
         new_file_path = os.path.join(BASE_DIR, 'media', 'attachments', file_name)
         width = img.size[0]
         height = img.size[1]

@@ -18,6 +18,9 @@ from main.models import SiteContent
 from datetime import datetime
 import pytz
 import hashlib
+import calendar
+import time
+from uuid import uuid4
 
 
 def login(request):
@@ -183,7 +186,9 @@ def edit_profile(request):
             if field == 'photo':
                 file = request.FILES.get('photo')
                 img = Image.open(file)
-                file_name = '.'.join([*file.name.split('.')[:-1], 'jpg']).split('/')[-1]
+                current_gmt = time.gmtime()
+                time_stamp = calendar.timegm(current_gmt)
+                file_name = f'{time_stamp}-{uuid4().hex}.jpg'
                 new_file_path = os.path.join(BASE_DIR, 'media', 'profile_photos', file_name)
                 width = img.size[0]
                 height = img.size[1]
@@ -264,3 +269,10 @@ def change_password(request):
     }
 
     return render(request, 'authentication/change_password.html', context=context)
+
+
+@login_required
+def send_application(request):
+    UserApprovalApplication.objects.create(user=request.user)
+    return render(request, 'authentication/notification.html',
+                  context={'notification': 'Новая заявка на одобрение профиля успешно отправлена!'})

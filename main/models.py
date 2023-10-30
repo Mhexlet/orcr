@@ -123,6 +123,24 @@ class SiteContent(models.Model):
         return self.content
 
 
+@receiver(models.signals.pre_save, sender=QuestionAnswer)
+def treat_question(sender, instance, raw, using, update_fields, *args, **kwargs):
+    if instance.answer or instance.approved:
+        instance.treated = True
+
+
+@receiver(models.signals.pre_save, sender=Review)
+def treat_review(sender, instance, raw, using, update_fields, *args, **kwargs):
+    if instance.approved:
+        instance.treated = True
+
+
+@receiver(models.signals.pre_save, sender=Application)
+def treat_application(sender, instance, raw, using, update_fields, *args, **kwargs):
+    if instance.answer or instance.answering:
+        instance.treated = True
+
+
 @receiver(models.signals.pre_delete, sender=MainSliderImage)
 def delete_slider_img(sender, instance, using, origin, **kwargs):
     try:

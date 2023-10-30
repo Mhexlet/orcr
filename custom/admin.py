@@ -61,7 +61,6 @@ class AlbumImageAdmin(admin.ModelAdmin):
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
                 except FileNotFoundError:
                     pass
-            compress_img(form.instance, 'image', 'images')
         return super(AlbumImageAdmin, self).save_model(request, obj, form, change)
 
 
