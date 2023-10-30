@@ -1,9 +1,13 @@
+import calendar
 import os
+import time
+from PIL import Image
+from uuid import uuid4
+
 from django.db import models
 from django.dispatch import receiver
 from translate import Translator
 import secrets
-
 from MedProject.settings import BASE_DIR
 
 
@@ -152,6 +156,31 @@ def add_url(sender, instance, raw, using, update_fields, *args, **kwargs):
         if Page.objects.filter(url=url).exists():
             url += secrets.token_urlsafe(5)
         instance.url = url.lower()
+
+
+@receiver(models.signals.pre_save, sender=AlbumImage)
+def compress_album_image(sender, instance, **kwargs):
+    file = instance.image
+    img = Image.open(file)
+    current_gmt = time.gmtime()
+    time_stamp = calendar.timegm(current_gmt)
+    file_name = f'{time_stamp}-{uuid4().hex}.jpg'
+    new_file_path = os.path.join(BASE_DIR, 'media', 'images', file_name)
+    width = img.size[0]
+    height = img.size[1]
+    ratio = width / height
+    if ratio > 1 and width > 1024:
+        sizes = [1024, int(1024 / ratio)]
+        img = img.resize(sizes)
+    elif height > 1024:
+        sizes = [int(1024 * ratio), 1024]
+        img = img.resize(sizes)
+    try:
+        img.save(new_file_path, quality=90, optimize=True)
+    except OSError:
+        img = img.convert("RGB")
+        img.save(new_file_path, quality=90, optimize=True)
+    instance.image = f'images/{file_name}'
 
 
 @receiver(models.signals.pre_delete, sender=AlbumImage)

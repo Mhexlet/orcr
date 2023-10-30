@@ -43,42 +43,42 @@ class CustomIndexDashboard(Dashboard):
             children=[
                 {
                     'title': f'Заявки на одобрение профиля: {uaa_length}',
-                    'url': '/admin/authentication/userapprovalapllication',
+                    'url': '/admin/authentication/userapprovalapplication/',
                     'attrs': {
                         'style': 'color: red;' if uaa_length else ''
                     }
                 },
                 {
                     'title': f'Заявки на изменение профиля: {uea_length}',
-                    'url': '/admin/authentication/usereditapllication',
+                    'url': '/admin/authentication/usereditapplication/',
                     'attrs': {
                         'style': 'color: red;' if uea_length else ''
                     }
                 },
                 {
                     'title': f'Заявки на одобрение статьи: {aaa_length}',
-                    'url': '/admin/specialists/articleapprovalapplication',
+                    'url': '/admin/specialists/articleapprovalapplication/',
                     'attrs': {
                         'style': 'color: red;' if aaa_length else ''
                     }
                 },
                 {
                     'title': f'Вопросы: {qa_length}',
-                    'url': '/admin/main/questionanswer',
+                    'url': '/admin/main/questionanswer/',
                     'attrs': {
                         'style': 'color: red;' if qa_length else ''
                     }
                 },
                 {
                     'title': f'Отзывы: {review_length}',
-                    'url': '/admin/main/review',
+                    'url': '/admin/main/review/',
                     'attrs': {
                         'style': 'color: red;' if review_length else ''
                     }
                 },
                 {
                     'title': f'Заявки на консультацию: {application_length}',
-                    'url': '/admin/main/application',
+                    'url': '/admin/main/application/',
                     'attrs': {
                         'style': 'color: red;' if application_length else ''
                     }

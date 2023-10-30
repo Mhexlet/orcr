@@ -144,7 +144,7 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
             new_value = instance.new_value[instance.new_value.find(":") + 1:instance.new_value.find("|")]
             instance.user.field_of_activity = FieldOfActivity.objects.get(pk=int(new_value))
         elif instance.field == 'photo':
-            instance.user.photo.name = instance.new_value
+            instance.user.photo = instance.new_value
         elif instance.field == 'birthdate':
             instance.user.birthdate = f'{instance.new_value[6:]}-{instance.new_value[3:5]}-{instance.new_value[:2]}'
         else:
@@ -162,7 +162,7 @@ def delete_user_photo(sender, instance, using, origin, **kwargs):
         pass
 
 
-@receiver(models.signals.post_save, sender=Attachment)
+@receiver(models.signals.pre_save, sender=Attachment)
 def compress_attachment(sender, instance, **kwargs):
     file = instance.file.name
     ext = f'.{file.split(".")[-1]}'
@@ -186,4 +186,4 @@ def compress_attachment(sender, instance, **kwargs):
         except OSError:
             img = img.convert("RGB")
             img.save(new_file_path, quality=90, optimize=True)
-        instance.file.name = os.path.join('attachments', file_name)
+        instance.file = f'attachments/{file_name}'

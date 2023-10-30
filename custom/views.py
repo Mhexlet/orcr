@@ -51,13 +51,7 @@ def add_album(request):
             album = AlbumBlock.objects.create(name=name, page=Page.objects.get(pk=int(page_pk)))
             for pk_name, image in request.FILES.items():
                 name = pk_name[pk_name.index('-') + 1:]
-                img = AlbumImage.objects.create(image=image, album=album, name=name)
-                compress_img(img, 'image', 'images', False)
-            try:
-                shutil.rmtree(os.path.join(BASE_DIR, 'media', 'tmp'))
-            except (FileNotFoundError, PermissionError):
-                pass
-            os.mkdir(os.path.join(BASE_DIR, 'media', 'tmp'))
+                AlbumImage.objects.create(image=image, album=album, name=name)
             return JsonResponse({'result': 'ok'})
         except:
             pass
