@@ -1,6 +1,10 @@
+import os
+import shutil
+
 from django.contrib.auth.decorators import user_passes_test
 from django.http import JsonResponse
 from django.shortcuts import render
+from MedProject.settings import BASE_DIR
 
 from authentication.admin import compress_img
 from custom.models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
@@ -48,7 +52,12 @@ def add_album(request):
             for pk_name, image in request.FILES.items():
                 name = pk_name[pk_name.index('-') + 1:]
                 img = AlbumImage.objects.create(image=image, album=album, name=name)
-                compress_img(img, 'image', 'images')
+                compress_img(img, 'image', 'images', False)
+            try:
+                shutil.rmtree(os.path.join(BASE_DIR, 'media', 'tmp'))
+            except (FileNotFoundError, PermissionError):
+                pass
+            os.mkdir(os.path.join(BASE_DIR, 'media', 'tmp'))
             return JsonResponse({'result': 'ok'})
         except:
             pass

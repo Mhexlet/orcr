@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-
 from .admin import compress_img
 from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
@@ -133,7 +132,7 @@ def send_verify_email(user):
 def send_verify_email_page(request):
     send_verify_email(request.user)
     return render(request, 'authentication/notification.html',
-                  context={'notification': 'Письмо с ссылкой для подтверждения адреса электронной почты '
+                  context={'notification': 'Письмо со ссылкой для подтверждения адреса электронной почты '
                                            'было успешно отправлено!'})
 
 
@@ -145,7 +144,7 @@ def renew_verification_key(request):
     user.save()
     send_verify_email(request.user)
     return render(request, 'authentication/notification.html',
-                  context={'notification': 'Письмо с ссылкой для подтверждения адреса электронной почты '
+                  context={'notification': 'Письмо со ссылкой для подтверждения адреса электронной почты '
                                            'было успешно отправлено!'})
 
 

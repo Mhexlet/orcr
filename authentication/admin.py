@@ -11,13 +11,16 @@ import time
 from uuid import uuid4
 
 
-def compress_img(instance, field, directory):
+def compress_img(instance, field, directory, multiple=True):
     file = getattr(instance, field)
+    print(file)
+    print(file.name)
     img = Image.open(file)
     current_gmt = time.gmtime()
     time_stamp = calendar.timegm(current_gmt)
     file_name = f'{time_stamp}-{uuid4().hex}.jpg'
     new_file_path = os.path.join(BASE_DIR, 'media', directory, file_name)
+    print(new_file_path)
     width = img.size[0]
     height = img.size[1]
     ratio = width / height
@@ -32,11 +35,12 @@ def compress_img(instance, field, directory):
     except OSError:
         img = img.convert("RGB")
         img.save(new_file_path, quality=90, optimize=True)
-    try:
-        shutil.rmtree(os.path.join(BASE_DIR, 'media', 'tmp'))
-    except (FileNotFoundError, PermissionError):
-        pass
-    os.mkdir(os.path.join(BASE_DIR, 'media', 'tmp'))
+    if multiple:
+        try:
+            shutil.rmtree(os.path.join(BASE_DIR, 'media', 'tmp'))
+        except (FileNotFoundError, PermissionError):
+            pass
+        os.mkdir(os.path.join(BASE_DIR, 'media', 'tmp'))
     setattr(instance, field, os.path.join(directory, file_name))
 
 
