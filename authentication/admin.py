@@ -13,14 +13,11 @@ from uuid import uuid4
 
 def compress_img(instance, field, directory, multiple=True):
     file = getattr(instance, field)
-    print(file)
-    print(file.name)
     img = Image.open(file)
     current_gmt = time.gmtime()
     time_stamp = calendar.timegm(current_gmt)
     file_name = f'{time_stamp}-{uuid4().hex}.jpg'
     new_file_path = os.path.join(BASE_DIR, 'media', directory, file_name)
-    print(new_file_path)
     width = img.size[0]
     height = img.size[1]
     ratio = width / height
@@ -64,6 +61,11 @@ class UserAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change or (change and 'photo' in form.changed_data):
+            if change:
+                try:
+                    os.remove(os.path.join(BASE_DIR, 'media', form.initial['photo'].name))
+                except FileNotFoundError:
+                    pass
             compress_img(form.instance, 'photo', 'profile_photos')
         return super(UserAdmin, self).save_model(request, obj, form, change)
 

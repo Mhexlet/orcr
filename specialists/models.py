@@ -2,6 +2,8 @@ from django.db import models
 import os
 from datetime import datetime
 from django.dispatch import receiver
+
+from MedProject.settings import BASE_DIR
 from authentication.models import User
 
 
@@ -68,3 +70,11 @@ def approve_article(sender, instance, raw, using, update_fields, *args, **kwargs
         instance.article.save()
     if instance.response or instance.comment:
         instance.treated = True
+
+
+@receiver(models.signals.pre_delete, sender=ArticleFile)
+def delete_file(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.file.name))
+    except FileNotFoundError:
+        pass

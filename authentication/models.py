@@ -154,6 +154,14 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
         instance.treated = True
 
 
+@receiver(models.signals.pre_delete, sender=User)
+def delete_user_photo(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.photo.name))
+    except FileNotFoundError:
+        pass
+
+
 @receiver(models.signals.post_save, sender=Attachment)
 def compress_attachment(sender, instance, **kwargs):
     file = instance.file.name
@@ -178,3 +186,4 @@ def compress_attachment(sender, instance, **kwargs):
         except OSError:
             img = img.convert("RGB")
             img.save(new_file_path, quality=90, optimize=True)
+        instance.file.name = os.path.join('attachments', file_name)

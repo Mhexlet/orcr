@@ -4,6 +4,8 @@ from django.dispatch import receiver
 from translate import Translator
 import secrets
 
+from MedProject.settings import BASE_DIR
+
 
 class Section(models.Model):
 
@@ -126,7 +128,7 @@ class AlbumImage(models.Model):
 class FileSetFile(models.Model):
 
     file = models.FileField(upload_to='documents/', verbose_name='Файл')
-    file_set = models.ForeignKey(FileSetBlock, on_delete=models.SET_NULL, null=True, related_name='files', verbose_name='Набор файлов')
+    file_set = models.ForeignKey(FileSetBlock, on_delete=models.CASCADE, null=True, related_name='files', verbose_name='Набор файлов')
     name = models.CharField(max_length=128, null=True, blank=True, verbose_name='Название (необязательно)')
 
     class Meta:
@@ -150,3 +152,19 @@ def add_url(sender, instance, raw, using, update_fields, *args, **kwargs):
         if Page.objects.filter(url=url).exists():
             url += secrets.token_urlsafe(5)
         instance.url = url.lower()
+
+
+@receiver(models.signals.pre_delete, sender=AlbumImage)
+def delete_album_img(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
+    except FileNotFoundError:
+        pass
+
+
+@receiver(models.signals.pre_delete, sender=FileSetFile)
+def delete_file(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.file.name))
+    except FileNotFoundError:
+        pass

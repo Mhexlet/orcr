@@ -1,4 +1,9 @@
+import os
+
 from django.db import models
+from django.dispatch import receiver
+
+from MedProject.settings import BASE_DIR
 
 
 class QuestionAnswer(models.Model):
@@ -116,3 +121,27 @@ class SiteContent(models.Model):
 
     def __str__(self):
         return self.content
+
+
+@receiver(models.signals.pre_delete, sender=MainSliderImage)
+def delete_slider_img(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
+    except FileNotFoundError:
+        pass
+
+
+@receiver(models.signals.pre_delete, sender=Banner)
+def delete_banner_img(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
+    except FileNotFoundError:
+        pass
+
+
+@receiver(models.signals.pre_delete, sender=News)
+def delete_news_img(sender, instance, using, origin, **kwargs):
+    try:
+        os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
+    except FileNotFoundError:
+        pass

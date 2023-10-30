@@ -56,6 +56,11 @@ class AlbumImageAdmin(admin.ModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if not change or (change and 'image' in form.changed_data):
+            if change:
+                try:
+                    os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
+                except FileNotFoundError:
+                    pass
             compress_img(form.instance, 'image', 'images')
         return super(AlbumImageAdmin, self).save_model(request, obj, form, change)
 
