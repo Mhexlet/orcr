@@ -39,7 +39,7 @@ class MainSliderImageAdmin(admin.ModelAdmin):
     list_display = [field.name for field in MainSliderImage._meta.get_fields()]
 
     def save_model(self, request, obj, form, change):
-        if change and 'image' in form.changed_data:
+        if not change or (change and 'image' in form.changed_data):
             compress_img(form.instance, 'image', 'images')
         return super(MainSliderImageAdmin, self).save_model(request, obj, form, change)
 
@@ -49,7 +49,7 @@ class BannerAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Banner._meta.get_fields()]
 
     def save_model(self, request, obj, form, change):
-        if change and 'image' in form.changed_data:
+        if not change or (change and 'image' in form.changed_data):
             compress_img(form.instance, 'image', 'images')
         return super(BannerAdmin, self).save_model(request, obj, form, change)
 
@@ -86,7 +86,7 @@ class NewsAdmin(SummernoteModelAdmin):
     short_content.short_description = 'Содержимое'
 
     def save_model(self, request, obj, form, change):
-        if change and 'image' in form.changed_data:
+        if not change or (change and 'image' in form.changed_data):
             compress_img(form.instance, 'image', 'images')
         return super(NewsAdmin, self).save_model(request, obj, form, change)
 

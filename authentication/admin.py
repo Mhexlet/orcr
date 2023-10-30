@@ -63,7 +63,7 @@ class UserAdmin(admin.ModelAdmin):
     short_description.short_description = 'О себе'
 
     def save_model(self, request, obj, form, change):
-        if change and 'photo' in form.changed_data:
+        if not change or (change and 'photo' in form.changed_data):
             compress_img(form.instance, 'photo', 'profile_photos')
         return super(UserAdmin, self).save_model(request, obj, form, change)
 

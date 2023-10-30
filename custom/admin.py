@@ -55,7 +55,7 @@ class AlbumImageAdmin(admin.ModelAdmin):
     list_display = [field.name for field in AlbumImage._meta.get_fields()]
 
     def save_model(self, request, obj, form, change):
-        if change and 'image' in form.changed_data:
+        if not change or (change and 'image' in form.changed_data):
             compress_img(form.instance, 'image', 'images')
         return super(AlbumImageAdmin, self).save_model(request, obj, form, change)
 
