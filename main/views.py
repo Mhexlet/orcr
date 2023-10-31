@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from django.core import serializers
 from django.http import JsonResponse
 from django.views.generic import ListView
 from custom.models import Page, Section
 from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner
+from django.conf import settings
+from django.core.mail import send_mail
+from MedProject.settings import BASE_URL
 
 
 def index(request):
@@ -153,8 +155,16 @@ def create_application(request):
     if request.recaptcha_is_valid:
         if first_name and last_name and patronymic and email and phone_number and text:
             try:
-                Application.objects.create(text=text, first_name=first_name, last_name=last_name, patronymic=patronymic,
+                app = Application.objects.create(text=text, first_name=first_name, last_name=last_name, patronymic=patronymic,
                                               email=email, phone_number=phone_number, address=address)
+                message = f'Email: {email}\nСсылка на заявку: {BASE_URL}/admin/main/application/{app.pk}/'
+                send_mail(
+                    'Новая заявка на консультацию',
+                    message,
+                    settings.EMAIL_HOST_USER,
+                    [SiteContent.objects.get(name='notification_email').content],
+                    fail_silently=False
+                )
                 return JsonResponse({'result': 'ok'})
             except:
                 pass

@@ -16,7 +16,8 @@
             {{ field }}
         {% endfor %}
         <input type="submit" class="med-button login-submit" value="Войти">
-        <a href="{% url 'authentication:register' %}" class="consultation-read-link">Зарегистрироваться</a>
+        <a href="{% url 'authentication:register' %}" class="consultation-read-link" style="margin-bottom: 5px;">Зарегистрироваться</a>
+        <a href="{% url 'authentication:password_reset' %}" class="consultation-read-link">Забыли пароль?</a>
     </div>
 </form>
 {% endblock %}

@@ -143,7 +143,7 @@ def edit_article(request):
     theme = request.POST.get('theme')
     title = request.POST.get('title')
     text = request.POST.get('text')
-    kept_files = [int(i) for i in request.POST.get('kept_files').split(',')]
+    kept_files = [int(i) for i in request.POST.get('kept_files').split(',')] if request.POST.get('kept_files') else []
 
     if request.recaptcha_is_valid:
         art = Article.objects.get(pk=pk)

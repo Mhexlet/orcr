@@ -70,7 +70,7 @@ window.addEventListener('load', () => {
 
         if(validated) {
             let formData = new FormData();
-            let keptFiles = [];
+            let keptFiles = '';
             $('.create-article-file').each((i, block) => {
                 if(block.tagName == 'INPUT') {
                     if(block.files.length) {
@@ -78,7 +78,7 @@ window.addEventListener('load', () => {
                         formData.append(`${pk}-${$(`#name-${pk}`).val()}`, block.files[0]);
                     }
                 } else {
-                    keptFiles.push(block.id.replace('file-pk', ''));
+                    keptFiles += block.id.replace('file-pk', '') + ',';
                 }
             })
             formData.append('csrfmiddlewaretoken', token);
@@ -87,6 +87,7 @@ window.addEventListener('load', () => {
             formData.append('title', title);
             formData.append('text', text);
             if(action == 'edit') {
+                console.log(keptFiles)
                 formData.append('kept_files', keptFiles);
                 let hrefParams = document.location.href.split('/');
                 formData.append('pk', hrefParams[hrefParams.length - 2]);

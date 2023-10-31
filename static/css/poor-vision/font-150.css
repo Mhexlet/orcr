@@ -162,6 +162,7 @@ body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-im
 
     .login-form .consultation-form-subblock:last-child {
         height: 400px;
+        margin: 0 auto;
     }
 }
 

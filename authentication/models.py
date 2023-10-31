@@ -80,7 +80,7 @@ class User(AbstractUser):
 
     @property
     def application_exists(self):
-        return UserApprovalApplication.objects.filter(treated=False).exists()
+        return UserApprovalApplication.objects.filter(user__pk=self.pk, treated=False).exists()
 
     @property
     def is_verification_key_expired(self):

@@ -1,9 +1,9 @@
 import os
 import shutil
-
+from django.utils.html import format_html
 from PIL import Image
 from django.contrib import admin
-from MedProject.settings import BASE_DIR
+from MedProject.settings import BASE_DIR, BASE_URL
 from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication
 from django.db.models.fields.reverse_related import ManyToOneRel
 import calendar
@@ -73,9 +73,29 @@ class UserAdmin(admin.ModelAdmin):
 @admin.register(UserApprovalApplication)
 class UserApprovalApplicationAdmin(admin.ModelAdmin):
     list_display = [field.name for field in UserApprovalApplication._meta.get_fields()]
-    exclude = ('field',)
 
 
 @admin.register(UserEditApplication)
 class UserEditApplicationAdmin(admin.ModelAdmin):
     list_display = [field.name for field in UserEditApplication._meta.get_fields()]
+    exclude = ('field', 'new_value', 'old_value')
+    readonly_fields = ['user', 'verbose_field', 'old_value_changed', 'new_value_changed']
+    fields = ['user', 'verbose_field', 'old_value_changed', 'new_value_changed', 'treated', 'response', 'comment']
+
+    def new_value_changed(self, obj):
+        if obj.field == 'photo':
+            url = f'{BASE_URL}/media/{obj.new_value}'
+            return format_html(f"<img src='{url}' style='max-width: 300px; max-height: 300px;'>")
+        else:
+            return obj.new_value
+
+    def old_value_changed(self, obj):
+        if obj.field == 'photo':
+            url = f'{BASE_URL}/media/{obj.old_value}'
+            return format_html(f"<img src='{url}' style='max-width: 300px; max-height: 300px;'>")
+        else:
+            return obj.old_value
+
+    old_value_changed.short_description = 'Старое значение'
+    new_value_changed.short_description = 'Новое значение'
+

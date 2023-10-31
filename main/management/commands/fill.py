@@ -7,6 +7,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         try:
+            SiteContent.objects.create(name='notification_email', content='info@orc-rrmc.ru')
             SiteContent.objects.create(name='email_verification_message_beginning',
                                        content='Здравствуйте,\n\nПожалуйста, перейдите по ссылке, '
                                                'чтобы подтвердить свой адрес электронной почты:')

@@ -9,7 +9,6 @@ from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
 import os
 from custom.models import Section, Page
-from main.models import SiteContent
 from PIL import Image
 from MedProject.settings import BASE_DIR
 from django.conf import settings
