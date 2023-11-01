@@ -22,6 +22,8 @@ from MedProject import settings
 import main.views as main
 from django.views.i18n import JavaScriptCatalog
 from main.decorators import check_recaptcha
+from django.contrib.auth.views import PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, \
+    PasswordResetCompleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -47,6 +49,10 @@ urlpatterns = [
 
     path('editor/', include('django_summernote.urls')),
     path('jsi18n', JavaScriptCatalog.as_view(), name='javascript-catalog'),
+    path('password-reset/', PasswordResetView.as_view(template_name='authentication/password_reset.html'), name='password_reset'),
+    path('password-reset/done/', PasswordResetDoneView.as_view(template_name='authentication/password_reset_done.html'), name='password_reset_done'),
+    path('password-reset-confirm/<uidb64>/<token>/', PasswordResetConfirmView.as_view(template_name='authentication/password_reset_confirm.html'), name='password_reset_confirm'),
+    path('password-reset-complete/',PasswordResetCompleteView.as_view(template_name='authentication/password_reset_complete.html'), name='password_reset_complete'),
 ]
 
 if settings.DEBUG:

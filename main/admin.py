@@ -116,3 +116,4 @@ class NewsAdmin(SummernoteModelAdmin):
 @admin.register(SiteContent)
 class SiteContentImageAdmin(admin.ModelAdmin):
     list_display = [field.name for field in SiteContent._meta.get_fields()]
+    readonly_fields = ['name']
