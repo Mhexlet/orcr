@@ -17,6 +17,9 @@
             <img src="/media/{{ specialist.photo }}" alt="photo" class="specialists-img">
         </div>
         <div class="specialists-info">
+            <span class="specialists-info-label">ФИО: </span>{{ specialist }}
+        </div>
+        <div class="specialists-info">
             <span class="specialists-info-label">Город: </span>{{ specialist.city }}
         </div>
         <div class="specialists-info">
@@ -24,6 +27,9 @@
         </div>
         <div class="specialists-info">
             <span class="specialists-info-label">Специализация: </span>{{ specialist.profession }}
+        </div>
+        <div class="specialists-info">
+            <span class="specialists-info-label">Номер телефона: </span>{{ specialist.phone_number }}
         </div>
     </a>
     {% endfor %}

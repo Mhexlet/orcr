@@ -63,13 +63,15 @@ window.addEventListener('load', () => {
     function adjustEventsTexts() {
     	$('.text-to-adjust').each((i, text) => {
             adjustText(text, textData[text.id], 2);
-        })
+        });
     }
     
     $('.text-to-adjust').each((i, text) => {
         textData[text.id] = text.innerText;
     });
+    $('.geo-name-block:nth-child(2) > .geo-text').removeClass('text-to-adjust');
     adjustEventsTexts();
+    $('.text-to-adjust').css({'max-height': 'none', 'overflow': 'visible'});
 
     $('.faq-faq-block').on('click', (e) => {
         let question = e.target.children[2];
@@ -104,6 +106,14 @@ window.addEventListener('load', () => {
             review.classList.remove('text-not-to-adjust');
             adjustText(review, textData[review.id], 2);
         }
+    })
+
+    $('.geo-name-block').on('click', (e) => {
+        $('.geo-text').addClass('text-to-adjust');
+        adjustEventsTexts();
+        let id = e.target.id.replace('name', 'text');
+        $(`#${id}`).removeClass('text-to-adjust');
+        $(`#${id}`).html(textData[id]);
     })
     
     window.addEventListener('resize', () => {

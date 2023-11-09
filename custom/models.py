@@ -1,5 +1,6 @@
 import calendar
 import os
+import re
 import time
 from PIL import Image
 from uuid import uuid4
@@ -29,7 +30,7 @@ class Section(models.Model):
 
 class Page(models.Model):
 
-    title = models.CharField(max_length=32, unique=True, verbose_name='Заголовок страницы')
+    title = models.CharField(max_length=100, unique=True, verbose_name='Заголовок страницы')
     url = models.CharField(max_length=16, unique=True, blank=True, verbose_name='URL страницы (заполняется автоматически)')
     section = models.ForeignKey(Section, null=True, blank=True, on_delete=models.SET_NULL, verbose_name='Раздел меню (оставьте незаполненным, если страница не является подразделом)', related_name='pages')
     content = models.TextField(verbose_name='Содержимое')
@@ -152,7 +153,11 @@ class FileSetFile(models.Model):
 def add_url(sender, instance, raw, using, update_fields, *args, **kwargs):
     if not instance.url:
         translator = Translator(to_lang='en', from_lang='ru')
-        url = translator.translate(instance.title).replace(' ', '_')
+        title = re.sub(r'[!@#&()–\[{}\]:;\',?/*`~$^+=<>“]+', '', instance.title)
+        title_list = title.split(' ')
+        if len(title) > 3:
+            title = ' '.join(title_list[0:3])
+        url = translator.translate(title).replace(' ', '_')
         if Page.objects.filter(url=url).exists():
             url += secrets.token_urlsafe(5)
         instance.url = url.lower()

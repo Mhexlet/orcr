@@ -100,7 +100,7 @@ class UserApprovalApplication(models.Model):
     user = models.ForeignKey(User, related_name='approval_applications', on_delete=models.CASCADE, verbose_name='Специалист')
     time = models.DateTimeField(auto_now=True, verbose_name='Время создания')
     treated = models.BooleanField(default=False, verbose_name='Обработана')
-    response = models.BooleanField(default=False, verbose_name='Вердикт')
+    response = models.BooleanField(default=False, verbose_name='Одобрить')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий')
 
     class Meta:
@@ -120,7 +120,7 @@ class UserEditApplication(models.Model):
     new_value = models.TextField(verbose_name='Новое значение')
     time = models.DateTimeField(auto_now=True, verbose_name='Время создания')
     treated = models.BooleanField(default=False, verbose_name='Обработана')
-    response = models.BooleanField(default=False, verbose_name='Вердикт')
+    response = models.BooleanField(default=False, verbose_name='Одобрить')
     comment = models.TextField(blank=True, null=True, verbose_name='Комментарий')
 
     class Meta:

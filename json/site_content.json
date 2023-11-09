@@ -1,0 +1,26 @@
+[
+  {
+    "name": "notification_email",
+    "content": "info@orc-rrmc.ru"
+  },
+  {
+    "name": "email_verification_message_beginning",
+    "content": "Здравствуйте,\n\nПожалуйста, перейдите по ссылке, чтобы подтвердить свой адрес электронной почты:"
+  },
+  {
+    "name": "email_verification_message_ending",
+    "content": "\n\nС уважением"
+  },
+  {
+    "name": "phone",
+    "content": "+7 (900) 999-99-99"
+  },
+  {
+    "name": "email",
+    "content": "example@gmail.com"
+  },
+  {
+    "name": "index_text",
+    "content": "test text"
+  }
+]

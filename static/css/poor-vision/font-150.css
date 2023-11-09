@@ -10,16 +10,25 @@
     height: auto;
 }
 
-body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-img-name, .index-answer,
-.consultation-checkbox-block, .register-options-block, .edit-profile-comment {
+body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-img-name,
+.consultation-checkbox-block, .register-options-block, .edit-profile-comment, .geo-text {
     font-size: 1.5rem !important;
 }
 
-.paginator-menu, .header-contacts-block, .index-news-date, .index-answer,
+.paginator-menu, .header-contacts-block, .index-news-date, .index-text, .index-answer,
 .faq-form-notification, .geo-name, .account-email-verification-block, .specialists-info,
 .profile-description, .profile-article-title, .article-text, .page-content span,
 .page-content p, .news-news-content span, .news-news-content p, .article-text span, .article-text p {
     font-size: 1.6rem !important;
+}
+
+.index-answer {
+    min-height: 3.84rem;
+    max-height: 3.84rem;
+}
+
+.geo-text {
+    max-height: 3rem;
 }
 
 .menu-section, .menu-page, .page-text, .index-faq-block > .index-link, 
@@ -30,6 +39,10 @@ body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-im
 .menu-section-page, .page-file-name, .index-news-text, .index-news-text span, .faq-asking-name,
 .profile-article-date, .account-application-title, .account-application-comment {
     font-size: 1.43rem !important;
+}
+
+.index-news-text, .account-application-title {
+    max-height: 2.86rem;
 }
 
 .header-title-block > h1 {
@@ -52,12 +65,18 @@ body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-im
     font-size: 1.88rem !important;
 }
 
+.faq-question.text-to-adjust, .index-link.text-to-adjust {
+    min-height: 4.88rem;
+    max-height: 4.88rem;
+}
+
 .profile-title {
     font-size: 2.1rem !important;
 }
 
 .account-application-text {
     font-size: 1.35rem !important;
+    max-height: 2.85rem;
 }
 
 .account-application-file-name {
@@ -176,7 +195,11 @@ body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-im
         font-size: 1.35rem !important;
     }
 
-    .index-news-date {
+    .index-news-text {
+        max-height: 2.7rem;
+    }
+
+    .index-news-date, .index-text {
         font-size: 1.28rem !important;
     }
 
@@ -213,6 +236,11 @@ body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-im
         font-size:1.65rem !important;
     }
 
+    .faq-question.text-to-adjust, .index-link.text-to-adjust {
+        min-height: 4.29rem;
+        max-height: 4.29rem;
+    }
+
     .page-title {
         font-size: 2.25rem !important;
     }
@@ -226,6 +254,8 @@ body, .med-input, .med-button, .base-search, .header-poor-vision, .page-album-im
 
     .index-answer {
         font-size: 1.35rem !important;
+        min-height: 3.24rem;
+        max-height: 3.24rem;
     }
 
     .profile-title {

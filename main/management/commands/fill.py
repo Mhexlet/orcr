@@ -1,18 +1,22 @@
+import json
+
 from django.core.management.base import BaseCommand
+from django.db.utils import IntegrityError
+from MedProject import settings
 from main.models import SiteContent
+
+
+def load_from_json(file_name):
+    with open(f'{settings.BASE_DIR}/json/{file_name}.json', 'r', encoding='utf-8') as json_file:
+        return json.load(json_file)
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        try:
-            SiteContent.objects.create(name='notification_email', content='info@orc-rrmc.ru')
-            SiteContent.objects.create(name='email_verification_message_beginning',
-                                       content='Здравствуйте,\n\nПожалуйста, перейдите по ссылке, '
-                                               'чтобы подтвердить свой адрес электронной почты:')
-            SiteContent.objects.create(name='email_verification_message_ending', content='\n\nС уважением')
-            SiteContent.objects.create(name='phone', content='+7 (900) 999-99-99')
-            SiteContent.objects.create(name='email', content='example@gmail.com')
-        except:
-            pass
+        for content in load_from_json('site_content'):
+            try:
+                SiteContent.objects.create(name=content['name'], content=content['content'])
+            except IntegrityError:
+                pass

@@ -1,6 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 {% block js %}
+<script src="{% static 'js/text-adjust.js' %}"></script>
 <script src="{% static 'js/geography.js' %}"></script>
 {% endblock %}
 {% block content %}
@@ -8,7 +9,12 @@
     <div class="geo-names">
         <div class="geo-separator"></div>
         {% for place in places %}
-        <div class="geo-name" id="name-{{ place.pk }}">{{ place.name }}</div>
+        <div class="geo-name-block" id="name-{{ place.pk }}">
+            <div class="geo-name">{{ place.name }}</div>
+            {% if place.text %}
+                <div class="geo-text text-to-adjust" id="text-{{ place.pk }}">{{ place.text }}</div>
+            {% endif %}
+        </div>
         <div class="geo-separator"></div>
         {% endfor %}
     </div>

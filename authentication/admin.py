@@ -48,11 +48,13 @@ class FieldOfActivityAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['username', 'last_login', 'first_name', 'patronymic', 'last_name', 'birthdate',
+    list_display = ['id', 'username', 'last_login', 'first_name', 'patronymic', 'last_name', 'birthdate',
                     'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
                     'phone_number', 'email', 'photo', 'short_description', 'email_verified']
     exclude = ('groups', 'is_superuser', 'is_staff', 'user_permissions', 'password', 'verification_key',
                'verification_key_expires')
+
+    list_display_links = ('id', 'username', 'first_name', 'patronymic', 'last_name')
 
     def short_description(self, obj):
         return obj.description[:50] + '...'
@@ -67,6 +69,13 @@ class UserAdmin(admin.ModelAdmin):
                 except FileNotFoundError:
                     pass
             compress_img(form.instance, 'photo', 'profile_photos')
+        if (not change or (change and 'approved' in form.changed_data)) and form.instance.approved:
+            app = UserApprovalApplication.objects.filter(user__pk=form.instance.pk, response=False)
+            if app.exists():
+                app = app.last()
+                app.treated = True
+                app.response = True
+                app.save()
         return super(UserAdmin, self).save_model(request, obj, form, change)
 
 

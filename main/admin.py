@@ -40,6 +40,7 @@ class ReviewAdmin(admin.ModelAdmin):
 @admin.register(MainSliderImage)
 class MainSliderImageAdmin(admin.ModelAdmin):
     list_display = [field.name for field in MainSliderImage._meta.get_fields()]
+    list_display_links = ('id', 'name',)
 
     def save_model(self, request, obj, form, change):
         if not change or (change and 'image' in form.changed_data):
@@ -79,7 +80,8 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Place._meta.get_fields()]
+    list_display = ['id', 'name', 'src']
+    list_display_links = ('id', 'name',)
 
     def save_model(self, request, obj, form, change):
         if obj.src.startswith('<'):
@@ -90,13 +92,9 @@ class PlaceAdmin(admin.ModelAdmin):
 
 @admin.register(News)
 class NewsAdmin(SummernoteModelAdmin):
-    list_display = [field.name if field.name != 'content' else 'short_content' for field in News._meta.get_fields()]
+    list_display = ['id', 'title', 'image', 'date']
     summernote_fields = ('content',)
-
-    def short_content(self, obj):
-        return obj.content[:50] + '...'
-
-    short_content.short_description = 'Содержимое'
+    list_display_links = ('id', 'title',)
 
     def save_model(self, request, obj, form, change):
         if not change or (change and 'image' in form.changed_data):

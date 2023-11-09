@@ -31,7 +31,8 @@ def index(request):
         'slides': slides,
         'banners': banners,
         'news': News.objects.all().order_by('-id')[0:5:1],
-        'questions': questions_list
+        # 'questions': questions_list
+        'text': SiteContent.objects.get(name='index_text').content
     }
 
     return render(request, 'main/index.html', context)
@@ -40,7 +41,7 @@ def index(request):
 class ReviewsList(ListView):
     model = Review
     template_name = 'main/reviews.html'
-    paginate_by = 3
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -56,7 +57,7 @@ class ReviewsList(ListView):
 
     def get_queryset(self):
         colors = ['#4F55DA', '#F06445', '#E8C444', '#B8D935', '#4FC9DA']
-        reviews_set = Review.objects.filter(approved=True)
+        reviews_set = Review.objects.filter(approved=True).order_by('-pk')
         reviews_list = []
 
         for i, review in enumerate(reviews_set):
@@ -85,7 +86,7 @@ def create_review(request):
 class FaqView(ListView):
     model = QuestionAnswer
     template_name = 'main/faq.html'
-    paginate_by = 3
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -101,7 +102,7 @@ class FaqView(ListView):
 
     def get_queryset(self):
         colors = ['#4F55DA', '#F06445', '#E8C444', '#B8D935', '#4FC9DA']
-        questions_set = QuestionAnswer.objects.filter(approved=True)
+        questions_set = QuestionAnswer.objects.filter(approved=True).order_by('-pk')
         questions_list = []
 
         for i, question in enumerate(questions_set):
@@ -157,14 +158,14 @@ def create_application(request):
             try:
                 app = Application.objects.create(text=text, first_name=first_name, last_name=last_name, patronymic=patronymic,
                                               email=email, phone_number=phone_number, address=address)
-                message = f'Email: {email}\nСсылка на заявку: {BASE_URL}/admin/main/application/{app.pk}/'
-                send_mail(
-                    'Новая заявка на консультацию',
-                    message,
-                    settings.EMAIL_HOST_USER,
-                    [SiteContent.objects.get(name='notification_email').content],
-                    fail_silently=False
-                )
+                # message = f'Email: {email}\nСсылка на заявку: {BASE_URL}/admin/main/application/{app.pk}/'
+                # send_mail(
+                #     'Новая заявка на консультацию',
+                #     message,
+                #     settings.EMAIL_HOST_USER,
+                #     [SiteContent.objects.get(name='notification_email').content],
+                #     fail_silently=False
+                # )
                 return JsonResponse({'result': 'ok'})
             except:
                 pass
@@ -184,7 +185,7 @@ def geography(request):
                                      SiteContent.objects.get(name='phone').content,
                                      SiteContent.objects.get(name='phone').content.translate(
                                          str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
-        'places': Place.objects.all()
+        'places': Place.objects.all().order_by('name')
     }
 
     return render(request, 'main/geography.html', context)
@@ -193,7 +194,7 @@ def geography(request):
 class NewsList(ListView):
     model = News
     template_name = 'main/news.html'
-    paginate_by = 3
+    paginate_by = 10
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -209,7 +210,7 @@ class NewsList(ListView):
 
     def get_queryset(self):
         colors = ['#4F55DA', '#F06445', '#E8C444', '#B8D935', '#4FC9DA']
-        news_set = News.objects.all()
+        news_set = News.objects.all().order_by('-pk')
         news_list = []
 
         for i, n in enumerate(news_set):

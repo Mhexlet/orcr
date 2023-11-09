@@ -39,12 +39,16 @@ class Review(models.Model):
 
 class MainSliderImage(models.Model):
 
+    name = models.CharField(max_length=128, null=True, verbose_name='Название')
     image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
     link = models.TextField(null=True, blank=True, verbose_name='Ссылка при клике (необязательно)')
 
     class Meta:
         verbose_name = 'Слайд с главной'
         verbose_name_plural = 'Слайды с главной'
+
+    def __str__(self):
+        return self.name
 
 
 class Banner(models.Model):
@@ -86,6 +90,7 @@ class Place(models.Model):
 
     src = models.TextField(verbose_name='Ссылка на карту')
     name = models.CharField(max_length=64, verbose_name='Название места')
+    text = models.TextField(null=True, verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Место из географии ранней помощи'

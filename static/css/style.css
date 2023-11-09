@@ -93,7 +93,6 @@ input:focus {
 }
 
 .base-logo {
-  width: 130px;
   height: 130px;
 }
 
@@ -130,6 +129,10 @@ input:focus {
   color: #B5B0A1;
 }
 
+.gsc-search-button-v2 {
+  height: 30px;
+}
+
 .base-menu {
   display: flex;
   flex-direction: column;
@@ -146,7 +149,6 @@ input:focus {
 .menu-section, .menu-page {
   font-size: 1.15rem;
   color: #716D66;
-  text-transform: capitalize;
   transition: color 0.2s ease;
 }
 
@@ -196,7 +198,6 @@ input:focus {
   position: relative;
   padding-left: 40px;
   font-size: 0.95rem;
-  text-transform: capitalize;
   transition: all 0.2s ease;
 }
 
@@ -304,6 +305,7 @@ input:focus {
   width: 700px;
   color: #00aeef;
   font-weight: 500;
+  display: block;
 }
 
 .header-title-block > h1 {
@@ -378,7 +380,6 @@ input:focus {
   color: #211F1C;
   font-size: 2.2rem;
   font-weight: 600;
-  text-transform: capitalize;
   margin-bottom: 1.75rem;
 }
 
@@ -536,7 +537,6 @@ input:focus {
   color: #968E7E;
   font-size: 1.075rem;
   font-weight: 600;
-  text-transform: capitalize;
   margin: 10px 5px 5px;
 }
 
@@ -556,7 +556,6 @@ input:focus {
   color: #968E7E;
   font-size: 1.075rem;
   font-weight: 600;
-  text-transform: capitalize;
   margin: 10px 5px 5px;
 }
 
@@ -676,6 +675,11 @@ input:focus {
   transition: color 0.2s ease;
 }
 
+.index-link.text-to-adjust {
+  max-height: 3.25rem;
+  overflow: hidden;
+}
+
 .index-links-block > .index-link {
   text-transform: capitalize;
   text-align: center;
@@ -686,10 +690,16 @@ input:focus {
   color: #00aeef;
 }
 
+.index-text {
+  margin-bottom: 2rem;
+  font-size: 1.075rem;
+  color: #8E887A;
+}
+
 .index-news-block {
   margin: 1rem 0;
   display: grid;
-  grid-template-columns: 32% 32% 32%;
+  grid-template-columns: 30% 30% 30%;
   justify-content: space-between;
 }
 
@@ -724,6 +734,12 @@ input:focus {
   margin-top: 5px;
 }
 
+.index-news-text {
+  line-height: 1 !important;
+  max-height: 1.9rem;
+  overflow: hidden;
+}
+
 .index-news-text img {
   display: none;
 }
@@ -736,11 +752,14 @@ input:focus {
 }
 
 .index-banners-block {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  background-color: white;
+  padding: 10px;
+  border-radius: 0.95rem;
 }
 
 .index-banner-left-arrow, .index-banner-right-arrow {
@@ -867,6 +886,12 @@ input:focus {
   pointer-events: none;
 }
 
+.faq-question.text-to-adjust {
+  min-height: 3.25rem;
+  max-height: 3.25rem;
+  overflow: hidden;
+}
+
 .faq-faq-block {
   cursor: pointer;
   margin-top: 0;
@@ -878,15 +903,8 @@ input:focus {
 }
 
 .faq-ask-question {
-  color: #211F1C;
   font-size: 1.25rem;
-  font-weight: 600;
-  transition: color 0.2s ease;
-  cursor: pointer;
-}
-
-.faq-ask-question:hover {
-  color: #00aeef;
+  width: auto;
 }
 
 .faq-background {
@@ -1006,8 +1024,10 @@ input:focus {
   flex-direction: column;
 }
 
-.reviews-left > .index-answer {
-  min-height: 40px;
+.index-answer {
+  min-height: 2.4rem;
+  max-height: 2.4rem;
+  overflow: hidden;
 }
 
 .paginator-menu {
@@ -1031,21 +1051,42 @@ input:focus {
   margin-right: 1.5rem;
 }
 
-.geo-name {
+.geo-name-block {
   width: 100%;
   padding: 1.5rem 10px;
   box-sizing: border-box;
   background-color: transparent;
   transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.geo-name {
   color: #716D66;
   font-size: 1.075rem;
   font-weight: 500;
   line-height: 1.2;
-  cursor: pointer;
+  pointer-events: none;
 }
 
-.geo-name:hover, .geo-name.selected {
+.geo-text {
+  color: #8E887A;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-top: 10px;
+  pointer-events: none;
+  max-height: 2rem;
+  overflow: hidden;
+}
+
+.geo-name-block:nth-child(2) > .geo-text {
+  max-height: none !important;
+}
+
+.geo-name-block:hover, .geo-name-block.selected {
   background-color: #4FC9DA;
+}
+
+.geo-name-block:hover div, .geo-name-block.selected div {
   color: #FFFFFF;
 }
 
@@ -1451,6 +1492,9 @@ input:focus {
   font-weight: 600;
   color: #716D66;
   margin-bottom: 10px;
+  max-height: 1.9rem;
+  overflow: hidden;
+  line-height: 1;
 }
 
 .account-application-text {
@@ -1458,6 +1502,8 @@ input:focus {
   font-weight: 400;
   color: #8E887A;
   margin-bottom: 20px;
+  max-height: 1.9rem;
+  overflow: hidden;
 }
 
 .account-application-files {
@@ -1820,10 +1866,16 @@ input:focus {
     font-size: 1.1rem;
     line-height: 1.1;
   }
+  .index-link.text-to-adjust {
+    max-height: 2.42rem;
+  }
   .index-news-text {
     font-size: 0.9rem !important;
   }
-  .index-news-date {
+  .index-news-text {
+    max-height: 1.8rem;
+  }
+  .index-news-date, .index-text {
     font-size: 0.85rem;
   }
   .index-banners {
@@ -1839,6 +1891,9 @@ input:focus {
   }
   .news-news-left {
     width: calc(70% - 44px);
+  }
+  .single-news-img-block {
+    height: calc(34vw - 34px);
   }
   .geo-content {
     flex-direction: column;
@@ -1864,7 +1919,7 @@ input:focus {
     grid-template-columns: 30% 30% 30%;
   }
   .index-news-block {
-    grid-template-columns: 49% 49%;
+    grid-template-columns: 45% 45%;
   }
   .index-news-img-block {
     height: calc(27vw - 16px);
@@ -1897,7 +1952,14 @@ input:focus {
     height: calc(56vw - 17px);
     max-height: 280px;
     max-width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
+  }
+  .article-bottom {
+    flex-direction: column-reverse;
+  }
+  .article-files-block {
+    margin-bottom: 20px;
+    width: 100%;
   }
   .account-application-block {
     flex-direction: column;
@@ -1995,6 +2057,10 @@ input:focus {
     margin-left: 0;
     margin-top: 10px;
   }
+  .article-files {
+    grid-template-columns: 48% 48%;
+    gap: 4%;
+  }
   .edit-profile-application {
     grid-template-columns: 100%;
     gap: 10px;
@@ -2002,6 +2068,10 @@ input:focus {
   }
   .edit-profile-application .med-button {
     width: 100%;
+  }
+  .single-news-img-block {
+    width: 100%;
+    height: calc(56vw - 34px);
   }
 }
 @media (max-width: 540px) {
@@ -2058,10 +2128,12 @@ input:focus {
   }
   .index-faq-block > .index-link, .faq-question {
     font-size: 1.1rem;
-    line-height: 1.1;
+  }
+  .faq-question.text-to-adjust {
+    min-height: 2.86rem;
+    max-height: 2.86rem;
   }
   .index-answer {
-    line-height: 1.1;
     margin-top: 5px;
   }
   .page-title {
@@ -2088,6 +2160,9 @@ input:focus {
     flex-direction: column;
     margin-bottom: 1.25rem;
     align-items: flex-start;
+  }
+  .faq-ask-question {
+    margin-top: 10px;
   }
   .faq-faq-block {
     margin-bottom: 1.5rem;
@@ -2123,6 +2198,10 @@ input:focus {
   .index-answer {
     font-size: 0.9rem;
   }
+  .index-answer {
+    min-height: 2rem;
+    max-height: 2rem;
+  }
   .news-news-subblock {
     display: grid;
     grid-template-columns: 19px calc(100% - 19px);
@@ -2157,6 +2236,10 @@ input:focus {
   }
   .account-application-files {
     grid-template-columns: 100%;
+  }
+  .article-files {
+    grid-template-columns: 100%;
+    gap: 4%;
   }
   .create-article-files {
     width: 100%;
