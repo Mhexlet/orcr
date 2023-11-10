@@ -30,7 +30,7 @@
             {{ field }}
         {% endfor %}
         <div class="consultation-checkbox-block"><input type="checkbox" class="consultation-checkbox"><span>Даю согласие на обработку персональных данных</span></div>
-        <a href="#" class="consultation-read-link">Правила обработки персональных данных</a>
+        <a href="{% url 'authentication:rules' %}" class="consultation-read-link">Правила обработки персональных данных</a>
         <input type="submit" class="med-button register-submit" value="Зарегистрироваться">
         <a href="{% url 'authentication:login' %}" class="consultation-read-link">Войти</a>
     </div>

@@ -72,6 +72,16 @@ input:focus {
   color: #968E7E;
 }
 
+.page-content img, .news-news-content img, .article-text img {
+  max-width: 100%;
+  border-radius: 0.95rem;
+  margin: 10px auto;
+}
+
+.page-content p:has(> img), .news-news-content p:has(> img), .article-text p:has(> img) {
+  display: flex;
+}
+
 .base-sidebar {
   position: fixed;
   height: 100vh;
@@ -757,7 +767,6 @@ input:focus {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  background-color: white;
   padding: 10px;
   border-radius: 0.95rem;
 }
@@ -1267,6 +1276,10 @@ input:focus {
   font-size: 1.075rem;
   font-weight: 500;
   color: #211F1C;
+}
+
+#ui-datepicker-div {
+  z-index: 5 !important;
 }
 
 .specialists-content {

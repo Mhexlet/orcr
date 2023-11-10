@@ -45,7 +45,9 @@
 <div class="separator"></div>
 <h3 class="page-label">Прикреплённые файлы</h3>
 <div class="create-article-files">
-    <div class="create-article-add-file">+</div>
+    {% if files_quantity <= 5 %}
+        <div class="create-article-add-file">+</div>
+    {% endif %}
     {% for file in article.get_files %}
     <div class="create-article-file-block">
         <input type="text" class="med-input create-article-file-name" placeholder="Подпись к файлу" id="name-pk{{ file.pk }}" value="{{ file.name }}">

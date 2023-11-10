@@ -4,13 +4,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from .admin import compress_img
+from .models import compress_img
 from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
 import os
 from custom.models import Section, Page
 from PIL import Image
-from MedProject.settings import BASE_DIR
+from MedProject.settings import BASE_DIR, BASE_URL
 from django.conf import settings
 from django.core.mail import send_mail
 from main.models import SiteContent
@@ -49,7 +49,8 @@ def login(request):
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
                                      SiteContent.objects.get(name='phone').content.translate(
-                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
+        'text': SiteContent.objects.get(name='login_text').content
     }
     return render(request, 'authentication/login.html', context)
 
@@ -67,7 +68,8 @@ def register(request):
             user.username = user.email
             user.save()
             UserApprovalApplication.objects.create(user=user)
-            # send_verify_email(user)
+            if not BASE_URL == 'http://127.0.0.1:8000':
+                send_verify_email(user)
             compress_img(user, 'photo', 'profile_photos')
             user = auth.authenticate(username=request.POST.get('email'), password=request.POST.get('password1'))
             if user:
@@ -275,3 +277,12 @@ def send_application(request):
     UserApprovalApplication.objects.create(user=request.user)
     return render(request, 'authentication/notification.html',
                   context={'notification': 'Новая заявка на одобрение профиля успешно отправлена!'})
+
+
+def rules(request):
+
+    context = {
+        'text': SiteContent.objects.get(name='rules_text').content
+    }
+
+    render(request, 'authentication/rules.html', context=context)

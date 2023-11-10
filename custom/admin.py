@@ -2,7 +2,7 @@ import shutil
 
 from django.contrib import admin
 
-from authentication.admin import compress_img
+from authentication.models import compress_img
 from .models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
 from django.db.models.fields.reverse_related import ManyToOneRel
 from django_summernote.admin import SummernoteModelAdmin

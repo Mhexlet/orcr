@@ -67,7 +67,6 @@ window.addEventListener('load', () => {
             processData: false,
             data: formData,
             success: (data) => {
-                console.log(data['result'])
                 if(data['result'] == 'ok') {
                     $('.custom-content').html('<div class="custom-notification faq-form-notification" style="margin-top: 10px;">Альбом успешно добавлен</div>');
                 } else if(data['result'] == 'failed') {

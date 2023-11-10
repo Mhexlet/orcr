@@ -137,7 +137,8 @@ def consultation(request):
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
                                      SiteContent.objects.get(name='phone').content.translate(
-                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
+        'text': SiteContent.objects.get(name='application_text').content
     }
 
     return render(request, 'main/consultation.html', context)
@@ -157,15 +158,26 @@ def create_application(request):
         if first_name and last_name and patronymic and email and phone_number and text:
             try:
                 app = Application.objects.create(text=text, first_name=first_name, last_name=last_name, patronymic=patronymic,
-                                              email=email, phone_number=phone_number, address=address)
-                # message = f'Email: {email}\nСсылка на заявку: {BASE_URL}/admin/main/application/{app.pk}/'
-                # send_mail(
-                #     'Новая заявка на консультацию',
-                #     message,
-                #     settings.EMAIL_HOST_USER,
-                #     [SiteContent.objects.get(name='notification_email').content],
-                #     fail_silently=False
-                # )
+                                                 email=email, phone_number=phone_number, address=address)
+                if not BASE_URL == 'http://127.0.0.1:8000':
+                    message = f'Email: {email}\nСсылка на заявку: {BASE_URL}/admin/main/application/{app.pk}/'
+                    send_mail(
+                        'Новая заявка на консультацию',
+                        message,
+                        settings.EMAIL_HOST_USER,
+                        [SiteContent.objects.get(name='notification_email').content],
+                        fail_silently=False
+                    )
+
+                    message = f'{SiteContent.objects.get(name="email_application_text").content}'
+                    send_mail(
+                        'Ваша заявка на консультацию успешно отправлена',
+                        message,
+                        settings.EMAIL_HOST_USER,
+                        [email],
+                        fail_silently=False
+                    )
+
                 return JsonResponse({'result': 'ok'})
             except:
                 pass

@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 from MedProject.settings import BASE_DIR
 
-from authentication.admin import compress_img
+from authentication.models import compress_img
 from custom.models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
 from main.models import SiteContent
 

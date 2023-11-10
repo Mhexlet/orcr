@@ -130,7 +130,8 @@ def edit_article_page(request, pk):
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
                                      SiteContent.objects.get(name='phone').content.translate(
-                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))]
+                                         str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
+        'files_quantity': len(art.get_files)
     }
 
     return render(request, 'specialists/edit_article_page.html', context)

@@ -5,7 +5,7 @@ import shutil
 from django.contrib import admin
 
 from MedProject.settings import BASE_DIR
-from authentication.admin import compress_img
+from authentication.models import compress_img
 from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner
 from django_summernote.admin import SummernoteModelAdmin
 
@@ -64,7 +64,7 @@ class BannerAdmin(admin.ModelAdmin):
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
                 except FileNotFoundError:
                     pass
-            compress_img(form.instance, 'image', 'images')
+            compress_img(form.instance, 'image', 'images', change_format=False)
         return super(BannerAdmin, self).save_model(request, obj, form, change)
 
 

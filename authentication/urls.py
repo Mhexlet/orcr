@@ -16,4 +16,5 @@ urlpatterns = [
     path('send_verify_email_page/', auth.send_verify_email_page, name='send_verify_email_page'),
     path('renew_verification_key/', auth.renew_verification_key, name='renew_verification_key'),
     path('send_application/', auth.send_application, name='send_application'),
+    path('rules/', auth.rules, name='rules'),
 ]

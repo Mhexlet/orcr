@@ -6,6 +6,7 @@
 {% block content %}
 <h1 class="page-title">Авторизация</h1>
 <div class="separator"></div>
+<p class="consultation-intro">{{ text|safe }}</p>
 <form action="{% url 'authentication:login' %}" class="consultation-form login-form" method="post">
     <div class="consultation-form-subblock">
         {% csrf_token %}

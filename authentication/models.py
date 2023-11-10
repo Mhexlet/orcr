@@ -1,4 +1,7 @@
 import os
+import shutil
+
+from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.dispatch import receiver
@@ -6,11 +9,42 @@ from datetime import datetime, timedelta
 import pytz
 from django_summernote.models import Attachment
 from PIL import Image
-from MedProject.settings import BASE_DIR
+from MedProject.settings import BASE_DIR, BASE_URL
 from django.conf import settings
+from main.models import SiteContent
 import calendar
 import time
 from uuid import uuid4
+
+
+def compress_img(instance, field, directory, multiple=True, change_format=True):
+    file = getattr(instance, field)
+    img = Image.open(file)
+    current_gmt = time.gmtime()
+    time_stamp = calendar.timegm(current_gmt)
+    file_name = f'{time_stamp}-{uuid4().hex}.{"jpg" if change_format else file.name.split(".")[-1]}'
+    new_file_path = os.path.join(BASE_DIR, 'media', directory, file_name)
+    width = img.size[0]
+    height = img.size[1]
+    ratio = width / height
+    if ratio > 1 and width > 1024:
+        sizes = [1024, int(1024 / ratio)]
+        img = img.resize(sizes)
+    elif height > 1024:
+        sizes = [int(1024 * ratio), 1024]
+        img = img.resize(sizes)
+    try:
+        img.save(new_file_path, quality=90, optimize=True)
+    except OSError:
+        img = img.convert("RGB")
+        img.save(new_file_path, quality=90, optimize=True)
+    if multiple:
+        try:
+            shutil.rmtree(os.path.join(BASE_DIR, 'media', 'tmp'))
+        except (FileNotFoundError, PermissionError):
+            pass
+        os.mkdir(os.path.join(BASE_DIR, 'media', 'tmp'))
+    setattr(instance, field, os.path.join(directory, file_name))
 
 
 class FieldOfActivity(models.Model):
@@ -138,12 +172,27 @@ class UserEditApplication(models.Model):
             return self.new_value
 
 
+@receiver(models.signals.pre_save, sender=User)
+def compress_user_photo(sender, instance, raw, using, update_fields, *args, **kwargs):
+    if not instance.pk:
+        compress_img(instance, 'photo', 'profile_photos')
+
+
 @receiver(models.signals.pre_save, sender=UserApprovalApplication)
 def approve_user(sender, instance, raw, using, update_fields, *args, **kwargs):
     if instance.response:
         instance.user.approved = True
         instance.user.approved_at = datetime.now()
         instance.user.save()
+        if not BASE_URL == 'http://127.0.0.1:8000':
+            message = f'{SiteContent.objects.get(name="email_approved_text").content}'
+            send_mail(
+                'Ваш профиль одобрен',
+                message,
+                settings.EMAIL_HOST_USER,
+                [instance.user.email],
+                fail_silently=False
+            )
     if instance.response or instance.comment:
         instance.treated = True
 
