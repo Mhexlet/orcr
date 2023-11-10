@@ -94,6 +94,7 @@ input:focus {
 
 .page-content p:has(> img), .news-news-content p:has(> img), .article-text p:has(> img) {
     display: flex;
+    flex-direction: column;
 }
 
 // BASE
@@ -1694,7 +1695,7 @@ input:focus {
 
 .create-article-submit, .edit-article-submit {
     width: 300px;
-    margin: 0 auto;
+    margin: 0 auto 10px;
 }
 
 .create-article-recaptha-wrapper {

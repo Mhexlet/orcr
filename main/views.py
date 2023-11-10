@@ -169,7 +169,7 @@ def create_application(request):
                         fail_silently=False
                     )
 
-                    message = f'{SiteContent.objects.get(name="email_application_text").content}'
+                    message = f'{SiteContent.objects.get(name="email_application_message").content}'
                     send_mail(
                         'Ваша заявка на консультацию успешно отправлена',
                         message,

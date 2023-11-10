@@ -90,7 +90,7 @@ class Place(models.Model):
 
     src = models.TextField(verbose_name='Ссылка на карту')
     name = models.CharField(max_length=64, verbose_name='Название места')
-    text = models.TextField(null=True, verbose_name='Описание')
+    text = models.TextField(null=True, blank=True, verbose_name='Описание')
 
     class Meta:
         verbose_name = 'Место из географии ранней помощи'

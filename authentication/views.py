@@ -285,4 +285,4 @@ def rules(request):
         'text': SiteContent.objects.get(name='rules_text').content
     }
 
-    render(request, 'authentication/rules.html', context=context)
+    return render(request, 'authentication/rules.html', context=context)
