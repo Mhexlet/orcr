@@ -167,6 +167,7 @@ def add_url(sender, instance, raw, using, update_fields, *args, **kwargs):
 def compress_album_image(sender, instance, **kwargs):
     file = instance.image
     img = Image.open(file)
+    img = ImageOps.exif_transpose(img)
     current_gmt = time.gmtime()
     time_stamp = calendar.timegm(current_gmt)
     file_name = f'{time_stamp}-{uuid4().hex}.jpg'

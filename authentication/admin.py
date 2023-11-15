@@ -2,7 +2,7 @@ import os
 from django.utils.html import format_html
 from django.contrib import admin
 from MedProject.settings import BASE_DIR, BASE_URL
-from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication
+from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication, compress_img
 from django.db.models.fields.reverse_related import ManyToOneRel
 
 

@@ -50,6 +50,7 @@
             <span>
                 <span class="specialists-info-label" id="label-birthdate">Дата рождения: </span>
                 <span id="data-birthdate">{{ user.birthdate }}</span>
+                <input type="hidden" value="{{ user.birthdate|safe }}" id="birthdate-hidden">
             </span>
             <div class="edit-profile-edit-block"><img src="{% static '/img/application.png' %}" alt="изменить" class="edit-profile-edit-img" id="edit-birthdate"></div>
         </div>

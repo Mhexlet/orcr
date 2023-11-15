@@ -11,6 +11,9 @@ window.addEventListener('load', () => {
     }
     $('.register-selected').html($('#id_field_of_activity > option:nth-child(2)').html());
 
+    $('#id_birthdate').attr('type', 'date');
+    $('#id_birthdate').attr('max', new Date().toISOString().split("T")[0]);
+
     $('.register-fake-select').on('click', (e) => {
         if($('.register-options-block').css('display') == 'flex') {
             $('.register-options-block').css('display', '');
@@ -25,20 +28,20 @@ window.addEventListener('load', () => {
         $('.register-selected').html(e.target.innerHTML);
     })
 
-    $('.datepicker').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "c-100:c+0",
-        dateFormat: "dd-mm-yy"
-    });
+    // $('.datepicker').datepicker({
+    //     changeMonth: true,
+    //     changeYear: true,
+    //     yearRange: "c-100:c+0",
+    //     dateFormat: "dd-mm-yy"
+    // });
 
-    $('.datepicker').on('focus', () => {
-        $('.datepicker').prop( "disabled", true );
-    })
+    // $('.datepicker').on('focus', () => {
+    //     $('.datepicker').prop( "disabled", true );
+    // })
 
-    $('.datepicker').on('blur', (e) => {
-        $('.datepicker').prop( "disabled", false );
-    })
+    // $('.datepicker').on('blur', (e) => {
+    //     $('.datepicker').prop( "disabled", false );
+    // })
 
     $('.med-input').on('blur', (e) => {
         if(!['id_phone_number', 'id_email', 'register-fake-select', 'id_birthdate'].includes(e.target.id)) {
@@ -48,6 +51,7 @@ window.addEventListener('load', () => {
                 e.target.classList.remove('wrong-input');
             }
         }
+        console.log(e.target.value)
     })
 
     $('#id_email').on('blur', (e) => {

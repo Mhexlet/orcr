@@ -26,7 +26,7 @@ class UserLoginForm(AuthenticationForm):
 
 class UserRegisterForm(UserCreationForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
-    birthdate = forms.DateField(input_formats=['%d-%m-%Y'], label='Дата рождения')
+    birthdate = forms.DateField(input_formats=['%Y-%m-%d'], label='Дата рождения')
 
     class Meta:
         model = User
@@ -41,7 +41,7 @@ class UserRegisterForm(UserCreationForm):
             field.widget.attrs['placeholder'] = field.label
             field.help_text = ''
         self.fields['field_of_activity'].widget.attrs['class'] = 'register-field-of-activity'
-        self.fields['birthdate'].widget.attrs['class'] = 'med-input datepicker'
+        # self.fields['birthdate'].widget.attrs['class'] = 'med-input datepicker'
 
     def save(self, *args, **kwargs):
         user = super().save(*args, **kwargs)

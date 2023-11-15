@@ -789,7 +789,9 @@ input:focus {
     justify-content: space-between;
     width: 100%;
     padding: 10px;
+    box-sizing: border-box;
     border-radius: 0.95rem;
+    background-color: white;
 }
 
 .index-banner-left-arrow, .index-banner-right-arrow {

@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from django.db import models
 from django.dispatch import receiver
@@ -13,6 +14,8 @@ class QuestionAnswer(models.Model):
     answer = models.TextField(blank=True, null=True, verbose_name='Ответ')
     treated = models.BooleanField(default=False, verbose_name='Обработано')
     approved = models.BooleanField(default=False, verbose_name='Одобрено')
+    created_at = models.DateTimeField(auto_now=True, verbose_name="Когда задан")
+    treated_at = models.DateTimeField(null=True, blank=True, verbose_name="Когда обработан")
 
     class Meta:
         verbose_name = 'Вопрос - ответ'
@@ -28,6 +31,8 @@ class Review(models.Model):
     text = models.TextField(verbose_name='Отзыв')
     treated = models.BooleanField(default=False, verbose_name='Обработано')
     approved = models.BooleanField(default=False, verbose_name='Одобрено')
+    created_at = models.DateTimeField(auto_now=True, verbose_name="Когда оставлен")
+    treated_at = models.DateTimeField(null=True, blank=True, verbose_name="Когда обработан")
 
     class Meta:
         verbose_name = 'Отзыв'
@@ -125,19 +130,23 @@ class SiteContent(models.Model):
         verbose_name_plural = 'Наполнения сайта'
 
     def __str__(self):
-        return self.content
+        return self.name
 
 
 @receiver(models.signals.pre_save, sender=QuestionAnswer)
 def treat_question(sender, instance, raw, using, update_fields, *args, **kwargs):
     if instance.answer or instance.approved:
         instance.treated = True
+    if instance.treated:
+        instance.treated_at = datetime.now()
 
 
 @receiver(models.signals.pre_save, sender=Review)
 def treat_review(sender, instance, raw, using, update_fields, *args, **kwargs):
     if instance.approved:
         instance.treated = True
+    if instance.treated:
+        instance.treated_at = datetime.now()
 
 
 @receiver(models.signals.pre_save, sender=Application)

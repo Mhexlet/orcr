@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib import admin
 from django.utils.html import format_html
 
@@ -25,6 +27,7 @@ class ArticleAdmin(SummernoteModelAdmin):
 
     def save_model(self, request, obj, form, change):
         if (not change or (change and 'approved' in form.changed_data)) and form.instance.approved:
+            form.instance.approved_at = datetime.now()
             app = ArticleApprovalApplication.objects.filter(article__pk=form.instance.pk, response=False)
             if app.exists():
                 app = app.last()

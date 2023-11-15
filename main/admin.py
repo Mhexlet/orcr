@@ -13,6 +13,7 @@ from django_summernote.admin import SummernoteModelAdmin
 @admin.register(QuestionAnswer)
 class QuestionAnswerAdmin(admin.ModelAdmin):
     list_display = ['name', 'short_question', 'short_answer', 'treated', 'approved']
+    readonly_fields = ('created_at',)
 
     def short_question(self, obj):
         return obj.question[:50] + '...'
@@ -30,6 +31,7 @@ class QuestionAnswerAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     list_display = [field.name if field.name != 'text' else 'short_text' for field in Review._meta.get_fields()]
+    readonly_fields = ('created_at',)
 
     def short_text(self, obj):
         return obj.text[:50] + '...'

@@ -20,6 +20,7 @@ from uuid import uuid4
 def compress_img(instance, field, directory, multiple=True, change_format=True):
     file = getattr(instance, field)
     img = Image.open(file)
+    img = ImageOps.exif_transpose(img)
     current_gmt = time.gmtime()
     time_stamp = calendar.timegm(current_gmt)
     file_name = f'{time_stamp}-{uuid4().hex}.{"jpg" if change_format else file.name.split(".")[-1]}'
@@ -206,8 +207,8 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
         elif instance.field == 'photo':
             os.remove(os.path.join(BASE_DIR, 'media', instance.user.photo.name))
             instance.user.photo = instance.new_value
-        elif instance.field == 'birthdate':
-            instance.user.birthdate = f'{instance.new_value[6:]}-{instance.new_value[3:5]}-{instance.new_value[:2]}'
+        # elif instance.field == 'birthdate':
+        #     instance.user.birthdate = f'{instance.new_value[6:]}-{instance.new_value[3:5]}-{instance.new_value[:2]}'
         else:
             setattr(instance.user, instance.field, instance.new_value)
         instance.user.save()
@@ -231,6 +232,7 @@ def compress_attachment(sender, instance, **kwargs):
     supported_extensions = {ex for ex, f in exts.items() if f in Image.OPEN}
     if ext in supported_extensions:
         img = Image.open(instance.file)
+        img = ImageOps.exif_transpose(img)
         current_gmt = time.gmtime()
         time_stamp = calendar.timegm(current_gmt)
         file_name = f'{time_stamp}-{uuid4().hex}.jpg'

@@ -108,6 +108,7 @@ window.addEventListener('load', () => {
                 let hrefParams = document.location.href.split('/');
                 formData.append('pk', hrefParams[hrefParams.length - 2]);
             }
+            console.log(keptFiles)
             $.ajax({
                 method: "post",
                 url: `/specialists/${action}_article/`,

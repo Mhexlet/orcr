@@ -9,7 +9,7 @@ from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
 import os
 from custom.models import Section, Page
-from PIL import Image
+from PIL import Image, ImageOps
 from MedProject.settings import BASE_DIR, BASE_URL
 from django.conf import settings
 from django.core.mail import send_mail
@@ -178,8 +178,8 @@ def edit_profile(request):
                      'phone_number', 'email', 'photo', 'description']:
 
             old_value = str(getattr(request.user, field))
-            if field == 'birthdate':
-                old_value = f'{old_value[8:]}-{old_value[5:7]}-{old_value[:4]}'
+            # if field == 'birthdate':
+            #     old_value = f'{old_value[8:]}-{old_value[5:7]}-{old_value[:4]}'
 
             if old_value == new_value:
                 return JsonResponse({'result': 'ok'})
@@ -187,6 +187,7 @@ def edit_profile(request):
             if field == 'photo':
                 file = request.FILES.get('photo')
                 img = Image.open(file)
+                img = ImageOps.exif_transpose(img)
                 current_gmt = time.gmtime()
                 time_stamp = calendar.timegm(current_gmt)
                 file_name = f'{time_stamp}-{uuid4().hex}.jpg'

@@ -9,10 +9,10 @@ window.addEventListener('load', () => {
         if(field == 'description') {
             $('.edit-profile-textarea').css('display', 'block');
             $('.edit-profile-textarea').val(data);
-        } else if(field == 'birthdate') {
-            $('.datepicker').val($('#user_birthdate').val());
-            $('.datepicker').datepicker("option", "defaultDate", $('#user_birthdate').val());
-            $('.datepicker').css('display', 'block');
+        // } else if(field == 'birthdate') {
+            // $('.datepicker').val($('#user_birthdate').val());
+            // $('.datepicker').datepicker("option", "defaultDate", $('#user_birthdate').val());
+            // $('.datepicker').css('display', 'block');
         } else if(field == 'field_of_activity') {
             $('#edit-fake-select').css('display', 'block');
             $('.register-selected').attr('id', `selected-${$('.user_field_of_activity').val()}`);
@@ -28,6 +28,10 @@ window.addEventListener('load', () => {
                 input.attr('placeholder', label);
                 input.attr('type', 'text');
             }
+            if(field == 'birthdate') {
+                input.attr('type', 'date');
+                input.val($('#birthdate-hidden').val());
+            }
         }
 
         $('.faq-background').css('display', 'flex');
@@ -37,9 +41,9 @@ window.addEventListener('load', () => {
         const token = $('input[name=csrfmiddlewaretoken]').val();
         let field = e.target.id;
         let input = field == 'description' ? $('.edit-profile-textarea') : $('.edit-profile-input');
-        if(field == 'birthdate') {
-            input = $('.datepicker');
-        }
+        // if(field == 'birthdate') {
+        //     input = $('.datepicker');
+        // }
         let newValue;
         if(field == 'field_of_activity') {
             newValue = $('.register-selected').attr('id').replace('selected-', '');
@@ -150,7 +154,7 @@ window.addEventListener('load', () => {
             input.attr('type', 'text');
             textarea.css('display', '');
             textarea.val('');
-            $('.datepicker').css('display', '');
+            // $('.datepicker').css('display', '');
             $('#edit-fake-select').css('display', '');
             $('.edit-profile-submit').removeAttr('id');
             $('.wrong-input').removeClass('wrong-input');
@@ -176,19 +180,19 @@ window.addEventListener('load', () => {
         $('.register-selected').html(e.target.innerHTML);
     })
 
-    $('.datepicker').datepicker({
-        changeMonth: true,
-        changeYear: true,
-        yearRange: "c-100:c+0",
-        dateFormat: "dd-mm-yy",
-        defaultDate: $('#data_birthdate').html()
-    });
+    // $('.datepicker').datepicker({
+    //     changeMonth: true,
+    //     changeYear: true,
+    //     yearRange: "c-100:c+0",
+    //     dateFormat: "dd-mm-yy",
+    //     defaultDate: $('#data_birthdate').html()
+    // });
 
-    $('.datepicker').on('focus', () => {
-        $('.datepicker').prop( "disabled", true );
-    })
+    // $('.datepicker').on('focus', () => {
+    //     $('.datepicker').prop( "disabled", true );
+    // })
 
-    $('.datepicker').on('blur', (e) => {
-        $('.datepicker').prop( "disabled", false );
-    })
+    // $('.datepicker').on('blur', (e) => {
+    //     $('.datepicker').prop( "disabled", false );
+    // })
 })
