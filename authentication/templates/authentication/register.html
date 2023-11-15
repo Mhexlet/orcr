@@ -37,13 +37,13 @@
 </form>
 <div class="register-errors-block">
     {% for field in first_block %}
-        {{ field.label }}{{ field.errors }}
+        {{ field.errors }}
     {% endfor %}
     {% for field in second_block %}
-        {{ field.label }}{{ field.errors }}
+        {{ field.errors }}
     {% endfor %}
     {% for field in third_block %}
-        {{ field.label }}{{ field.errors }}
+        {{ field.errors }}
     {% endfor %}
 </div>
 {% endblock %}
