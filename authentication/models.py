@@ -8,7 +8,7 @@ from django.dispatch import receiver
 from datetime import datetime, timedelta
 import pytz
 from django_summernote.models import Attachment
-from PIL import Image
+from PIL import Image, ImageOps
 from MedProject.settings import BASE_DIR, BASE_URL
 from django.conf import settings
 from main.models import SiteContent

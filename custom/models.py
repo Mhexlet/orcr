@@ -2,7 +2,7 @@ import calendar
 import os
 import re
 import time
-from PIL import Image
+from PIL import Image, ImageOps
 from uuid import uuid4
 
 from django.db import models
