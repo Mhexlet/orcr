@@ -21,6 +21,7 @@ def constructor(request, url):
         'filesets': FileSetBlock.objects.filter(page__url=url),
         'current_page': page,
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,

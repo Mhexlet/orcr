@@ -2,6 +2,14 @@ window.addEventListener('load', () => {
 
     let closeTimeout;
 
+    let croppie = $('.edit-profile-photo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 250,
+            height: 250
+        }
+    });
+
     $('.edit-profile-edit-img').on('click', (e) => {
         let field = e.target.id.replace('edit-', '');
         let data = $(`#data-${field}`).html();
@@ -9,10 +17,12 @@ window.addEventListener('load', () => {
         if(field == 'description') {
             $('.edit-profile-textarea').css('display', 'block');
             $('.edit-profile-textarea').val(data);
-        // } else if(field == 'birthdate') {
-            // $('.datepicker').val($('#user_birthdate').val());
-            // $('.datepicker').datepicker("option", "defaultDate", $('#user_birthdate').val());
-            // $('.datepicker').css('display', 'block');
+        } else if(field == 'birthdate') {
+            let input = $('.edit-profile-date-input');
+            input.css('display', 'flex');
+            input.val($('#birthdate-hidden').val());
+        } else if(field == 'photo') {
+            $('.edit-profile-photo-input').css('display', 'flex');
         } else if(field == 'field_of_activity') {
             $('#edit-fake-select').css('display', 'block');
             $('.register-selected').attr('id', `selected-${$('.user_field_of_activity').val()}`);
@@ -21,32 +31,93 @@ window.addEventListener('load', () => {
             let input = $('.edit-profile-input');
             input.css('display', 'block');
             input.val(data);
-            if(field == 'photo') {
-                input.attr('type', 'file');
-            } else {
-                let label = $(`#label-${field}`).html().replace(': ', '');
-                input.attr('placeholder', label);
-                input.attr('type', 'text');
-            }
-            if(field == 'birthdate') {
-                input.attr('type', 'date');
-                input.val($('#birthdate-hidden').val());
-            }
+            let label = $(`#label-${field}`).html().replace(': ', '');
+            input.attr('placeholder', label);
         }
 
         $('.faq-background').css('display', 'flex');
     })
 
+    $('.edit-profile-photo-input').on('change', (e) => {
+        $('.edit-profile-photo-block').css('display', 'flex');
+        let reader = new FileReader();
+
+        reader.onload = function(e) {
+            croppie.croppie('bind', {url: e.target.result});
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+    })
+
+    function editAjax(formData, field) {
+        $.ajax({
+            method: "post",
+            url: "/authentication/edit_profile/",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: (data) => {
+                let notificationText = '';
+                if(data['result'] == 'ok') {
+                    notificationText = 'Заявка на изменение данных профиля отправлена успешно';
+                    $('.faq-form-notification').css('margin-bottom', '');
+                    $('.faq-background-form-content').css('display', 'none');
+                    if(Object.keys(data).includes('pk')) {
+                        $(`.application-${field}`).remove();
+                        if($('.edit-profile-rejected-block').children().length == 0) {
+                            $('.edit-profile-rejected-wrapper').css('display', 'none');
+                        }
+                        let pk = data['pk'];
+                        let htmlString = `<div class="edit-profile-application application-${field}" id="application-${pk}">
+                        <div class="edit-profile-application-left">
+                            <span class="specialists-info-label">${data['verbose_field']}: </span>`;
+                        if(field == 'photo') {
+                            htmlString += `<div class="specialists-img-block">
+                                    <img src="/media/${data['new_value']}" alt="photo" class="specialists-img">
+                                </div>`;
+                        } else if(field == 'field_of_activity') {
+                            htmlString += `<span class="edit-profile-application-value">${data['new_value'].replace(/id:[0-9]\|/, '')}</span>`;
+                        } else {
+                            htmlString += `<span class="edit-profile-application-value">${newValue}</span>`;
+                        }
+                        htmlString += `</div><div class="med-button mini-med-button edit-profile-application-delete" id="application-delete-${pk}">Удалить</div></div>`;
+                        $('.edit-profile-waiting-block').prepend(htmlString);
+                        $('.edit-profile-waiting-wrapper').css('display', 'flex');
+                    }
+                    closeTimeout = window.setTimeout(() => {
+                        $('.faq-background').click();
+                    }, 5000);
+                } else if(data['result'] == 'captcha') {
+                    notificationText = 'Капча не пройдена';
+                    $('.faq-form-notification').css('margin-bottom', '15px');
+                } else if(data['result'] == 'email') {
+                    notificationText = 'Пользователь с этим адресом электронной почты уже существует';
+                    $('.faq-form-notification').css('margin-bottom', '15px');
+                } else if(data['result'] == 'failed') {
+                    notificationText = 'Упс, что-то пошло не так. Попробуйте позже :с';
+                    $('.faq-form-notification').css('margin-bottom', '15px');
+                }
+                $('.faq-form-notification').html(notificationText);
+            },
+            error: (data) => {
+            }
+        });
+    }
+
     $('.edit-profile-submit').on('click', (e) => {
         const token = $('input[name=csrfmiddlewaretoken]').val();
         let field = e.target.id;
         let input = field == 'description' ? $('.edit-profile-textarea') : $('.edit-profile-input');
-        // if(field == 'birthdate') {
-        //     input = $('.datepicker');
-        // }
+        if(field == 'birthdate') {
+            input = $('.edit-profile-date-input');
+        } else if(field == 'photo') {
+            input = $('#cropped-photo');
+        }
         let newValue;
         if(field == 'field_of_activity') {
             newValue = $('.register-selected').attr('id').replace('selected-', '');
+        } else if(field == 'photo') {
+            newValue = true;
         } else {
             newValue = input.val();
         }
@@ -60,7 +131,7 @@ window.addEventListener('load', () => {
             validated = false;
             input.addClass('wrong-input');
         }
-
+        
         if(newValue && validated) {
             let formData = new FormData();
             formData.append('csrfmiddlewaretoken', token);
@@ -68,60 +139,17 @@ window.addEventListener('load', () => {
             formData.append('field', field);
             formData.append('new_value', newValue);
             if(field == 'photo') {
-                formData.append('photo', $('.edit-profile-input').prop('files')[0])
+                croppie.croppie('result', {
+                    type: 'blob',
+                    format: 'jpeg',
+                }).then(function (blob) {
+                    const file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
+                    formData.append('photo', file)
+                    editAjax(formData, field);
+                });
+            } else {
+                editAjax(formData, field);
             }
-            $.ajax({
-                method: "post",
-                url: "/authentication/edit_profile/",
-                contentType: false,
-                processData: false,
-                data: formData,
-                success: (data) => {
-                    let notificationText = '';
-                    if(data['result'] == 'ok') {
-                        notificationText = 'Заявка на изменение данных профиля отправлена успешно';
-                        $('.faq-form-notification').css('margin-bottom', '');
-                        $('.faq-background-form-content').css('display', 'none');
-                        if(Object.keys(data).includes('pk')) {
-                            $(`.application-${field}`).remove();
-                            if($('.edit-profile-rejected-block').children().length == 0) {
-                                $('.edit-profile-rejected-wrapper').css('display', 'none');
-                            }
-                            let pk = data['pk'];
-                            let htmlString = `<div class="edit-profile-application application-${field}" id="application-${pk}">
-                            <div class="edit-profile-application-left">
-                                <span class="specialists-info-label">${data['verbose_field']}: </span>`;
-                            if(field == 'photo') {
-                                htmlString += `<div class="specialists-img-block">
-                                        <img src="/media/${data['new_value']}" alt="photo" class="specialists-img">
-                                    </div>`;
-                            } else if(field == 'field_of_activity') {
-                                htmlString += `<span class="edit-profile-application-value">${data['new_value'].replace(/id:[0-9]\|/, '')}</span>`;
-                            } else {
-                                htmlString += `<span class="edit-profile-application-value">${newValue}</span>`;
-                            }
-                            htmlString += `</div><div class="med-button mini-med-button edit-profile-application-delete" id="application-delete-${pk}">Удалить</div></div>`;
-                            $('.edit-profile-waiting-block').prepend(htmlString);
-                            $('.edit-profile-waiting-wrapper').css('display', 'flex');
-                        }
-                        closeTimeout = window.setTimeout(() => {
-                            $('.faq-background').click();
-                        }, 5000);
-                    } else if(data['result'] == 'captcha') {
-                        notificationText = 'Капча не пройдена';
-                        $('.faq-form-notification').css('margin-bottom', '15px');
-                    } else if(data['result'] == 'email') {
-                        notificationText = 'Пользователь с этим адресом электронной почты уже существует';
-                        $('.faq-form-notification').css('margin-bottom', '15px');
-                    } else if(data['result'] == 'failed') {
-                        notificationText = 'Упс, что-то пошло не так. Попробуйте позже :с';
-                        $('.faq-form-notification').css('margin-bottom', '15px');
-                    }
-                    $('.faq-form-notification').html(notificationText);
-                },
-                error: (data) => {
-                }
-            });
         }
     })
 
@@ -151,10 +179,11 @@ window.addEventListener('load', () => {
             input.css('display', '');
             input.val('');
             input.removeAttr('placeholder');
-            input.attr('type', 'text');
             textarea.css('display', '');
             textarea.val('');
-            // $('.datepicker').css('display', '');
+            $('.edit-profile-date-input').css('display', '');
+            $('.edit-profile-photo-block').css('display', '');
+            $('.edit-profile-photo-input').css('display', '');
             $('#edit-fake-select').css('display', '');
             $('.edit-profile-submit').removeAttr('id');
             $('.wrong-input').removeClass('wrong-input');

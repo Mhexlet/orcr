@@ -42,8 +42,8 @@ window.addEventListener('load', () => {
     $('.index-slides-block').append(getHtmlString('current'));
     $('.index-banners').append(getBannerBlock('current'));
     
-    currentSliderTimer = setTimeout(timeoutChangeCurrentSlide, 5000);
-    currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 5000);
+    currentSliderTimer = setTimeout(timeoutChangeCurrentSlide, 10000);
+    currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 10000);
 
     let position = window.innerWidth <= 540 ? '-10px' : '20px';
     $('.index-slider-left-arrow').animate({
@@ -87,7 +87,7 @@ window.addEventListener('load', () => {
             });
         }
         clearTimeout(currentSliderTimer);
-        currentSliderTimer = setTimeout(timeoutChangeCurrentSlide, 5000);
+        currentSliderTimer = setTimeout(timeoutChangeCurrentSlide, 10000);
     };
 
     function changeCurrentBanner(direction=true) {
@@ -123,7 +123,7 @@ window.addEventListener('load', () => {
             });
         }
         clearTimeout(currentBannerTimer);
-        currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 5000);
+        currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 10000);
     };
 
     function timeoutChangeCurrentSlide() {

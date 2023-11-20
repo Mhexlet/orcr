@@ -28,6 +28,7 @@
             </div>
             <div class="base-menu">
                 {% block menu %}
+                    <a href="{% url 'index' %}" class="menu-page{% if 'index' in request.resolver_match.url_name %} active{% endif %}">Главная</a>
                     {% for section in menu_sections %}
                         <div class="menu-section-block{% if current_page and current_page.section.pk == section.pk %} active{% endif %}" id="menu-section-{{ section.pk }}">
                             <span class="menu-section">{{ section.name }}
@@ -41,6 +42,15 @@
                                     </a>
                                 {% endif %}
                             {% endfor %}
+                            {% if section.pk == account_section_id %}
+                                {% if user.is_superuser %}
+                                    <a href="{% url 'admin:index' %}" class="menu-section-page">Админская панель<div class="menu-section-page-circle"></div></a>
+                                {% elif user.is_authenticated %}
+                                    <a href="{% url 'specialists:account' %}" class="menu-section-page">Личный кабинет<div class="menu-section-page-circle"></div></a>
+                                {% else %}
+                                    <a href="{% url 'authentication:login' %}" class="menu-section-page{% if 'authentication' in request.resolver_match.namespace %} active{% endif %}">Войти<div class="menu-section-page-circle"></div></a>
+                                {% endif %}
+                            {% endif%}
                         </div>
                     {% endfor %}
                     {% for page in menu_pages %}
@@ -54,13 +64,6 @@
                     <a href="{% url 'faq' %}" class="menu-page{% if 'faq' in request.resolver_match.url_name %} active{% endif %}">Вопрос - ответ</a>
                     <a href="{% url 'reviews' %}" class="menu-page{% if 'reviews' in request.resolver_match.url_name %} active{% endif %}">Отзывы</a>
                     <a href="{% url 'specialists:specialists' %}" class="menu-page{% if 'specialists' in request.resolver_match.url_name %} active{% endif %}">Специалисты ранней помощи</a>
-                    {% if user.is_superuser %}
-                        <a href="{% url 'admin:index' %}" class="menu-page">Специалистам</a>
-                    {% elif user.is_authenticated %}
-                        <a href="{% url 'specialists:account' %}" class="menu-page">Специалистам</a>
-                    {% else %}
-                        <a href="{% url 'authentication:login' %}" class="menu-page{% if 'authentication' in request.resolver_match.namespace %} active{% endif %}">Специалистам</a>
-                    {% endif %}
                 {% endblock %}
             </div>
         </div>
@@ -105,14 +108,16 @@
             </div>
             <div class="base-header">
                 {% block header %}
-                <div class="header-menu-show">
-                    <div class="header-menu-show-subblock"></div>
-                    <div class="header-menu-show-subblock"></div>
-                    <div class="header-menu-show-subblock"></div>
+                <div class="header-left-block">
+                    <div class="header-menu-show">
+                        <div class="header-menu-show-subblock"></div>
+                        <div class="header-menu-show-subblock"></div>
+                        <div class="header-menu-show-subblock"></div>
+                    </div>
+                    <a href="{% url 'index' %}" class="med-button">Главная</a>
                 </div>
                 <a href="{% url 'index' %}" class="header-title-block">
                     <h1>Региональный ресурсно - методический центр ранней помощи детям и их семьям в Иркутской области</h1>
-                    <h2>На базе ОГБУСО «Реабилитационный центр для детей и подростков с ограниченными возможностями»</h2>
                 </a>
                 <div class="header-right-block">
                     <div class="header-contacts-block">

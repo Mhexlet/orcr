@@ -48,6 +48,14 @@ def compress_img(instance, field, directory, multiple=True, change_format=True):
     setattr(instance, field, os.path.join(directory, file_name))
 
 
+def user_photo_upload(instance, filename):
+    current_gmt = time.gmtime()
+    time_stamp = calendar.timegm(current_gmt)
+    file_name = f'{time_stamp}-{uuid4().hex}.jpg'
+    new_file_path = os.path.join(BASE_DIR, 'media', 'profile_photos', file_name)
+    return new_file_path
+
+
 class FieldOfActivity(models.Model):
 
     name = models.CharField(max_length=64, verbose_name='Название')
@@ -68,7 +76,7 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=64, verbose_name='Фамилия')
     field_of_activity = models.ForeignKey(FieldOfActivity, on_delete=models.SET_NULL, null=True, verbose_name='Сфера деятельности')
     profession = models.CharField(max_length=64, verbose_name='Профессия')
-    photo = models.ImageField(upload_to='tmp/', verbose_name='Фото')
+    photo = models.ImageField(upload_to=user_photo_upload, verbose_name='Фото')
     city = models.CharField(max_length=128, verbose_name='Город')
     birthdate = models.DateField(null=True, verbose_name='Дата рождения')
     workplace_address = models.CharField(max_length=128, verbose_name='Адрес места работы')

@@ -2,6 +2,8 @@
 {% load static %}
 {% block js %}
 <script src='https://www.google.com/recaptcha/api.js'></script>
+<link rel="stylesheet" href="{% static 'css/croppie.css' %}" />
+<script src="{% static 'js/croppie.js' %}"></script>
 <link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
 <script src="{% static 'js/edit_profile.js' %}"></script>
@@ -165,7 +167,11 @@
         <span class="faq-form-notification"></span>
         <div class="faq-background-form-content">
             <input type="text" class="med-input edit-profile-input">
-            <input type="text" class="med-input edit-profile-date-input datepicker" id="birthdate">
+            <input type="date" class="med-input edit-profile-date-input" id="birthdate">
+            <input type="file" class="med-input edit-profile-photo-input" accept="image/png, image/gif, image/jpeg">
+            <div class="edit-profile-photo-block">
+                <div class="edit-profile-photo"></div>
+            </div>
             <div class="med-input register-fake-select" id="edit-fake-select">
                 <img src="{% static 'img/menu-arrow.svg' %}" alt="+" class="register-fake-select-arrow">
                 <div class="register-selected" id="selected-{{ user.field_of_activity.pk }}">{{ user.field_of_activity }}</div>

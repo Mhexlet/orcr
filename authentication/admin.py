@@ -33,7 +33,7 @@ class UserAdmin(admin.ModelAdmin):
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['photo'].name))
                 except FileNotFoundError:
                     pass
-            compress_img(form.instance, 'photo', 'profile_photos')
+            # compress_img(form.instance, 'photo', 'profile_photos')
         if (not change or (change and 'approved' in form.changed_data)) and form.instance.approved:
             app = UserApprovalApplication.objects.filter(user__pk=form.instance.pk, response=False)
             if app.exists():

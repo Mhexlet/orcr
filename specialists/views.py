@@ -35,6 +35,7 @@ def profile(request, pk):
         'title': f'{specialist}',
         'specialist': specialist,
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -54,6 +55,7 @@ def article(request, pk):
         'article': art,
         'files': len(art.get_files) > 0,
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -73,6 +75,7 @@ class SpecialistsList(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Специалисты ранней помощи',
         context['menu_sections'] = Section.objects.all()
+        context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,

@@ -133,6 +133,19 @@ class SiteContent(models.Model):
         return self.name
 
 
+class IndexLink(models.Model):
+
+    name = models.CharField(max_length=64, verbose_name='Название')
+    link = models.TextField(verbose_name='Ссылка')
+
+    class Meta:
+        verbose_name = 'Ссылка с главной'
+        verbose_name_plural = 'Ссылки с главной'
+
+    def __str__(self):
+        return self.name
+
+
 @receiver(models.signals.pre_save, sender=QuestionAnswer)
 def treat_question(sender, instance, raw, using, update_fields, *args, **kwargs):
     if instance.answer or instance.approved:

@@ -19,13 +19,17 @@
         <img src="{% static 'img/menu-arrow.svg' %}" alt=">" class="index-slider-right-arrow-img">
     </div>
 </div>
+<div class="index-links-wrapper" {% if links_display %}style="display: flex; flex-direction: column;"{% else %}style="display: none;"{% endif %}>
+    <div class="separator"></div>
+    <div class="index-links-label index-link">{{ links_label }}</div>
+    <div class="index-links-block">
+        {% for link in links %}
+            <a href="{{ link.link }}" class="index-link">{{ link.name }}</a>
+        {% endfor %}
+    </div>
+</div>
 <div class="separator"></div>
 <div class="index-text">{{ text|safe }}</div>
-<!-- <div class="index-links-block">
-    <a href="{% url 'consultation' %}" class="index-link">Интерактивная консультация</a>
-    <a href="{% url 'geography' %}" class="index-link">География ранней помощи</a>
-    <a href="{% url 'reviews' %}" class="index-link">Отзывы</a>
-</div> -->
 <div class="separator"></div>
 <a href="{% url 'news' %}" class="index-link">Новости</a>
 <div class="index-news-block">

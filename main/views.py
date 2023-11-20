@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.generic import ListView
 from custom.models import Page, Section
-from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner
+from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner, IndexLink
 from django.conf import settings
 from django.core.mail import send_mail
 from MedProject.settings import BASE_URL
@@ -23,6 +23,7 @@ def index(request):
     context = {
         'title': 'Главная',
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -32,7 +33,10 @@ def index(request):
         'banners': banners,
         'news': News.objects.all().order_by('-id')[0:5:1],
         # 'questions': questions_list
-        'text': SiteContent.objects.get(name='index_text').content
+        'text': SiteContent.objects.get(name='index_text').content,
+        'links': IndexLink.objects.all(),
+        'links_display': SiteContent.objects.get(name='index_links_display').content,
+        'links_label': SiteContent.objects.get(name='index_links_label').content,
     }
 
     return render(request, 'main/index.html', context)
@@ -47,6 +51,7 @@ class ReviewsList(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Отзывы'
         context['menu_sections'] = Section.objects.all()
+        context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -92,6 +97,7 @@ class FaqView(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Вопрос - ответ'
         context['menu_sections'] = Section.objects.all()
+        context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -133,6 +139,7 @@ def consultation(request):
     context = {
         'title': 'Интерактивная консультация',
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -192,6 +199,7 @@ def geography(request):
     context = {
         'title': 'География ранней помощи',
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -212,6 +220,7 @@ class NewsList(ListView):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Новости'
         context['menu_sections'] = Section.objects.all()
+        context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -237,6 +246,7 @@ def single_news(request, pk):
     context = {
         'title': current_news.title,
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,

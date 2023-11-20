@@ -20,6 +20,8 @@ import hashlib
 import calendar
 import time
 from uuid import uuid4
+import base64
+import io
 
 
 def login(request):
@@ -45,6 +47,7 @@ def login(request):
         'login_form': login_form,
         'next': next_value,
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -70,7 +73,7 @@ def register(request):
             UserApprovalApplication.objects.create(user=user)
             if not BASE_URL == 'http://127.0.0.1:8000':
                 send_verify_email(user)
-            compress_img(user, 'photo', 'profile_photos')
+            # compress_img(user, 'photo', 'profile_photos')
             user = auth.authenticate(username=request.POST.get('email'), password=request.POST.get('password1'))
             if user:
                 auth.login(request, user)
@@ -85,6 +88,7 @@ def register(request):
         'second_block': register_list[7:14],
         'third_block': register_list[-2:],
         'menu_sections': Section.objects.all(),
+        'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
@@ -192,20 +196,20 @@ def edit_profile(request):
                 time_stamp = calendar.timegm(current_gmt)
                 file_name = f'{time_stamp}-{uuid4().hex}.jpg'
                 new_file_path = os.path.join(BASE_DIR, 'media', 'profile_photos', file_name)
-                width = img.size[0]
-                height = img.size[1]
-                ratio = width / height
-                if ratio > 1 and width > 1024:
-                    sizes = [1024, int(1024 / ratio)]
-                    img = img.resize(sizes)
-                elif height > 1024:
-                    sizes = [int(1024 * ratio), 1024]
-                    img = img.resize(sizes)
+                # width = img.size[0]
+                # height = img.size[1]
+                # ratio = width / height
+                # if ratio > 1 and width > 1024:
+                #     sizes = [1024, int(1024 / ratio)]
+                #     img = img.resize(sizes)
+                # elif height > 1024:
+                #     sizes = [int(1024 * ratio), 1024]
+                #     img = img.resize(sizes)
                 try:
-                    img.save(new_file_path, quality=90, optimize=True)
+                    img.save(new_file_path, optimize=True)
                 except OSError:
                     img = img.convert("RGB")
-                    img.save(new_file_path, quality=90, optimize=True)
+                    img.save(new_file_path, optimize=True)
                 new_value = 'profile_photos/' + file_name
                 previous = UserEditApplication.objects.filter(field=field, user__pk=request.user.pk)
                 if previous.exists() and not previous.last().response:
