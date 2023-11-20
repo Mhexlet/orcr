@@ -20,6 +20,12 @@ def index(request):
                'link': i.link if i.link is not None else ''} for i in MainSliderImage.objects.all().order_by('-pk')]
     banners = [{'image': i.image.url, 'link': i.link, 'name': i.name} for i in Banner.objects.all().order_by('-pk')]
 
+    links_display = True
+    try:
+        links_display = int(SiteContent.objects.get(name='index_links_display').content)
+    except ValueError:
+        pass
+
     context = {
         'title': 'Главная',
         'menu_sections': Section.objects.all(),
@@ -35,7 +41,7 @@ def index(request):
         # 'questions': questions_list
         'text': SiteContent.objects.get(name='index_text').content,
         'links': IndexLink.objects.all(),
-        'links_display': SiteContent.objects.get(name='index_links_display').content,
+        'links_display': links_display,
         'links_label': SiteContent.objects.get(name='index_links_label').content,
     }
 
