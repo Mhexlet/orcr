@@ -14,6 +14,40 @@ window.addEventListener('load', () => {
     $('#id_birthdate').attr('type', 'date');
     $('#id_birthdate').attr('max', new Date().toISOString().split("T")[0]);
 
+    let croppie = $('.edit-profile-photo').croppie({
+        enableExif: true,
+        viewport: {
+            width: 250,
+            height: 250
+        }
+    });
+
+    $('#id_photo').on('change', (e) => {
+        $('.edit-profile-photo-block').css('display', 'flex');
+        $('.faq-background').css('display', 'flex');
+        let reader = new FileReader();
+
+        reader.onload = function(e) {
+            croppie.croppie('bind', {url: e.target.result});
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+    })
+
+    $('.edit-profile-photo-save').on('click', () => {
+        croppie.croppie('result', {
+            type: 'blob',
+            format: 'jpeg',
+        }).then(function (blob) {
+            const file = new File([blob], "Photo.jpg", { type: "image/jpeg" });
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            document.getElementById('id_photo').files = dataTransfer.files;
+        });
+        $('.edit-profile-photo-block').css('display', '');
+        $('.faq-background').css('display', '');
+    })
+
     $('.register-fake-select').on('click', (e) => {
         if($('.register-options-block').css('display') == 'flex') {
             $('.register-options-block').css('display', '');
@@ -44,14 +78,13 @@ window.addEventListener('load', () => {
     // })
 
     $('.med-input').on('blur', (e) => {
-        if(!['id_phone_number', 'id_email', 'register-fake-select', 'id_birthdate'].includes(e.target.id)) {
+        if(!['id_email', 'register-fake-select', 'id_birthdate'].includes(e.target.id)) {
             if(!e.target.value) {
                 e.target.classList.add('wrong-input');
             } else {
                 e.target.classList.remove('wrong-input');
             }
         }
-        console.log(e.target.value)
     })
 
     $('#id_email').on('blur', (e) => {
@@ -62,11 +95,16 @@ window.addEventListener('load', () => {
         }
     });
 
-    $('#id_phone_number').on('blur', (e) => {
-        if(!/^[0-9\+]+$/.test(e.target.value)) {
-            e.target.classList.add('wrong-input');
-        } else {
-            e.target.classList.remove('wrong-input');
+    $('#id_phone_number').on('keydown', (e) => {
+        // if(!/^[0-9\+]+$/.test(e.target.value)) {
+        //     e.target.classList.add('wrong-input');
+        // } else {
+        //     e.target.classList.remove('wrong-input');
+        // }
+        let symbol = String.fromCharCode(e.keyCode);
+        let regEx = /[0-9]/
+        if (!regEx.test(symbol) && ![8, 9, 13, 27].includes(e.keyCode) && !(e.keyCode == 187 && e.shiftKey)) {
+            e.preventDefault();
         }
     })
 

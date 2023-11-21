@@ -48,7 +48,8 @@
                                 {% elif user.is_authenticated %}
                                     <a href="{% url 'specialists:account' %}" class="menu-section-page">Личный кабинет<div class="menu-section-page-circle"></div></a>
                                 {% else %}
-                                    <a href="{% url 'authentication:login' %}" class="menu-section-page{% if 'authentication' in request.resolver_match.namespace %} active{% endif %}">Войти<div class="menu-section-page-circle"></div></a>
+                                    <a href="{% url 'authentication:login' %}" class="menu-section-page{% if 'login' in request.resolver_match.namespace %} active{% endif %}">Войти<div class="menu-section-page-circle"></div></a>
+                                    <a href="{% url 'authentication:register' %}" class="menu-section-page{% if 'register' in request.resolver_match.namespace %} active{% endif %}">Зарегистрироваться<div class="menu-section-page-circle"></div></a>
                                 {% endif %}
                             {% endif%}
                         </div>

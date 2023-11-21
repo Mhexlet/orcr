@@ -98,8 +98,28 @@ class Place(models.Model):
     text = models.TextField(null=True, blank=True, verbose_name='Описание')
 
     class Meta:
-        verbose_name = 'Место из географии ранней помощи'
-        verbose_name_plural = 'Места из географии ранней помощи'
+        verbose_name = 'Город из географии ранней помощи'
+        verbose_name_plural = 'Город из географии ранней помощи'
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def get_institutions(self):
+        return self.institutions.select_related().order_by('name')
+
+
+class Institution(models.Model):
+
+    name = models.CharField(max_length=64, verbose_name='Название')
+    place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='institutions', verbose_name='Город')
+    phone_number = models.CharField(max_length=16, verbose_name='Номер телефона')
+    address = models.TextField(verbose_name='Адрес')
+    link = models.TextField(verbose_name='Ссылка')
+
+    class Meta:
+        verbose_name = 'Учреждение из географии ранней помощи'
+        verbose_name_plural = 'Учреждение из географии ранней помощи'
 
     def __str__(self):
         return self.name

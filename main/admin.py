@@ -6,7 +6,8 @@ from django.contrib import admin
 
 from MedProject.settings import BASE_DIR
 from authentication.models import compress_img
-from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner, IndexLink
+from .models import QuestionAnswer, Review, MainSliderImage, Application, Place, News, SiteContent, Banner, IndexLink, \
+    Institution
 from django_summernote.admin import SummernoteModelAdmin
 
 
@@ -92,6 +93,11 @@ class PlaceAdmin(admin.ModelAdmin):
         return super().save_model(request, obj, form, change)
 
 
+@admin.register(Institution)
+class InstitutionAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Institution._meta.get_fields()]
+
+
 @admin.register(News)
 class NewsAdmin(SummernoteModelAdmin):
     list_display = ['id', 'title', 'image', 'date']
@@ -114,11 +120,11 @@ class NewsAdmin(SummernoteModelAdmin):
 
 
 @admin.register(SiteContent)
-class SiteContentImageAdmin(admin.ModelAdmin):
+class SiteContentAdmin(admin.ModelAdmin):
     list_display = [field.name for field in SiteContent._meta.get_fields()]
     readonly_fields = ['name']
 
 
 @admin.register(IndexLink)
-class IndexLinkImageAdmin(admin.ModelAdmin):
+class IndexLinkAdmin(admin.ModelAdmin):
     list_display = [field.name for field in IndexLink._meta.get_fields()]

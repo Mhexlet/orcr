@@ -3,11 +3,14 @@
 {% block js %}
 <link href="{% static 'css/jquery-ui.min.css' %}" rel="stylesheet">
 <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/croppie.css' %}" />
+<script src="{% static 'js/croppie.js' %}"></script>
 <script src="{% static 'js/register.js' %}"></script>
 {% endblock %}
 {% block content %}
 <h1 class="page-title">Регистрация</h1>
 <div class="separator"></div>
+<p class="consultation-intro">{{ text|safe }}</p>
 <form action="{% url 'authentication:register' %}" class="consultation-form register-form" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="consultation-form-subblock">
@@ -45,5 +48,13 @@
     {% for field in third_block %}
         {{ field.errors }}
     {% endfor %}
+</div>
+<div class="faq-background">
+    <div class="faq-form-block">
+        <div class="edit-profile-photo-block">
+            <div class="edit-profile-photo"></div>
+        </div>
+        <div class="med-button edit-profile-photo-save">Сохранить</div>
+    </div>
 </div>
 {% endblock %}

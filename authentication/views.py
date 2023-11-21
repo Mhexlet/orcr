@@ -4,7 +4,6 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
-from .models import compress_img
 from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
 from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
 import os
@@ -20,8 +19,6 @@ import hashlib
 import calendar
 import time
 from uuid import uuid4
-import base64
-import io
 
 
 def login(request):
@@ -87,6 +84,7 @@ def register(request):
         'first_block': register_list[0:7],
         'second_block': register_list[7:14],
         'third_block': register_list[-2:],
+        'text': SiteContent.objects.get(name='register_text').content,
         'menu_sections': Section.objects.all(),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),

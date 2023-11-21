@@ -1144,6 +1144,30 @@ input:focus {
     color: $first-color;
 }
 
+.geo-info-block {
+    display: none;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+.geo-info-block > div {
+    margin-top: 20px;
+}
+
+.geo-info {
+    line-height: 1.4;
+}
+
+.geo-info-link {
+    margin-top: 10px;
+    pointer-events: all;
+    display: block;
+}
+
+.geo-name-block:nth-child(2) > .geo-info-block {
+    display: block;
+}
+
 .geo-separator {
     width: 100%;
     border-bottom: 1px dashed $separator-color;
@@ -1758,7 +1782,7 @@ input:focus {
     width: 200px;
 }
 
-.edit-profile-input, .edit-profile-textarea, .edit-profile-date-input, #edit-fake-select {
+.edit-profile-input, .edit-profile-textarea, .edit-profile-date-input, #edit-fake-select, .edit-profile-photo-input {
     display: none;
     margin-bottom: 10px;
 }
@@ -1809,7 +1833,7 @@ input:focus {
     height: 300px;
     align-items: center;
     justify-content: center;
-    margin: 10px 0;
+    margin: 10px 0 50px;
 }
 
 // CHANGE PASSWORD
