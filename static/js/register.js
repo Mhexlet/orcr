@@ -96,15 +96,19 @@ window.addEventListener('load', () => {
     });
 
     $('#id_phone_number').on('keydown', (e) => {
-        // if(!/^[0-9\+]+$/.test(e.target.value)) {
-        //     e.target.classList.add('wrong-input');
-        // } else {
-        //     e.target.classList.remove('wrong-input');
-        // }
         let symbol = String.fromCharCode(e.keyCode);
         let regEx = /[0-9]/
         if (!regEx.test(symbol) && ![8, 9, 13, 27].includes(e.keyCode) && !(e.keyCode == 187 && e.shiftKey)) {
             e.preventDefault();
+        }
+    })
+
+    $('#id_phone_number').on('input', (e) => {
+        if(!/^[0-9\+]+$/.test(e.target.value)) {
+            e.target.value = '';
+            e.target.classList.add('wrong-input');
+        } else {
+            e.target.classList.remove('wrong-input');
         }
     })
 

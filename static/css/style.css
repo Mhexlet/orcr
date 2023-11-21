@@ -1338,7 +1338,7 @@ input:focus {
 
 .specialists-img-block {
   width: 100%;
-  height: calc(17vw - 60px);
+  height: calc(30vw - 120px - 1rem);
   margin-bottom: 20px;
   display: flex;
   align-items: flex-start;
@@ -1397,7 +1397,7 @@ input:focus {
 }
 
 .profile-top-left .specialists-img-block {
-  height: calc(27vw - 97px);
+  height: calc(48vw - 173px - 1.5rem);
 }
 
 .profile-title {
@@ -1486,7 +1486,7 @@ input:focus {
 
 .article-bottom .specialists-img-block {
   width: 160px;
-  height: 120px;
+  height: 160px;
 }
 
 .article-files-block {
@@ -1724,7 +1724,7 @@ input:focus {
 
 .edit-profile-subblock .specialists-img-block, .edit-profile-application .specialists-img-block {
   width: 200px;
-  height: 150px;
+  height: 200px;
 }
 
 .edit-profile-subblock .specialists-info {
@@ -1868,7 +1868,7 @@ input:focus {
     grid-template-columns: 48% 48%;
   }
   .specialists-img-block, .page-album-img-block {
-    height: calc(27vw - 96px);
+    height: calc(48vw - 173px - 1.5rem);
   }
   .account-application-content {
     width: calc(100% - 330px);
@@ -1987,10 +1987,10 @@ input:focus {
     height: auto;
   }
   .profile-top-left .specialists-img-block {
-    height: calc(27vw - 16px);
+    height: calc(48vw - 29px - 1.5rem);
   }
   .specialists-img-block, .page-album-img-block {
-    height: calc(27vw - 17px);
+    height: calc(48vw - 29px - 1.5rem);
   }
 }
 @media (max-width: 800px) {
@@ -2022,15 +2022,18 @@ input:focus {
   .specialists-content, .page-album {
     grid-template-columns: 100%;
   }
+  .article-bottom > .specialists-block {
+    width: auto;
+  }
   .specialists-block {
     max-width: 500px;
     width: 100%;
     margin: 0 auto;
   }
   .specialists-img-block, .page-album-img-block {
-    height: calc(56vw - 17px);
-    max-height: 280px;
-    max-width: 500px;
+    height: calc(100vw - 80px);
+    max-height: 300px;
+    max-width: 300px;
     margin: 0 auto 20px;
   }
   .article-bottom {
@@ -2103,7 +2106,7 @@ input:focus {
     width: 100%;
   }
   .profile-top-left > .specialists-img-block {
-    height: calc(56vw - 17px);
+    height: calc(100vw - 80px);
   }
   .account-dashboard {
     flex-direction: column;

@@ -1371,7 +1371,7 @@ input:focus {
 
 .specialists-img-block {
     width: 100%;
-    height: calc(17vw - 60px);
+    height: calc(30vw - 120px - 1rem);
     margin-bottom: 20px;
     display: flex;
     align-items: flex-start;
@@ -1431,7 +1431,7 @@ input:focus {
 }
 
 .profile-top-left .specialists-img-block {
-    height: calc(27vw - 97px);
+    height: calc(48vw - 173px - 1.5rem);
 }
 
 .profile-title {
@@ -1520,7 +1520,7 @@ input:focus {
 
 .article-bottom .specialists-img-block {
     width: 160px;
-    height: 120px;
+    height: 160px;
 }
 
 .article-files-block {
@@ -1764,7 +1764,7 @@ input:focus {
 
 .edit-profile-subblock .specialists-img-block, .edit-profile-application .specialists-img-block {
     width: 200px;
-    height: 150px;
+    height: 200px;
 }
 
 .edit-profile-subblock .specialists-info {
@@ -1938,7 +1938,7 @@ input:focus {
     }
 
     .specialists-img-block, .page-album-img-block {
-        height: calc(27vw - 96px);
+        height: calc(48vw - 173px - 1.5rem);
     }
 
     // ACCOUNT
@@ -2107,13 +2107,13 @@ input:focus {
     // PROFILE
 
     .profile-top-left .specialists-img-block {
-        height: calc(27vw - 16px);
+        height: calc(48vw - 29px - 1.5rem);
     }
 
     // SPECIALISTS
 
     .specialists-img-block, .page-album-img-block {
-        height: calc(27vw - 17px);
+        height: calc(48vw - 29px - 1.5rem);
     }
 }
 
@@ -2164,6 +2164,10 @@ input:focus {
         grid-template-columns: 100%;
     }
 
+    .article-bottom > .specialists-block {
+        width: auto;
+    }
+
     .specialists-block {
         max-width: 500px;
         width: 100%;
@@ -2171,9 +2175,9 @@ input:focus {
     }
 
     .specialists-img-block, .page-album-img-block {
-        height: calc(56vw - 17px);
-        max-height: 280px;
-        max-width: 500px;
+        height: calc(100vw - 80px);
+        max-height: 300px;
+        max-width: 300px;
         margin: 0 auto 20px;
     }
 
@@ -2281,7 +2285,7 @@ input:focus {
     }
 
     .profile-top-left > .specialists-img-block {
-        height: calc(56vw - 17px);
+        height: calc(100vw - 80px);
     }
 
     // ACCOUNT

@@ -49,7 +49,7 @@ window.addEventListener('load', () => {
         reader.readAsDataURL(e.target.files[0]);
     })
 
-    function editAjax(formData, field) {
+    function editAjax(formData, field, newValue) {
         $.ajax({
             method: "post",
             url: "/authentication/edit_profile/",
@@ -145,10 +145,10 @@ window.addEventListener('load', () => {
                 }).then(function (blob) {
                     const file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
                     formData.append('photo', file)
-                    editAjax(formData, field);
+                    editAjax(formData, field, newValue);
                 });
             } else {
-                editAjax(formData, field);
+                editAjax(formData, field, newValue);
             }
         }
     })
