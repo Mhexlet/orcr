@@ -20,7 +20,7 @@ input:focus {
 .med-button {
   border-radius: 0.95rem;
   padding: 0.775rem 1.5rem;
-  background-color: #00aeef;
+  background-color: #080655;
   color: #FFFFFF;
   cursor: pointer;
   width: 100%;
@@ -38,7 +38,7 @@ input:focus {
 }
 
 .med-button:hover {
-  background-color: #0498ce;
+  background-color: #120075;
 }
 
 .med-input {
@@ -142,6 +142,8 @@ input:focus {
 
 .gsc-search-button-v2 {
   height: 30px;
+  border-color: #080655 !important;
+  background-color: #080655 !important;
 }
 
 .base-menu {
@@ -213,7 +215,7 @@ input:focus {
 }
 
 .menu-section-page.active, .menu-page.active {
-  background-color: #00aeef;
+  background-color: #080655;
   color: #FFFFFF;
   border-radius: 0.95rem;
 }
@@ -302,12 +304,12 @@ input:focus {
 }
 
 .header-menu-show:hover .header-menu-show-subblock:first-child {
-  background-color: #0498ce;
+  background-color: #120075;
   opacity: 0.9;
 }
 
 .header-menu-show:hover .header-menu-show-subblock:nth-child(2) {
-  background-color: #00aeef;
+  background-color: #080655;
   opacity: 0.6;
 }
 
@@ -328,14 +330,15 @@ input:focus {
 }
 
 .header-title-block {
-  width: 700px;
-  color: #00aeef;
+  width: calc(100% - 220px);
+  color: #080655;
   font-weight: 500;
   display: block;
+  text-align: center;
 }
 
 .header-title-block > h1 {
-  font-size: 1.5rem;
+  font-size: 2.1rem;
   margin-bottom: 5px;
 }
 
@@ -362,7 +365,7 @@ input:focus {
   justify-content: center;
   width: 40px;
   height: 40px;
-  background-color: #00aeef;
+  background-color: #080655;
   border-radius: 0.95rem;
 }
 
@@ -379,7 +382,7 @@ input:focus {
   font-size: 1rem;
   font-weight: 500;
   height: 40px;
-  background-color: #00aeef;
+  background-color: #080655;
   border-radius: 0.95rem;
   width: 200px;
   cursor: pointer;
@@ -523,7 +526,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid #00aeef;
+  border: 3px solid #080655;
   margin-bottom: 10px;
   border-radius: 1rem;
   border-top-left-radius: 2rem;
@@ -603,7 +606,7 @@ input:focus {
 }
 
 .index-slider-block {
-  width: 80%;
+  width: 100%;
   position: relative;
   display: flex;
   align-items: center;
@@ -643,7 +646,7 @@ input:focus {
 
 .index-slides-block {
   width: 100%;
-  height: calc(40vw - 161px);
+  height: calc(56vw - 202px);
   max-width: 1000px;
   max-height: 560px;
   overflow: hidden;
@@ -709,7 +712,7 @@ input:focus {
 }
 
 .index-link:hover {
-  color: #00aeef;
+  color: #080655;
 }
 
 .index-links-label:hover {
@@ -1222,11 +1225,11 @@ input:focus {
 }
 
 .wrong-input {
-  border: 1px solid #00aeef;
+  border: 1px solid #080655;
 }
 
 .consultation-checkbox-block > span.wrong-input {
-  color: #00aeef;
+  color: #080655;
   border: none;
 }
 
@@ -1303,7 +1306,7 @@ input:focus {
 
 .register-errors-block {
   margin-top: 10px;
-  color: #00aeef;
+  color: #080655;
 }
 
 .register-errors-block ul {
@@ -1362,7 +1365,7 @@ input:focus {
   width: 30px;
   height: 30px;
   border-radius: 100%;
-  background-color: #00aeef;
+  background-color: #080655;
   z-index: 30;
   color: #FFFFFF;
   display: flex;
@@ -1578,7 +1581,7 @@ input:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid #00aeef;
+  border: 2px solid #080655;
   margin-bottom: 10px;
   border-radius: 1rem;
   border-top-left-radius: 2rem;
@@ -1669,7 +1672,7 @@ input:focus {
   left: 550px;
   bottom: 13px;
   font-size: 40px;
-  color: #00aeef;
+  color: #080655;
   cursor: pointer;
 }
 
@@ -2141,7 +2144,7 @@ input:focus {
     padding: 0 15px;
   }
   .header-title-block > h1 {
-    font-size: 1.2rem;
+    font-size: 1.7rem;
   }
   .base-content {
     padding: 1rem;
