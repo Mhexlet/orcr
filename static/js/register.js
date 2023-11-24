@@ -5,11 +5,11 @@ window.addEventListener('load', () => {
         options += `<span class="register-option" id="option-${option.value}">${option.innerHTML}</span>`
     })
     $('.register-options-block').append(options);
-    if(!$('#id_field_of_activity > option:selected').val()) {
-        $('#id_field_of_activity > option:selected').removeAttr('selected');
-        $('#id_field_of_activity > option:nth-child(2)').attr('selected', true);
-    }
-    $('.register-selected').html($('#id_field_of_activity > option:nth-child(2)').html());
+    // if(!$('#id_field_of_activity > option:selected').val()) {
+    //     $('#id_field_of_activity > option:selected').removeAttr('selected');
+    //     $('#id_field_of_activity > option:nth-child(2)').attr('selected', true);
+    // }
+    // $('.register-selected').html($('#id_field_of_activity > option:nth-child(2)').html());
 
     $('#id_birthdate').attr('type', 'date');
     $('#id_birthdate').attr('max', new Date().toISOString().split("T")[0]);
@@ -25,6 +25,7 @@ window.addEventListener('load', () => {
     $('#id_photo').on('change', (e) => {
         $('.edit-profile-photo-block').css('display', 'flex');
         $('.faq-background').css('display', 'flex');
+        $('.register-photo-label').html(`Фото выбрано: ${e.target.files[0].name}`);
         let reader = new FileReader();
 
         reader.onload = function(e) {
@@ -60,6 +61,7 @@ window.addEventListener('load', () => {
         let id = e.target.id.replace('option-', '');
         $('#id_field_of_activity > option').removeAttr('selected').filter(`[value=${id}]`).attr('selected', true);
         $('.register-selected').html(e.target.innerHTML);
+        $('.register-fake-select').removeClass('wrong-input');
     })
 
     // $('.datepicker').datepicker({
@@ -154,6 +156,11 @@ window.addEventListener('load', () => {
         if(!$('.consultation-checkbox').is(":checked")) {
             validated = false;
             $('.consultation-checkbox-block > span').addClass('wrong-input');
+        }
+        console.log($('.register-field-of-activity > option').filter('[selected=selected]').val())
+        if(!$('.register-field-of-activity > option').filter('[selected=selected]').val()) {
+            validated = false;
+            $('.register-fake-select').addClass('wrong-input');
         }
 
         if(!validated) {

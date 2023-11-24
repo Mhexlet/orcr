@@ -639,7 +639,7 @@ input:focus {
 .index-slider-left-arrow, .index-slider-right-arrow {
     position: absolute;
     top: calc(50% - 30px);
-    left: -100px;
+    left: -20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -653,7 +653,7 @@ input:focus {
 
 .index-slider-right-arrow {
     left: auto;
-    right: -100px;
+    right: -20px;
 }
 
 .index-slider-left-arrow-img, .index-slider-right-arrow-img {
@@ -668,7 +668,7 @@ input:focus {
 
 .index-slides-block {
     width: 100%;
-    height: calc(56vw - 202px);
+    height: calc(75vw - 202px);
     max-width: 1000px;
     max-height: 560px;
     overflow: hidden;
@@ -693,15 +693,15 @@ input:focus {
     max-height: 100%;
 }
 
-.index-previous-slide, .index-previous-banner {
+.index-previous-slide, .index-previous-banner, .index-previous-link {
     left: -100%;
 }
 
-.index-current-slide, .index-current-banner {
+.index-current-slide, .index-current-banner, .index-current-link {
     left: 0;
 }
 
-.index-next-slide, .index-next-banner {
+.index-next-slide, .index-next-banner, .index-next-link {
     left: 100%;
 }
 
@@ -734,6 +734,10 @@ input:focus {
 
 .index-link:hover {
     color: $highlight-color;
+}
+
+.index-links-label {
+    margin-bottom: 20px;
 }
 
 .index-links-label:hover {
@@ -812,7 +816,7 @@ input:focus {
     background-color: white;
 }
 
-.index-banner-left-arrow, .index-banner-right-arrow {
+.index-banner-left-arrow, .index-banner-right-arrow, .index-link-left-arrow, .index-link-right-arrow {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -832,7 +836,7 @@ input:focus {
     transform: rotate(-180deg);
 }
 
-.index-banners {
+.index-banners, .index-links {
     position: relative;
     width: calc(100% - 140px);
     height: calc(11vw - 62px);
@@ -872,7 +876,7 @@ input:focus {
     max-height: 100%;
 }
 
-.index-banner > span {
+.index-banner > span, .index-link > span {
     width: calc(66% - 10px);
     text-align: center;
 }
@@ -1895,7 +1899,7 @@ input:focus {
 
     // INDEX
 
-    .index-banners {
+    .index-banners, .index-links {
         height: calc(17vw - 87px);
     }
     
@@ -2036,7 +2040,7 @@ input:focus {
     }
 
     .index-slides-block {
-        height: calc(50vw - 60px);
+        height: calc(65vw - 60px);
     }
 
     .index-news-img-block {
@@ -2064,7 +2068,7 @@ input:focus {
         font-size: 0.85rem;
     }
 
-    .index-banners {
+    .index-banners, .index-links {
         height: calc(17vw - 27px);
     }
 
@@ -2269,7 +2273,7 @@ input:focus {
 
     // INDEX 
 
-    .index-banners {
+    .index-banners, .index-links {
         height: calc(33vw - 53px);
     }
     
@@ -2357,12 +2361,12 @@ input:focus {
     .index-slider-left-arrow, .index-slider-right-arrow {
         width: 40px;
         height: 40px;
-        left: -80px;
+        left: -10px;
     }
 
     .index-slider-right-arrow {
         left: auto;
-        right: -80px;
+        right: -10px;
     }
 
     .index-slider-left-arrow-img, .index-slider-right-arrow-img {

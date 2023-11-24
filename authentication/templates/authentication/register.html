@@ -21,11 +21,14 @@
     <div class="consultation-form-subblock">
         <div class="med-input register-fake-select" id="register-fake-select">
             <img src="{% static 'img/menu-arrow.svg' %}" alt="+" class="register-fake-select-arrow">
-            <div class="register-selected"></div>
+            <div class="register-selected">Выберите сферу деятельности</div>
             <div class="register-options-block"></div>
         </div>
         {% for field in second_block %}
             {{ field }}
+            {% if field.name == 'photo' %}
+            <label for="id_photo" class="med-input register-photo-label">Фото профиля</label>
+            {% endif %}
         {% endfor %}
     </div>
     <div class="consultation-form-subblock">

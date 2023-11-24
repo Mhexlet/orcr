@@ -90,8 +90,8 @@ class User(AbstractUser):
     verification_key_expires = models.DateTimeField(blank=True, null=True, verbose_name='Ключ истекает')
 
     class Meta:
-        verbose_name = 'Пользователь'
-        verbose_name_plural = 'Пользователи'
+        verbose_name = 'Специалист ранней помощи'
+        verbose_name_plural = 'Специалисты ранней помощи'
 
     @property
     def get_articles_count(self):

@@ -16,6 +16,12 @@ window.addEventListener('load', () => {
         bannersPerBlock = 2;
     }
 
+    const linksCount = links.length - 1;
+    let currentLink = 0;
+    let currentLinkTimer;
+    let linksLock = false;
+
+    console.log(links)
 
     function getHtmlString(position) {
         let htmlString = `<div class="index-slide-block index-${position}-slide"><img src="${slides[currentImage].image}" alt="image"></div>`;
@@ -39,11 +45,27 @@ window.addEventListener('load', () => {
         return htmlString;
     }
 
+    function getLinkBlock(position) {
+        let htmlString = `<div class="index-banners-subblock index-${position}-link">`;
+        for(let i = 0; i < bannersPerBlock; i++) {
+            if(linksCount >= currentLink + i) {
+                htmlString += `<a href="${links[currentLink + i].link}" class="index-banner" target="_blank">
+                                        <div class="index-banner-img-block"><img src="${links[currentLink + i].image}" alt="image"></div>
+                                        <span class="index-answer">${links[currentLink + i].name}</span>
+                                    </a>`;
+            }
+        }
+        htmlString += '</div>';
+        return htmlString;
+    }
+
     $('.index-slides-block').append(getHtmlString('current'));
     $('.index-banners').append(getBannerBlock('current'));
+    $('.index-links').append(getLinkBlock('current'));
     
     currentSliderTimer = setTimeout(timeoutChangeCurrentSlide, 10000);
     currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 10000);
+    currentLinkTimer = setTimeout(timeoutChangeCurrentLink, 10000);
 
     let position = window.innerWidth <= 540 ? '-10px' : '20px';
     $('.index-slider-left-arrow').animate({
@@ -126,6 +148,42 @@ window.addEventListener('load', () => {
         currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 10000);
     };
 
+    function changeCurrentLink(direction=true) {
+        let nextPosition = '100%';
+        let currentPosition = 0;
+        let prevPosition = '-100%';
+        linksLock = true;
+        if(direction) {
+            $('.index-links').prepend(getLinkBlock('next'));
+            $('.index-current-link').animate({
+                'left': prevPosition
+            }, 600);
+            $('.index-next-link').animate({
+                'left': currentPosition
+            }, 600, () => {
+                $('.index-current-link').remove();
+                $('.index-next-link').addClass('index-current-link');
+                $('.index-current-link').removeClass('index-next-link');
+                linksLock = false;
+            });
+        } else {
+            $('.index-links').prepend(getLinkBlock('previous'));
+            $('.index-current-link').animate({
+                'left': nextPosition
+            }, 600);
+            $('.index-previous-link').animate({
+                'left': currentPosition
+            }, 600, () => {
+                $('.index-current-link').remove();
+                $('.index-previous-link').addClass('index-current-link');
+                $('.index-current-link').removeClass('index-previous-link');
+                linksLock = false;
+            });
+        }
+        clearTimeout(currentLinkTimer);
+        currentLinkTimer = setTimeout(timeoutChangeCurrentLink, 10000);
+    };
+
     function timeoutChangeCurrentSlide() {
         if(currentImage == imagesCount) {
             currentImage = 0;
@@ -142,6 +200,15 @@ window.addEventListener('load', () => {
             currentBanner += bannersPerBlock;
         }
         changeCurrentBanner();
+    };
+
+    function timeoutChangeCurrentLink() {
+        if(currentLink + bannersPerBlock >= linksCount) {
+            currentLink = 0;
+        } else {
+            currentLink += bannersPerBlock;
+        }
+        changeCurrentLink();
     };
 
     $(document).on('click', '.index-slider-left-arrow', () => {
@@ -185,6 +252,28 @@ window.addEventListener('load', () => {
                 currentBanner += bannersPerBlock;
             }
             changeCurrentBanner();
+        };
+    });
+
+    $(document).on('click', '.index-link-left-arrow', () => {
+        if(!linksLock) {
+            if(currentLink == 0) {
+                currentLink = linksCount - linksCount % bannersPerBlock;
+            } else {
+                currentLink -= bannersPerBlock;
+            }
+            changeCurrentLink(false);
+        };
+    });
+
+    $(document).on('click', '.index-link-right-arrow', () => {
+        if(!linksLock) {
+            if(currentLink + bannersPerBlock >= linksCount) {
+                currentLink = 0;
+            } else {
+                currentLink += bannersPerBlock;
+            }
+            changeCurrentLink();
         };
     });
 

@@ -41,6 +41,7 @@ class UserRegisterForm(UserCreationForm):
             field.widget.attrs['placeholder'] = field.label
             field.help_text = ''
         self.fields['field_of_activity'].widget.attrs['class'] = 'register-field-of-activity'
+        self.fields['photo'].widget.attrs['style'] = 'display: none;'
         # self.fields['birthdate'].widget.attrs['class'] = 'med-input datepicker'
 
     def save(self, *args, **kwargs):

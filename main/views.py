@@ -19,6 +19,7 @@ def index(request):
     slides = [{'image': i.image.url,
                'link': i.link if i.link is not None else ''} for i in MainSliderImage.objects.all().order_by('-pk')]
     banners = [{'image': i.image.url, 'link': i.link, 'name': i.name} for i in Banner.objects.all().order_by('-pk')]
+    links = [{'image': i.image.url if bool(i.image) else '', 'link': i.link, 'name': i.name} for i in IndexLink.objects.all().order_by('-pk')]
 
     links_display = True
     try:
@@ -40,7 +41,7 @@ def index(request):
         'news': News.objects.all().order_by('-id')[0:5:1],
         # 'questions': questions_list
         'text': SiteContent.objects.get(name='index_text').content,
-        'links': IndexLink.objects.all(),
+        'links': links,
         'links_display': links_display,
         'links_label': SiteContent.objects.get(name='index_links_label').content,
     }

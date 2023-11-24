@@ -97,6 +97,12 @@ class PlaceAdmin(admin.ModelAdmin):
 class InstitutionAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Institution._meta.get_fields()]
 
+    def save_model(self, request, obj, form, change):
+        if not obj.link.startswith('http'):
+            obj.link = f'http://{obj.link}'
+        obj.save()
+        return super().save_model(request, obj, form, change)
+
 
 @admin.register(News)
 class NewsAdmin(SummernoteModelAdmin):
@@ -128,3 +134,13 @@ class SiteContentAdmin(admin.ModelAdmin):
 @admin.register(IndexLink)
 class IndexLinkAdmin(admin.ModelAdmin):
     list_display = [field.name for field in IndexLink._meta.get_fields()]
+
+    def save_model(self, request, obj, form, change):
+        if not change or (change and 'image' in form.changed_data):
+            if change:
+                try:
+                    os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
+                except FileNotFoundError:
+                    pass
+            compress_img(form.instance, 'image', 'images', change_format=False)
+        return super(IndexLinkAdmin, self).save_model(request, obj, form, change)

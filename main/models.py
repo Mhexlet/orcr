@@ -63,8 +63,8 @@ class Banner(models.Model):
     link = models.TextField(verbose_name='Ссылка')
 
     class Meta:
-        verbose_name = 'Баннер-ссылка'
-        verbose_name_plural = 'Баннеры-ссылки'
+        verbose_name = 'Логотип министерств со ссылкой в подвале'
+        verbose_name_plural = 'Логотипы министерств со ссылкой в подвале'
 
     def __str__(self):
         return f'{self.name}'
@@ -155,12 +155,13 @@ class SiteContent(models.Model):
 
 class IndexLink(models.Model):
 
+    image = models.ImageField(upload_to='tmp/', null=True, blank=True, verbose_name='Изображение')
     name = models.CharField(max_length=64, verbose_name='Название')
     link = models.TextField(verbose_name='Ссылка')
 
     class Meta:
-        verbose_name = 'Ссылка с главной'
-        verbose_name_plural = 'Ссылки с главной'
+        verbose_name = 'Горячая ссылка'
+        verbose_name_plural = 'Горячие ссылки'
 
     def __str__(self):
         return self.name
