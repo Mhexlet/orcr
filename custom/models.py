@@ -15,6 +15,7 @@ from MedProject.settings import BASE_DIR
 class Section(models.Model):
 
     name = models.CharField(max_length=64, verbose_name='Название раздела')
+    order = models.PositiveSmallIntegerField(null=True, verbose_name='Порядок')
 
     class Meta:
         verbose_name = 'Раздел'

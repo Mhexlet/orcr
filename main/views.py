@@ -29,7 +29,7 @@ def index(request):
 
     context = {
         'title': 'Главная',
-        'menu_sections': Section.objects.all(),
+        'menu_sections': Section.objects.all().order_by('order'),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
@@ -57,7 +57,7 @@ class ReviewsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Отзывы'
-        context['menu_sections'] = Section.objects.all()
+        context['menu_sections'] = Section.objects.all().order_by('order')
         context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
@@ -103,7 +103,7 @@ class FaqView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Вопрос - ответ'
-        context['menu_sections'] = Section.objects.all()
+        context['menu_sections'] = Section.objects.all().order_by('order')
         context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
@@ -145,7 +145,7 @@ def consultation(request):
 
     context = {
         'title': 'Интерактивная консультация',
-        'menu_sections': Section.objects.all(),
+        'menu_sections': Section.objects.all().order_by('order'),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
@@ -205,7 +205,7 @@ def geography(request):
 
     context = {
         'title': 'География ранней помощи',
-        'menu_sections': Section.objects.all(),
+        'menu_sections': Section.objects.all().order_by('order'),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
@@ -226,7 +226,7 @@ class NewsList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Новости'
-        context['menu_sections'] = Section.objects.all()
+        context['menu_sections'] = Section.objects.all().order_by('order')
         context['account_section_id'] = int(SiteContent.objects.get(name='account_section_id').content)
         context['menu_pages'] = Page.objects.filter(section=None)
         context['header_content'] = [SiteContent.objects.get(name='email').content,
@@ -252,7 +252,7 @@ def single_news(request, pk):
 
     context = {
         'title': current_news.title,
-        'menu_sections': Section.objects.all(),
+        'menu_sections': Section.objects.all().order_by('order'),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
         'header_content': [SiteContent.objects.get(name='email').content,
