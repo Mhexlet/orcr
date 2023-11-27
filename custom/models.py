@@ -97,7 +97,10 @@ class AlbumBlock(models.Model):
         return self.images.select_related()
 
     def __str__(self):
-        return self.name
+        if self.name is not None:
+            return self.name
+        else:
+            return '-'
 
 
 class FileSetBlock(models.Model):
@@ -114,7 +117,10 @@ class FileSetBlock(models.Model):
         return self.files.select_related()
 
     def __str__(self):
-        return self.name
+        if self.name is not None:
+            return self.name
+        else:
+            return '-'
 
 
 class AlbumImage(models.Model):

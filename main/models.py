@@ -53,7 +53,10 @@ class MainSliderImage(models.Model):
         verbose_name_plural = 'Слайды с главной'
 
     def __str__(self):
-        return self.name
+        if self.name is not None:
+            return self.name
+        else:
+            return '-'
 
 
 class Banner(models.Model):
