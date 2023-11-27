@@ -2440,7 +2440,7 @@ input:focus {
     }
 
     .index-links, .index-banners {
-        height: 220px;
+        height: 420px;
         width: calc(100% - 60px);
     }
 
@@ -2454,8 +2454,8 @@ input:focus {
     }
 
     .index-banner-img-block {
-        width: 100px;
-        height: 100px;
+        width: 300px;
+        height: 300px;
     }
 
     .index-banner > .index-answer {
@@ -2560,6 +2560,15 @@ input:focus {
     .index-answer { 
         min-height: 2rem;
         max-height: 2rem;
+    }
+
+    .index-links, .index-banners {
+        height: calc(100vw - 3rem + 60px);
+    }
+
+    .index-banner-img-block {
+        width: 100%;
+        height: calc(100vw - 3rem - 60px);
     }
 
     // NEWS
