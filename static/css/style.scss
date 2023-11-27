@@ -4,10 +4,12 @@ $h2-color: #B5B0A1;
 $h3-color: #968E7E;
 $menu-heading-color: #716D66;
 $first-color: #FFFFFF;
-$second-color: #F8F6F2;
-$highlight-color: #080655;
-$highlight-color-hover: #120075;
-$separator-color: #E0E0DE;
+// $second-color: #F8F6F2;
+$second-color: #FFFFFF;
+$highlight-color: #4FC9DA;
+$highlight-color-hover: #0498ce;
+// $separator-color: #E0E0DE;
+$separator-color: #4FC9DA;
 $border-color: #DAD3C3;
 
 // @font-face {
@@ -97,6 +99,11 @@ input:focus {
     flex-direction: column;
 }
 
+.gsc-control-cse {
+    background-color: $second-color !important;
+    border-color: $second-color !important;
+}
+
 // BASE
 
 .base-sidebar {
@@ -110,7 +117,7 @@ input:focus {
 }
 
 .base-logo-block {
-    height: 150px;
+    height: 180px;
     width: 100%;
     box-sizing: border-box;
     display: flex;
@@ -163,7 +170,7 @@ input:focus {
     flex-direction: column;
     padding: 0 1rem;
     margin: 15px 0;
-    height: calc(100% - 170px - 3rem);
+    height: calc(100% - 230px - 3rem);
     overflow: auto;
 }
 
@@ -271,6 +278,10 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: linear-gradient(270deg, #090755, #4FCADA);
+    margin: 10px 0;
+    border-radius: 0.95rem;
+    padding: 10px;
 }
 
 .header-left-block {
@@ -343,7 +354,7 @@ input:focus {
 
 .header-title-block {
     width: calc(100% - 220px);
-    color: $highlight-color;
+    color: $first-color;
     font-weight: 500;
     display: block;
     text-align: center;
@@ -366,9 +377,12 @@ input:focus {
     display: flex;
     flex-direction: column;
     line-height: 1.2;
-    font-size: 1.075rem;
+    font-size: 1.2rem;
     font-weight: 500;
-    color: $h2-color;
+}
+
+.header-contacts-block > a {
+    color: $first-color;
 }
 
 .header-img-block {
@@ -644,7 +658,6 @@ input:focus {
     align-items: center;
     justify-content: center;
     border-radius: 100%;
-    border: 2px dashed $separator-color;
     width: 60px;
     height: 60px;
     cursor: pointer;
@@ -821,7 +834,6 @@ input:focus {
     align-items: center;
     justify-content: center;
     border-radius: 100%;
-    border: 2px dashed $separator-color;
     width: 60px;
     height: 60px;
 }
@@ -867,7 +879,7 @@ input:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 33%;
+    width: 45%;
 }
 
 .index-banner-img-block > img {
@@ -877,7 +889,7 @@ input:focus {
 }
 
 .index-banner > span, .index-link > span {
-    width: calc(66% - 10px);
+    width: calc(55% - 10px);
     text-align: center;
 }
 
@@ -1022,6 +1034,9 @@ input:focus {
     justify-content: space-between;
     width: 100%;
     margin-bottom: 1.5rem;
+    position: relative;
+    padding-left: 24px;
+    box-sizing: border-box;
 }
 
 .news-news-img-block {
@@ -1048,7 +1063,10 @@ input:focus {
     border-radius: 0.95rem;
     min-width: 4px;
     width: 4px;
-    margin-right: 20px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
 }
 
 .single-news-title {
@@ -1154,7 +1172,6 @@ input:focus {
 .geo-info-block {
     display: none;
     font-size: 14px;
-    pointer-events: none;
 }
 
 .geo-info-block > div {
@@ -1167,8 +1184,9 @@ input:focus {
 
 .geo-info-link {
     margin-top: 10px;
-    pointer-events: all;
     display: block;
+    color: white;
+    text-decoration: underline;
 }
 
 .geo-name-block:nth-child(2) > .geo-info-block {
@@ -2011,6 +2029,8 @@ input:focus {
         height: auto;
         margin: 10px 0 20px;
         gap: 10px;
+        background: $first-color;
+        padding: 0;
     }
 
     .header-left-block {
@@ -2031,6 +2051,10 @@ input:focus {
     .header-title-block {
         grid-area: title;
         width: 100%;
+        border-radius: 0.95rem;
+        background: linear-gradient(270deg, #090755, #4FCADA);
+        padding: 10px;
+        box-sizing: border-box;
     }
 
     // INDEX

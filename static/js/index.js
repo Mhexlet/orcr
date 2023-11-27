@@ -65,7 +65,7 @@ window.addEventListener('load', () => {
     
     currentSliderTimer = setTimeout(timeoutChangeCurrentSlide, 10000);
     currentBannerTimer = setTimeout(timeoutChangeCurrentBanner, 10000);
-    currentLinkTimer = setTimeout(timeoutChangeCurrentLink, 10000);
+    // currentLinkTimer = setTimeout(timeoutChangeCurrentLink, 10000);
 
     let position = window.innerWidth <= 540 ? '-10px' : '20px';
     $('.index-slider-left-arrow').animate({

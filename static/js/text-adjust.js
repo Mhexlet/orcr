@@ -109,11 +109,13 @@ window.addEventListener('load', () => {
     })
 
     $('.geo-name-block').on('click', (e) => {
-        $('.geo-text').addClass('text-to-adjust');
-        adjustEventsTexts();
-        let id = e.target.id.replace('name', 'text');
-        $(`#${id}`).removeClass('text-to-adjust');
-        $(`#${id}`).html(textData[id]);
+        if(e.target.classList.contains('geo-name-block') && !e.target.classList.contains('selected')) {
+            $('.geo-text').addClass('text-to-adjust');
+            adjustEventsTexts();
+            let id = e.target.id.replace('name', 'text');
+            $(`#${id}`).removeClass('text-to-adjust');
+            $(`#${id}`).html(textData[id]);
+        }
     })
     
     window.addEventListener('resize', () => {

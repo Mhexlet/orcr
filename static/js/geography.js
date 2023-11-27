@@ -4,7 +4,7 @@ window.addEventListener('load', () => {
     $('.geo-name-block:nth-child(2)').addClass('selected');
 
     $('.geo-name-block').on('click', (e) => {
-        if(!e.target.classList.contains('geo-info-link') && !e.target.classList.contains('selected')) {
+        if(e.target.classList.contains('geo-name-block') && !e.target.classList.contains('selected')) {
             $('.geo-place.selected').removeClass('selected');
             $(`#${e.target.id.replace('name', 'src')}`).addClass('selected');
 
