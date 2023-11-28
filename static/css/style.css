@@ -2231,8 +2231,12 @@ input:focus {
   .index-banners-block {
     padding: 0;
   }
-  .index-links, .index-banners {
+  .index-banners {
     height: 420px;
+    width: calc(100% - 60px);
+  }
+  .index-links {
+    height: 300px;
     width: calc(100% - 60px);
   }
   .index-banner-left-arrow, .index-banner-right-arrow, .index-link-left-arrow, .index-link-right-arrow {
@@ -2246,12 +2250,15 @@ input:focus {
     width: 300px;
     height: 300px;
   }
-  .index-banner > .index-answer {
+  .index-banners > .index-answer {
     width: 100%;
     min-height: 120px;
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .index-links .index-answer {
+    display: none;
   }
   .page-title {
     font-size: 1.5rem;
@@ -2319,8 +2326,11 @@ input:focus {
     min-height: 2rem;
     max-height: 2rem;
   }
-  .index-links, .index-banners {
+  .index-banners {
     height: calc(100vw - 3rem + 60px);
+  }
+  .index-links {
+    height: calc(100vw - 3rem - 60px);
   }
   .index-banner-img-block {
     width: 100%;
