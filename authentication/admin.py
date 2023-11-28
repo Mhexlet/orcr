@@ -13,7 +13,7 @@ class FieldOfActivityAdmin(admin.ModelAdmin):
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ['id', 'username', 'last_login', 'first_name', 'patronymic', 'last_name', 'birthdate',
+    list_display = ['id', 'username', 'last_login', 'first_name', 'patronymic', 'last_name', 'order', 'birthdate',
                     'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
                     'phone_number', 'email', 'photo', 'short_description', 'email_verified']
     exclude = ('groups', 'is_superuser', 'is_staff', 'user_permissions', 'password', 'verification_key',

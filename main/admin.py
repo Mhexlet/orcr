@@ -83,7 +83,7 @@ class ApplicationAdmin(admin.ModelAdmin):
 
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'src']
+    list_display = ['id', 'name', 'order', 'src']
     list_display_links = ('id', 'name',)
 
     def save_model(self, request, obj, form, change):

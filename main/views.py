@@ -17,7 +17,7 @@ def index(request):
         questions_list.append((review, colors[i % 5]))
 
     slides = [{'image': i.image.url,
-               'link': i.link if i.link is not None else ''} for i in MainSliderImage.objects.all().order_by('-pk')]
+               'link': i.link if i.link is not None else ''} for i in MainSliderImage.objects.all().order_by('order')]
     banners = [{'image': i.image.url, 'link': i.link, 'name': i.name} for i in Banner.objects.all().order_by('-pk')]
     links = [{'image': i.image.url if bool(i.image) else '', 'link': i.link, 'name': i.name} for i in IndexLink.objects.all().order_by('-pk')]
 
@@ -38,7 +38,7 @@ def index(request):
                                          str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
         'slides': slides,
         'banners': banners,
-        'news': News.objects.all().order_by('-id')[0:5:1],
+        'news': News.objects.all().order_by('order')[0:5:1],
         # 'questions': questions_list
         'text': SiteContent.objects.get(name='index_text').content,
         'links': links,
@@ -212,7 +212,7 @@ def geography(request):
                                      SiteContent.objects.get(name='phone').content,
                                      SiteContent.objects.get(name='phone').content.translate(
                                          str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
-        'places': Place.objects.all().order_by('name')
+        'places': Place.objects.all().order_by('order')
     }
 
     return render(request, 'main/geography.html', context)
@@ -238,7 +238,7 @@ class NewsList(ListView):
 
     def get_queryset(self):
         colors = ['#4F55DA', '#F06445', '#E8C444', '#B8D935', '#4FC9DA']
-        news_set = News.objects.all().order_by('-pk')
+        news_set = News.objects.all().order_by('order')
         news_list = []
 
         for i, n in enumerate(news_set):

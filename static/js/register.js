@@ -148,7 +148,8 @@ window.addEventListener('load', () => {
             $('#id_phone_number').addClass('wrong-input');
         }
         $('.med-input').each((i, input) => {
-            if(!input.value && !input.classList.contains('register-fake-select')) {
+            if(!input.value && !input.classList.contains('register-fake-select') && input.id) {
+                console.log(input.id)
                 validated = false;
                 input.classList.add('wrong-input');
             }

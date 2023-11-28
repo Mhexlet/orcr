@@ -88,6 +88,7 @@ class User(AbstractUser):
     email_verified = models.BooleanField(default=True, verbose_name='Почта подтверждена')
     verification_key = models.CharField(max_length=128, blank=True, null=True, verbose_name='Ключ подтверждения почты')
     verification_key_expires = models.DateTimeField(blank=True, null=True, verbose_name='Ключ истекает')
+    order = models.PositiveIntegerField(blank=True, null=True, verbose_name='Порядок вывода')
 
     class Meta:
         verbose_name = 'Специалист ранней помощи'

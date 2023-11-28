@@ -47,6 +47,7 @@ class MainSliderImage(models.Model):
     name = models.CharField(max_length=128, null=True, verbose_name='Название')
     image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
     link = models.TextField(null=True, blank=True, verbose_name='Ссылка при клике (необязательно)')
+    order = models.PositiveIntegerField(blank=True, null=True, verbose_name='Порядок вывода')
 
     class Meta:
         verbose_name = 'Слайд с главной'
@@ -99,10 +100,11 @@ class Place(models.Model):
     src = models.TextField(verbose_name='Ссылка на карту')
     name = models.CharField(max_length=64, verbose_name='Название места')
     text = models.TextField(null=True, blank=True, verbose_name='Описание')
+    order = models.PositiveIntegerField(blank=True, null=True, verbose_name='Порядок вывода')
 
     class Meta:
         verbose_name = 'Город из географии ранней помощи'
-        verbose_name_plural = 'Город из географии ранней помощи'
+        verbose_name_plural = 'Города из географии ранней помощи'
 
     def __str__(self):
         return self.name
@@ -134,6 +136,7 @@ class News(models.Model):
     content = models.TextField(verbose_name='Содержимое')
     image = models.ImageField(upload_to='tmp/', verbose_name='Изображение')
     date = models.DateTimeField(auto_now=True, verbose_name='Дата публикации')
+    order = models.PositiveIntegerField(blank=True, null=True, verbose_name='Порядок вывода')
 
     class Meta:
         verbose_name = 'Новость'

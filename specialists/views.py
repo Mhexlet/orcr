@@ -85,7 +85,7 @@ class SpecialistsList(ListView):
         return context
 
     def get_queryset(self):
-        return User.objects.filter(is_superuser=False, approved=True)
+        return User.objects.filter(is_superuser=False, approved=True).order_by('order')
 
 
 @login_required
