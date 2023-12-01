@@ -116,11 +116,11 @@ class Place(models.Model):
 
 class Institution(models.Model):
 
-    name = models.CharField(max_length=64, verbose_name='Название')
+    name = models.CharField(max_length=256, verbose_name='Название')
     place = models.ForeignKey(Place, on_delete=models.CASCADE, related_name='institutions', verbose_name='Город')
     phone_number = models.CharField(max_length=16, verbose_name='Номер телефона')
     address = models.TextField(verbose_name='Адрес')
-    link = models.TextField(verbose_name='Ссылка')
+    link = models.TextField(null=True, blank=True, verbose_name='Ссылка')
 
     class Meta:
         verbose_name = 'Учреждение из географии ранней помощи'

@@ -83,6 +83,12 @@ input:focus {
   flex-direction: column;
 }
 
+.page-content, .news-news-content, .article-text,
+.page-content p, .news-news-content p, .article-text p,
+.page-content span, .news-news-content span, .article-text span {
+  font-size: 1.2rem !important;
+}
+
 .gsc-control-cse {
   background-color: #FFFFFF !important;
   border-color: #FFFFFF !important;

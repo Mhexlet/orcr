@@ -98,7 +98,7 @@ class InstitutionAdmin(admin.ModelAdmin):
     list_display = [field.name for field in Institution._meta.get_fields()]
 
     def save_model(self, request, obj, form, change):
-        if not obj.link.startswith('http'):
+        if obj.link and not obj.link.startswith('http'):
             obj.link = f'http://{obj.link}'
         obj.save()
         return super().save_model(request, obj, form, change)

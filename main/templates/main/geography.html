@@ -21,7 +21,9 @@
                             <div class="geo-info">{{ i.name }}</div>
                             <div class="geo-info">{{ i.address }}</div>
                             <div class="geo-info">{{ i.phone_number }}</div>
-                            <a href="{{ i.link }}" class="geo-info-link" target="_blank">Перейти на сайт</a>
+                            {% if i.link %}
+                                <a href="{{ i.link }}" class="geo-info-link" target="_blank">Перейти на сайт</a>
+                            {% endif %}
                         </div>
                     {% endfor %}
                 </div>
