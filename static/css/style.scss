@@ -1295,11 +1295,11 @@ input:focus {
 // AUTH
 
 .register-form {
-    height: 450px;
+    height: 500px;
 }
 
 .register-form .consultation-form-subblock {
-    height: 450px;
+    height: 500px;
 }
 
 .register-form .med-input {
@@ -1319,6 +1319,19 @@ input:focus {
 
 .login-form .consultation-form-subblock {
     height: 250px;
+    position: relative;
+}
+
+.login-password-show, .login-password-hide {
+    position: absolute;
+    z-index: 3;
+    top: 72px;
+    right: 10px;
+    width: 25px;
+}
+
+.login-password-hide {
+    display: none;
 }
 
 .register-field-of-activity {
@@ -1816,8 +1829,13 @@ input:focus {
     width: 200px;
 }
 
-.edit-profile-input, .edit-profile-textarea, .edit-profile-date-input, #edit-fake-select, .edit-profile-photo-input {
+.edit-profile-input, .edit-profile-textarea, .edit-profile-date-input, #edit-fake-select {
     display: none;
+    margin-bottom: 10px;
+}
+
+.edit-profile-photo-input {
+    display: none !important;
     margin-bottom: 10px;
 }
 
@@ -2194,10 +2212,6 @@ input:focus {
 
     .consultation-form-subblock:last-child {
         height: 250px;
-    }
-
-    .register-form .consultation-form-subblock:last-child {
-        height: 400px;
     }
 
     .login-form .consultation-form-subblock {

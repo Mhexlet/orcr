@@ -23,10 +23,6 @@ from uuid import uuid4
 
 def login(request):
     login_form = UserLoginForm(data=request.POST)
-    if 'next' in request.GET.keys():
-        next_value = request.GET['next']
-    else:
-        next_value = ''
     if request.method == 'POST' and login_form.is_valid():
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -35,14 +31,11 @@ def login(request):
             auth.login(request, user)
             if user.is_superuser:
                 return HttpResponseRedirect(reverse('admin:index'))
-            elif 'next' in request.POST.keys():
-                return HttpResponseRedirect(request.POST['next'])
             else:
                 return HttpResponseRedirect(reverse('specialists:account'))
     context = {
         'title': 'Авторизация',
         'login_form': login_form,
-        'next': next_value,
         'menu_sections': Section.objects.all().order_by('order'),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),

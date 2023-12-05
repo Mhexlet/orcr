@@ -4,6 +4,7 @@ from django.contrib import admin
 from MedProject.settings import BASE_DIR, BASE_URL
 from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication, compress_img
 from django.db.models.fields.reverse_related import ManyToOneRel
+from django_summernote.admin import SummernoteModelAdmin
 
 
 @admin.register(FieldOfActivity)
@@ -12,7 +13,7 @@ class FieldOfActivityAdmin(admin.ModelAdmin):
 
 
 @admin.register(User)
-class UserAdmin(admin.ModelAdmin):
+class UserAdmin(SummernoteModelAdmin):
     list_display = ['id', 'username', 'last_login', 'first_name', 'patronymic', 'last_name', 'order', 'birthdate',
                     'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
                     'phone_number', 'email', 'photo', 'short_description', 'email_verified']
@@ -20,6 +21,7 @@ class UserAdmin(admin.ModelAdmin):
                'verification_key_expires')
 
     list_display_links = ('id', 'username', 'first_name', 'patronymic', 'last_name')
+    summernote_fields = ('description',)
 
     def short_description(self, obj):
         return obj.description[:50] + '...'

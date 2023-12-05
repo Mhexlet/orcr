@@ -10,19 +10,34 @@ window.addEventListener('load', () => {
         }
     });
 
+    $('.summernote').summernote({
+        height: 120,
+        lang: "ru-RU",
+        placeholder: "О себе",
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+    });
+
     $('.edit-profile-edit-img').on('click', (e) => {
         let field = e.target.id.replace('edit-', '');
         let data = $(`#data-${field}`).html();
         $('.edit-profile-submit').attr('id', field);
         if(field == 'description') {
-            $('.edit-profile-textarea').css('display', 'block');
-            $('.edit-profile-textarea').val(data);
+            $('.note-editor').css('display', 'block');
+            $('.summernote').summernote('code', data);
         } else if(field == 'birthdate') {
             let input = $('.edit-profile-date-input');
             input.css('display', 'flex');
             input.val($('#birthdate-hidden').val());
         } else if(field == 'photo') {
-            $('.edit-profile-photo-input').css('display', 'flex');
+            $('.edit-profile-photo-input').attr('style', 'display: flex !important');
         } else if(field == 'field_of_activity') {
             $('#edit-fake-select').css('display', 'block');
             $('.register-selected').attr('id', `selected-${$('.user_field_of_activity').val()}`);
@@ -107,7 +122,7 @@ window.addEventListener('load', () => {
     $('.edit-profile-submit').on('click', (e) => {
         const token = $('input[name=csrfmiddlewaretoken]').val();
         let field = e.target.id;
-        let input = field == 'description' ? $('.edit-profile-textarea') : $('.edit-profile-input');
+        let input = $('.edit-profile-input');
         if(field == 'birthdate') {
             input = $('.edit-profile-date-input');
         } else if(field == 'photo') {
@@ -118,6 +133,9 @@ window.addEventListener('load', () => {
             newValue = $('.register-selected').attr('id').replace('selected-', '');
         } else if(field == 'photo') {
             newValue = true;
+        } else if(field == 'description') {
+            newValue = $('.note-editable').html();
+            console.log(newValue)
         } else {
             newValue = input.val();
         }
@@ -175,12 +193,11 @@ window.addEventListener('load', () => {
         if(e.target.classList.contains('faq-background')) {
             e.target.style.display = '';
             let input = $('.edit-profile-input');
-            let textarea = $('.edit-profile-textarea');
             input.css('display', '');
             input.val('');
             input.removeAttr('placeholder');
-            textarea.css('display', '');
-            textarea.val('');
+            $('.note-editor').css('display', '');
+            $('.summernote').val('');
             $('.edit-profile-date-input').css('display', '');
             $('.edit-profile-photo-block').css('display', '');
             $('.edit-profile-photo-input').css('display', '');

@@ -22,6 +22,25 @@ window.addEventListener('load', () => {
         }
     });
 
+    $('.summernote').summernote({
+        height: 120,
+        lang: "ru-RU",
+        placeholder: "О себе",
+        toolbar: [
+            ['style', ['style']],
+            ['font', ['bold', 'underline', 'clear']],
+            ['fontname', ['fontname']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link']],
+            ['view', ['fullscreen', 'codeview', 'help']],
+        ],
+    });
+
+    $(document).on('input', '.note-editable', (e) => {
+        $('#id_description').html(e.target.innerHTML);
+    })
+
     $('#id_photo').on('change', (e) => {
         $('.edit-profile-photo-block').css('display', 'flex');
         $('.faq-background').css('display', 'flex');

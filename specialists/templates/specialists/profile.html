@@ -21,7 +21,7 @@
     </div>
     <div class="profile-top-right">
         <div class="profile-title">{{ specialist.last_name|title }} {{ specialist.first_name|title }} {{ specialist.patronymic|title }}</div>
-        <p class="profile-description">{{ specialist.description }}</p>
+        <p class="profile-description">{{ specialist.description|safe }}</p>
     </div>
 </div>
 <div class="separator"></div>

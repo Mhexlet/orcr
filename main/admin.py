@@ -130,6 +130,9 @@ class SiteContentAdmin(admin.ModelAdmin):
     list_display = [field.name for field in SiteContent._meta.get_fields()]
     readonly_fields = ['name']
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 @admin.register(IndexLink)
 class IndexLinkAdmin(admin.ModelAdmin):

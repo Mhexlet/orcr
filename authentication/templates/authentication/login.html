@@ -9,10 +9,9 @@
 <p class="consultation-intro">{{ text|safe }}</p>
 <form action="{% url 'authentication:login' %}" class="consultation-form login-form" method="post">
     <div class="consultation-form-subblock">
+        <img src="{% static 'img/password_show.svg' %}" alt="show" class="login-password-show">
+        <img src="{% static 'img/password_hide.svg' %}" alt="show" class="login-password-hide">
         {% csrf_token %}
-        {% if next %}
-            <input type="hidden" name="next" value="{{ next }}">
-        {% endif %}
         {% for field in login_form %}
             {{ field }}
         {% endfor %}
