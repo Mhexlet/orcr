@@ -38,7 +38,7 @@ def index(request):
                                          str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
         'slides': slides,
         'banners': banners,
-        'news': News.objects.all().order_by('order')[0:5:1],
+        'news': News.objects.all().order_by('order')[0:6:1],
         # 'questions': questions_list
         'text': SiteContent.objects.get(name='index_text').content,
         'links': links,
