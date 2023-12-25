@@ -1,8 +1,9 @@
 import shutil
+import time
+from uuid import uuid4
+import calendar
 
 from django.contrib import admin
-
-from authentication.models import compress_img
 from .models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
 from django.db.models.fields.reverse_related import ManyToOneRel
 from django_summernote.admin import SummernoteModelAdmin
@@ -67,6 +68,19 @@ class AlbumImageAdmin(admin.ModelAdmin):
 @admin.register(FileSetFile)
 class FileSetFileAdmin(admin.ModelAdmin):
     list_display = [field.name for field in FileSetFile._meta.get_fields()]
+
+    def save_model(self, request, obj, form, change):
+        if not change or (change and 'file' in form.changed_data):
+            current_gmt = time.gmtime()
+            time_stamp = calendar.timegm(current_gmt)
+            obj.file.name = f'{time_stamp}-{uuid4().hex}.{obj.file.name.split(".")[-1]}'
+            obj.save()
+            if change:
+                try:
+                    os.remove(os.path.join(BASE_DIR, 'media', form.initial['file'].name))
+                except FileNotFoundError:
+                    pass
+        return super(FileSetFileAdmin, self).save_model(request, obj, form, change)
 
 
 @admin.register(Page)
