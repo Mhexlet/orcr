@@ -68,7 +68,8 @@ window.addEventListener('load', () => {
             data: formData,
             success: (data) => {
                 if(data['result'] == 'ok') {
-                    $('.custom-content').html('<div class="custom-notification faq-form-notification" style="margin-top: 10px;">Альбом успешно добавлен</div>');
+                    let name = instance == 'album' ? 'Альбом' : 'Набор файлов';
+                    $('.custom-content').html(`<div class="custom-notification faq-form-notification" style="margin-top: 10px;">${name} успешно добавлен</div>`);
                 } else if(data['result'] == 'failed') {
                     $('.custom-notification').html('Упс, что-то пошло не так. Попробуйте позже :с');
                     $('.custom-notification').css({'display': 'block', 'margin-top': '10px'});

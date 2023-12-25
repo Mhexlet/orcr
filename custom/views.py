@@ -1,12 +1,9 @@
-import os
-import shutil
-
+import time
+from uuid import uuid4
+import calendar
 from django.contrib.auth.decorators import user_passes_test
 from django.http import JsonResponse
 from django.shortcuts import render
-from MedProject.settings import BASE_DIR
-
-from authentication.models import compress_img
 from custom.models import Section, Page, AlbumBlock, FileSetBlock, AlbumImage, FileSetFile
 from main.models import SiteContent
 
@@ -80,6 +77,9 @@ def add_fileset(request):
         try:
             file_set = FileSetBlock.objects.create(name=name, page=Page.objects.get(pk=int(page_pk)))
             for pk_name, file in request.FILES.items():
+                current_gmt = time.gmtime()
+                time_stamp = calendar.timegm(current_gmt)
+                file.name = f'{time_stamp}-{uuid4().hex}.{file.name.split(".")[-1]}'
                 name = pk_name[pk_name.index('-') + 1:]
                 FileSetFile.objects.create(file=file, file_set=file_set, name=name)
             return JsonResponse({'result': 'ok'})
