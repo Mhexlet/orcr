@@ -38,7 +38,7 @@ def index(request):
                                          str.maketrans({' ': '', '-': '', '(': '', ')': ''}))],
         'slides': slides,
         'banners': banners,
-        'news': News.objects.all().order_by('order')[0:6:1],
+        'news': News.objects.all().order_by('order', '-pk')[0:6:1],
         # 'questions': questions_list
         'text': SiteContent.objects.get(name='index_text').content,
         'links': links,
@@ -148,6 +148,7 @@ def consultation(request):
         'menu_sections': Section.objects.all().order_by('order'),
         'account_section_id': int(SiteContent.objects.get(name='account_section_id').content),
         'menu_pages': Page.objects.filter(section=None),
+        'rules_url': SiteContent.objects.get(name='rules_url').content,
         'header_content': [SiteContent.objects.get(name='email').content,
                                      SiteContent.objects.get(name='phone').content,
                                      SiteContent.objects.get(name='phone').content.translate(

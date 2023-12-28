@@ -1,6 +1,5 @@
 import os
 import shutil
-
 from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -75,7 +74,7 @@ class User(AbstractUser):
     patronymic = models.CharField(max_length=64, verbose_name='Отчество')
     last_name = models.CharField(max_length=64, verbose_name='Фамилия')
     field_of_activity = models.ForeignKey(FieldOfActivity, on_delete=models.SET_NULL, null=True, verbose_name='Сфера деятельности')
-    profession = models.CharField(max_length=64, verbose_name='Профессия')
+    profession = models.CharField(max_length=64, verbose_name='Специализация')
     photo = models.ImageField(upload_to=user_photo_upload, verbose_name='Фото')
     city = models.CharField(max_length=128, verbose_name='Город')
     birthdate = models.DateField(null=True, verbose_name='Дата рождения')
@@ -132,11 +131,29 @@ class User(AbstractUser):
             return True
         return False
 
+    # @property
+    # def fields_of_activity(self):
+    #     fields = self.fields.select_related()
+    #     return ', '.join([str(field) for field in fields])
+
     def __str__(self):
         try:
             return f'{self.last_name} {str(self.first_name)[0]}. {str(self.patronymic)[0]}.'
         except IndexError:
             return self.username
+
+
+# class FoAUserConnection(models.Model):
+#
+#     foa = models.ForeignKey(FieldOfActivity, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Сфера деятельности')
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fields', verbose_name='Пользователь')
+#
+#     class Meta:
+#         verbose_name = 'Сфера деятельности пользователей'
+#         verbose_name_plural = 'Сферы деятельности пользователей'
+#
+#     def __str__(self):
+#         return str(self.foa)
 
 
 class UserApprovalApplication(models.Model):

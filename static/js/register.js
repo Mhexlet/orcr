@@ -58,6 +58,7 @@ window.addEventListener('load', () => {
         croppie.croppie('result', {
             type: 'blob',
             format: 'jpeg',
+            size: 'original'
         }).then(function (blob) {
             const file = new File([blob], "Photo.jpg", { type: "image/jpeg" });
             const dataTransfer = new DataTransfer();

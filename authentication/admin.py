@@ -2,7 +2,8 @@ import os
 from django.utils.html import format_html
 from django.contrib import admin
 from MedProject.settings import BASE_DIR, BASE_URL
-from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication, compress_img
+from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication
+# from .models import FoAUserConnection
 from django.db.models.fields.reverse_related import ManyToOneRel
 from django_summernote.admin import SummernoteModelAdmin
 
@@ -27,6 +28,11 @@ class UserAdmin(SummernoteModelAdmin):
         return obj.description[:50] + '...'
 
     short_description.short_description = 'О себе'
+
+    # def fields_of_activity(self, obj):
+    #     return obj.fields_of_activity
+    #
+    # fields_of_activity.short_description = 'Сфер'
 
     def save_model(self, request, obj, form, change):
         if not change or (change and 'photo' in form.changed_data):

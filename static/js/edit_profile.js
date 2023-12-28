@@ -160,6 +160,7 @@ window.addEventListener('load', () => {
                 croppie.croppie('result', {
                     type: 'blob',
                     format: 'jpeg',
+                    size: 'original'
                 }).then(function (blob) {
                     const file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
                     formData.append('photo', file)
