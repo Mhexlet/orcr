@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 from django.conf import settings
 import hashlib
-from authentication.models import User
+from authentication.models import User, FieldOfActivity
 from captcha.fields import ReCaptchaField
 from captcha.widgets import ReCaptchaV2Checkbox
 
@@ -27,6 +27,8 @@ class UserLoginForm(AuthenticationForm):
 class UserRegisterForm(UserCreationForm):
     captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox())
     birthdate = forms.DateField(input_formats=['%Y-%m-%d'], label='Дата рождения')
+    field_of_activity = forms.MultipleChoiceField(choices=tuple(
+        [(f.pk, f.name) for f in FieldOfActivity.objects.all()]), label='Сферы деятельности в ранней помощи')
 
     class Meta:
         model = User
@@ -40,8 +42,8 @@ class UserRegisterForm(UserCreationForm):
             field.widget.attrs['class'] = 'med-input'
             field.widget.attrs['placeholder'] = field.label
             field.help_text = ''
-        self.fields['field_of_activity'].widget.attrs['class'] = 'register-field-of-activity'
         self.fields['photo'].widget.attrs['style'] = 'display: none;'
+        self.fields['field_of_activity'].widget.attrs['class'] = 'register-field-of-activity'
         # self.fields['birthdate'].widget.attrs['class'] = 'med-input datepicker'
 
     def save(self, *args, **kwargs):

@@ -2,8 +2,7 @@ import os
 from django.utils.html import format_html
 from django.contrib import admin
 from MedProject.settings import BASE_DIR, BASE_URL
-from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication
-# from .models import FoAUserConnection
+from .models import FieldOfActivity, User, UserApprovalApplication, UserEditApplication, FoAUserConnection
 from django.db.models.fields.reverse_related import ManyToOneRel
 from django_summernote.admin import SummernoteModelAdmin
 
@@ -16,7 +15,7 @@ class FieldOfActivityAdmin(admin.ModelAdmin):
 @admin.register(User)
 class UserAdmin(SummernoteModelAdmin):
     list_display = ['id', 'username', 'last_login', 'first_name', 'patronymic', 'last_name', 'order', 'birthdate',
-                    'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
+                    'fields_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
                     'phone_number', 'email', 'photo', 'short_description', 'email_verified']
     exclude = ('groups', 'is_superuser', 'is_staff', 'user_permissions', 'password', 'verification_key',
                'verification_key_expires')
@@ -29,10 +28,10 @@ class UserAdmin(SummernoteModelAdmin):
 
     short_description.short_description = 'О себе'
 
-    # def fields_of_activity(self, obj):
-    #     return obj.fields_of_activity
-    #
-    # fields_of_activity.short_description = 'Сфер'
+    def fields_of_activity(self, obj):
+        return obj.fields_of_activity
+
+    fields_of_activity.short_description = 'Сферы деятельности'
 
     def save_model(self, request, obj, form, change):
         if not change or (change and 'photo' in form.changed_data):
@@ -69,7 +68,7 @@ class UserEditApplicationAdmin(admin.ModelAdmin):
             url = f'{BASE_URL}/media/{obj.new_value}'
             return format_html(f"<img src='{url}' style='max-width: 300px; max-height: 300px;'>")
         else:
-            return obj.new_value
+            return obj.get_value
 
     def old_value_changed(self, obj):
         if obj.field == 'photo':

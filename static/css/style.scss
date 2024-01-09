@@ -1343,6 +1343,9 @@ input:focus {
     position: relative;
     cursor: pointer;
     z-index: 4;
+    padding: 0;
+    display: flex;
+    align-items: center;
 }
 
 .register-fake-select-arrow {
@@ -1376,7 +1379,20 @@ input:focus {
 }
 
 .register-option {
-    margin: 0.775rem 0;
+    padding: 5px 10px;
+    margin: 5px 0;
+    cursor: pointer;
+}
+
+.register-option.selected {
+    background-color: $highlight-color;
+    color: white;
+    border-radius: 0.95rem;
+}
+
+.register-selected {
+    width: 100%;
+    padding: 0 1rem;
 }
 
 .register-errors-block {
@@ -1887,6 +1903,15 @@ input:focus {
     align-items: center;
     justify-content: center;
     margin: 10px 0 50px;
+}
+
+.edit-profile-foas {
+    display: flex;
+    flex-direction: column;
+}
+
+#data-field_of_activity > p {
+    margin: 5px 0;
 }
 
 // CHANGE PASSWORD

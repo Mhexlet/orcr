@@ -1,15 +1,10 @@
 window.addEventListener('load', () => {
 
     let options = '';
-    $('#id_field_of_activity > option').slice(1).each((i, option) => {
+    $('#id_field_of_activity > option').each((i, option) => {
         options += `<span class="register-option" id="option-${option.value}">${option.innerHTML}</span>`
     })
     $('.register-options-block').append(options);
-    // if(!$('#id_field_of_activity > option:selected').val()) {
-    //     $('#id_field_of_activity > option:selected').removeAttr('selected');
-    //     $('#id_field_of_activity > option:nth-child(2)').attr('selected', true);
-    // }
-    // $('.register-selected').html($('#id_field_of_activity > option:nth-child(2)').html());
 
     $('#id_birthdate').attr('type', 'date');
     $('#id_birthdate').attr('max', new Date().toISOString().split("T")[0]);
@@ -69,18 +64,25 @@ window.addEventListener('load', () => {
         $('.faq-background').css('display', '');
     })
 
-    $('.register-fake-select').on('click', (e) => {
+    $('.register-selected').on('click', (e) => {
         if($('.register-options-block').css('display') == 'flex') {
             $('.register-options-block').css('display', '');
+            $('.register-selected').html('Сферы деятельности в ранней помощи');
         } else {
             $('.register-options-block').css('display', 'flex');
+            $('.register-selected').html('Закрыть');
         }
     });
 
     $(document).on('click', '.register-option', (e) => {
         let id = e.target.id.replace('option-', '');
-        $('#id_field_of_activity > option').removeAttr('selected').filter(`[value=${id}]`).attr('selected', true);
-        $('.register-selected').html(e.target.innerHTML);
+        if(e.target.classList.contains('selected')) {
+            e.target.classList.remove('selected');
+            $('#id_field_of_activity > option').filter(`[value=${id}]`).attr('selected', false);
+        } else {
+            e.target.classList.add('selected');
+            $('#id_field_of_activity > option').filter(`[value=${id}]`).attr('selected', true);
+        }
         $('.register-fake-select').removeClass('wrong-input');
     })
 
@@ -169,7 +171,6 @@ window.addEventListener('load', () => {
         }
         $('.med-input').each((i, input) => {
             if(!input.value && !input.classList.contains('register-fake-select') && input.id) {
-                console.log(input.id)
                 validated = false;
                 input.classList.add('wrong-input');
             }
@@ -178,8 +179,7 @@ window.addEventListener('load', () => {
             validated = false;
             $('.consultation-checkbox-block > span').addClass('wrong-input');
         }
-        console.log($('.register-field-of-activity > option').filter('[selected=selected]').val())
-        if(!$('.register-field-of-activity > option').filter('[selected=selected]').val()) {
+        if($('.register-option.selected').length == 0) {
             validated = false;
             $('.register-fake-select').addClass('wrong-input');
         }

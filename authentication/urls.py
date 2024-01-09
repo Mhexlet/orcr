@@ -10,6 +10,7 @@ urlpatterns = [
     path('register/', auth.register, name='register'),
     path('edit_profile_page/', auth.edit_profile_page, name='edit_profile_page'),
     path('edit_profile/', check_recaptcha(auth.edit_profile), name='edit_profile'),
+    path('edit_foas/', check_recaptcha(auth.edit_foas), name='edit_foas'),
     path('delete_application/', auth.delete_application, name='delete_application'),
     path('change_password/', auth.change_password, name='change_password'),
     path('verify/<str:email>/<str:key>/', auth.verify, name='verify'),

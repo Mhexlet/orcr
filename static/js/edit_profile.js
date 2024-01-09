@@ -25,6 +25,10 @@ window.addEventListener('load', () => {
         ],
     });
 
+    $('#data-field_of_activity > p').each((i, foa) => {
+        $(`#${foa.id.replace('foa', 'option')}`).addClass('selected');
+    })
+
     $('.edit-profile-edit-img').on('click', (e) => {
         let field = e.target.id.replace('edit-', '');
         let data = $(`#data-${field}`).html();
@@ -40,8 +44,6 @@ window.addEventListener('load', () => {
             $('.edit-profile-photo-input').attr('style', 'display: flex !important');
         } else if(field == 'field_of_activity') {
             $('#edit-fake-select').css('display', 'block');
-            $('.register-selected').attr('id', `selected-${$('.user_field_of_activity').val()}`);
-            $('.register-selected').html($('.data-field_of_activity').val());
         } else {
             let input = $('.edit-profile-input');
             input.css('display', 'block');
@@ -64,10 +66,18 @@ window.addEventListener('load', () => {
         reader.readAsDataURL(e.target.files[0]);
     })
 
-    function editAjax(formData, field, newValue) {
+    $('.register-option').on('click', (e) => {
+        if(e.target.classList.contains('selected')) {
+            e.target.classList.remove('selected');
+        } else {
+            e.target.classList.add('selected');
+        }
+    })
+
+    function editAjax(formData, action, field, newValue) {
         $.ajax({
             method: "post",
-            url: "/authentication/edit_profile/",
+            url: `/authentication/${action}/`,
             contentType: false,
             processData: false,
             data: formData,
@@ -91,7 +101,7 @@ window.addEventListener('load', () => {
                                     <img src="/media/${data['new_value']}" alt="photo" class="specialists-img">
                                 </div>`;
                         } else if(field == 'field_of_activity') {
-                            htmlString += `<span class="edit-profile-application-value">${data['new_value'].replace(/id:[0-9]\|/, '')}</span>`;
+                            htmlString += `<span class="edit-profile-application-value">${data['new_value']}</span>`;
                         } else {
                             htmlString += `<span class="edit-profile-application-value">${newValue}</span>`;
                         }
@@ -130,12 +140,14 @@ window.addEventListener('load', () => {
         }
         let newValue;
         if(field == 'field_of_activity') {
-            newValue = $('.register-selected').attr('id').replace('selected-', '');
+            newValue = []
+            $('.register-option.selected').each((i, option) => {
+                newValue.push(option.id.replace('option-', ''));
+            })
         } else if(field == 'photo') {
             newValue = true;
         } else if(field == 'description') {
             newValue = $('.note-editable').html();
-            console.log(newValue)
         } else {
             newValue = input.val();
         }
@@ -155,19 +167,24 @@ window.addEventListener('load', () => {
             formData.append('csrfmiddlewaretoken', token);
             formData.append('g-recaptcha-response', $('#g-recaptcha-response').val());
             formData.append('field', field);
-            formData.append('new_value', newValue);
-            if(field == 'photo') {
-                croppie.croppie('result', {
-                    type: 'blob',
-                    format: 'jpeg',
-                    size: 'original'
-                }).then(function (blob) {
-                    const file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
-                    formData.append('photo', file)
-                    editAjax(formData, field, newValue);
-                });
+            if(field == 'field_of_activity') {
+                formData.append('new_value', JSON.stringify(newValue));
+                editAjax(formData, 'edit_foas', field, newValue);
             } else {
-                editAjax(formData, field, newValue);
+                formData.append('new_value', newValue);
+                if(field == 'photo') {
+                    croppie.croppie('result', {
+                        type: 'blob',
+                        format: 'jpeg',
+                        size: 'original'
+                    }).then(function (blob) {
+                        const file = new File([blob], "fileName.jpg", { type: "image/jpeg" });
+                        formData.append('photo', file)
+                        editAjax(formData, 'edit_profile', field, newValue);
+                    });
+                } else {
+                    editAjax(formData, 'edit_profile', field, newValue);
+                }
             }
         }
     })

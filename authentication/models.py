@@ -1,5 +1,8 @@
 import os
+import re
 import shutil
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -73,7 +76,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=64, verbose_name='Имя')
     patronymic = models.CharField(max_length=64, verbose_name='Отчество')
     last_name = models.CharField(max_length=64, verbose_name='Фамилия')
-    field_of_activity = models.ForeignKey(FieldOfActivity, on_delete=models.SET_NULL, null=True, verbose_name='Сфера деятельности')
+    # field_of_activity = models.ForeignKey(FieldOfActivity, on_delete=models.SET_NULL, null=True, verbose_name='Сфера деятельности')
     profession = models.CharField(max_length=64, verbose_name='Специализация')
     photo = models.ImageField(upload_to=user_photo_upload, verbose_name='Фото')
     city = models.CharField(max_length=128, verbose_name='Город')
@@ -131,10 +134,14 @@ class User(AbstractUser):
             return True
         return False
 
-    # @property
-    # def fields_of_activity(self):
-    #     fields = self.fields.select_related()
-    #     return ', '.join([str(field) for field in fields])
+    @property
+    def fields_of_activity(self):
+        fields = self.fields.select_related()
+        return ', '.join([str(field) for field in fields])
+
+    @property
+    def fields_of_activity_list(self):
+        return self.fields.select_related()
 
     def __str__(self):
         try:
@@ -143,17 +150,17 @@ class User(AbstractUser):
             return self.username
 
 
-# class FoAUserConnection(models.Model):
-#
-#     foa = models.ForeignKey(FieldOfActivity, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Сфера деятельности')
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fields', verbose_name='Пользователь')
-#
-#     class Meta:
-#         verbose_name = 'Сфера деятельности пользователей'
-#         verbose_name_plural = 'Сферы деятельности пользователей'
-#
-#     def __str__(self):
-#         return str(self.foa)
+class FoAUserConnection(models.Model):
+
+    foa = models.ForeignKey(FieldOfActivity, on_delete=models.CASCADE, null=True, blank=True, verbose_name='Сфера деятельности')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='fields', verbose_name='Пользователь')
+
+    class Meta:
+        verbose_name = 'Сфера деятельности пользователей'
+        verbose_name_plural = 'Сферы деятельности пользователей'
+
+    def __str__(self):
+        return str(self.foa)
 
 
 class UserApprovalApplication(models.Model):
@@ -194,7 +201,9 @@ class UserEditApplication(models.Model):
     @property
     def get_value(self):
         if self.field == 'field_of_activity':
-            return self.new_value[self.new_value.find("|") + 1:]
+            result = re.sub(r'id:[0-9]+\|', '', str(self.new_value))
+            result = re.sub(r'\|', ', ', result)
+            return result[:-2]
         else:
             return self.new_value
 
@@ -228,8 +237,14 @@ def approve_user(sender, instance, raw, using, update_fields, *args, **kwargs):
 def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
     if instance.response:
         if instance.field == 'field_of_activity':
-            new_value = instance.new_value[instance.new_value.find(":") + 1:instance.new_value.find("|")]
-            instance.user.field_of_activity = FieldOfActivity.objects.get(pk=int(new_value))
+            FoAUserConnection.objects.filter(user__pk=instance.user.pk).delete()
+            for value in re.findall(r'id:[0-9]+\|', instance.new_value):
+                new_value = int(value[3:-1])
+                try:
+                    foa = FieldOfActivity.objects.get(pk=new_value)
+                    FoAUserConnection.objects.create(foa=foa, user=instance.user)
+                except ObjectDoesNotExist:
+                    pass
         elif instance.field == 'photo':
             try:
                 os.remove(os.path.join(BASE_DIR, 'media', instance.user.photo.name))

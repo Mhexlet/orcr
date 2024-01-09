@@ -1,3 +1,5 @@
+import json
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -5,7 +7,7 @@ from django.contrib import auth
 from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from .forms import UserLoginForm, UserRegisterForm, UserPasswordChangeForm
-from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User
+from .models import UserApprovalApplication, FieldOfActivity, UserEditApplication, User, FoAUserConnection
 import os
 from custom.models import Section, Page
 from PIL import Image, ImageOps
@@ -60,10 +62,16 @@ def register(request):
             user = register_form.save()
             user.username = user.email
             user.save()
+            fields = request.POST.getlist('field_of_activity')
+            print(fields)
+            for field in fields:
+                try:
+                    FoAUserConnection.objects.create(foa=FieldOfActivity.objects.get(pk=int(field)), user=user)
+                except ObjectDoesNotExist:
+                    pass
             UserApprovalApplication.objects.create(user=user)
             if not BASE_URL == 'http://127.0.0.1:8000':
                 send_verify_email(user)
-            # compress_img(user, 'photo', 'profile_photos')
             user = auth.authenticate(username=request.POST.get('email'), password=request.POST.get('password1'))
             if user:
                 auth.login(request, user)
@@ -169,13 +177,10 @@ def edit_profile(request):
     new_value = request.POST.get('new_value')
 
     if request.recaptcha_is_valid:
-        if field in ['first_name', 'patronymic', 'last_name', 'birthdate',
-                     'field_of_activity', 'profession', 'city', 'workplace_address', 'workplace_name',
+        if field in ['first_name', 'patronymic', 'last_name', 'birthdate', 'profession', 'city', 'workplace_address', 'workplace_name',
                      'phone_number', 'email', 'photo', 'description']:
 
             old_value = str(getattr(request.user, field))
-            # if field == 'birthdate':
-            #     old_value = f'{old_value[8:]}-{old_value[5:7]}-{old_value[:4]}'
 
             if old_value == new_value:
                 return JsonResponse({'result': 'ok'})
@@ -188,15 +193,6 @@ def edit_profile(request):
                 time_stamp = calendar.timegm(current_gmt)
                 file_name = f'{time_stamp}-{uuid4().hex}.jpg'
                 new_file_path = os.path.join(BASE_DIR, 'media', 'profile_photos', file_name)
-                # width = img.size[0]
-                # height = img.size[1]
-                # ratio = width / height
-                # if ratio > 1 and width > 1024:
-                #     sizes = [1024, int(1024 / ratio)]
-                #     img = img.resize(sizes)
-                # elif height > 1024:
-                #     sizes = [int(1024 * ratio), 1024]
-                #     img = img.resize(sizes)
                 try:
                     img.save(new_file_path, optimize=True)
                 except OSError:
@@ -212,11 +208,6 @@ def edit_profile(request):
             elif field == 'email' and User.objects.filter(email=new_value).exists():
                 return JsonResponse({'result': 'email'})
 
-            if field == 'field_of_activity' and not FieldOfActivity.objects.filter(pk=int(new_value)).exists():
-                return JsonResponse({'result': 'failed'})
-            elif field == 'field_of_activity':
-                new_value = f'id:{new_value}|{FieldOfActivity.objects.get(pk=int(new_value)).name}'
-
             verbose_field = User._meta.get_field(field).verbose_name
 
             UserEditApplication.objects.filter(field=field, user__pk=request.user.pk).delete()
@@ -231,6 +222,34 @@ def edit_profile(request):
         return JsonResponse({'result': 'captcha'})
 
     return JsonResponse({'result': 'failed'})
+
+
+@login_required
+def edit_foas(request):
+    if request.recaptcha_is_valid:
+        old_value = request.user.fields_of_activity
+        new_value = ''
+        foas = ''
+        for foa in json.loads(request.POST['new_value']):
+            try:
+                name = FieldOfActivity.objects.get(pk=int(foa)).name
+                new_value += f'id:{foa}|{name}|'
+                foas += f'{name}, '
+            except ObjectDoesNotExist:
+                pass
+
+        if foas == '':
+            return JsonResponse({'result': 'failed'})
+
+        UserEditApplication.objects.filter(field='field_of_activity', user__pk=request.user.pk).delete()
+        application = UserEditApplication.objects.create(user=request.user, field='field_of_activity',
+                                                         new_value=new_value,
+                                                         old_value=old_value, verbose_field='Сферы деятельности')
+
+        return JsonResponse({'result': 'ok', 'pk': application.pk, 'verbose_field': 'Сферы деятельности',
+                             'new_value': foas[:-2]})
+    else:
+        return JsonResponse({'result': 'captcha'})
 
 
 @login_required

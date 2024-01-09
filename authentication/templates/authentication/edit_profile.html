@@ -117,8 +117,12 @@
     <div class="edit-profile-subblock">
         <div class="specialists-info">
             <span>
-                <span class="specialists-info-label" id="label-field_of_activity">Сфера деятельности: </span>
-                <span id="data-field_of_activity">{{ user.field_of_activity }}</span>
+                <span class="specialists-info-label" id="label-field_of_activity">Сферы деятельности: </span>
+                <div id="data-field_of_activity">
+                    {% for field in user.fields_of_activity_list %}
+                        <p id="foa-{{ field.pk }}">{{ field }}</p>
+                    {% endfor %}
+                </div>
             </span>
             <div class="edit-profile-edit-block"><img src="{% static '/img/application.png' %}" alt="изменить" class="edit-profile-edit-img" id="edit-field_of_activity"></div>
         </div>
@@ -215,14 +219,10 @@
             <div class="edit-profile-photo-block">
                 <div class="edit-profile-photo"></div>
             </div>
-            <div class="med-input register-fake-select" id="edit-fake-select">
-                <img src="{% static 'img/menu-arrow.svg' %}" alt="+" class="register-fake-select-arrow">
-                <div class="register-selected" id="selected-{{ user.field_of_activity.pk }}">{{ user.field_of_activity }}</div>
-                <div class="register-options-block">
-                    {% for field in fields_of_activity %}
-                    <span class="register-option" id="option-{{ field.pk }}">{{ field.name }}</span>
-                    {% endfor %}
-                </div>
+            <div class="med-input edit-profile-foas" id="edit-fake-select">
+                {% for field in fields_of_activity %}
+                    <div class="register-option" id="option-{{ field.pk }}">{{ field.name }}</div>
+                {% endfor %}
             </div>
             <div class="summernote"></div>
             <div class="form-group g-recaptcha" data-sitekey="6Lf_F2YoAAAAAAVQNp1zYPQk7S5cdxh7ylOkxGCU"></div>
