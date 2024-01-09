@@ -120,7 +120,7 @@
                 <span class="specialists-info-label" id="label-field_of_activity">Сферы деятельности: </span>
                 <div id="data-field_of_activity">
                     {% for field in user.fields_of_activity_list %}
-                        <p id="foa-{{ field.pk }}">{{ field }}</p>
+                        <p id="foa-{{ field.foa.pk }}">{{ field }}</p>
                     {% endfor %}
                 </div>
             </span>
