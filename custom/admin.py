@@ -60,7 +60,7 @@ class AlbumImageAdmin(admin.ModelAdmin):
             if change:
                 try:
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
-                except FileNotFoundError:
+                except (FileNotFoundError, UnicodeEncodeError):
                     pass
         return super(AlbumImageAdmin, self).save_model(request, obj, form, change)
 
@@ -78,7 +78,7 @@ class FileSetFileAdmin(admin.ModelAdmin):
             if change:
                 try:
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['file'].name))
-                except FileNotFoundError:
+                except (FileNotFoundError, UnicodeEncodeError):
                     pass
         return super(FileSetFileAdmin, self).save_model(request, obj, form, change)
 

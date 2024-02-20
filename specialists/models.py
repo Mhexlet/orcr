@@ -76,5 +76,5 @@ def approve_article(sender, instance, raw, using, update_fields, *args, **kwargs
 def delete_file(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.file.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass

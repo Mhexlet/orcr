@@ -203,7 +203,7 @@ def edit_profile(request):
                 if previous.exists() and not previous.last().response:
                     try:
                         os.remove(os.path.join(BASE_DIR, 'media', *previous.last().new_value.split('/')))
-                    except FileNotFoundError:
+                    except (FileNotFoundError, UnicodeEncodeError):
                         pass
             elif field == 'email' and User.objects.filter(email=new_value).exists():
                 return JsonResponse({'result': 'email'})

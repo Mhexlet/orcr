@@ -199,7 +199,7 @@ def treat_application(sender, instance, raw, using, update_fields, *args, **kwar
 def delete_slider_img(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass
 
 
@@ -207,7 +207,7 @@ def delete_slider_img(sender, instance, using, origin, **kwargs):
 def delete_banner_img(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass
 
 
@@ -215,5 +215,5 @@ def delete_banner_img(sender, instance, using, origin, **kwargs):
 def delete_news_img(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass

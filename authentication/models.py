@@ -248,7 +248,7 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
         elif instance.field == 'photo':
             try:
                 os.remove(os.path.join(BASE_DIR, 'media', instance.user.photo.name))
-            except FileNotFoundError:
+            except (FileNotFoundError, UnicodeEncodeError):
                 pass
             instance.user.photo = instance.new_value
         # elif instance.field == 'birthdate':
@@ -264,7 +264,7 @@ def approve_edit(sender, instance, raw, using, update_fields, *args, **kwargs):
 def delete_user_photo(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.photo.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass
 
 

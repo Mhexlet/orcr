@@ -1,3 +1,7 @@
+import calendar
+import time
+from uuid import uuid4
+
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -112,6 +116,9 @@ def create_article(request):
                 ArticleApprovalApplication.objects.create(article=art)
                 for pk_name, file in request.FILES.items():
                     name = pk_name[pk_name.index('-') + 1:]
+                    current_gmt = time.gmtime()
+                    time_stamp = calendar.timegm(current_gmt)
+                    file.name = f'{time_stamp}-{uuid4().hex}.{file.name.split(".")[-1]}'
                     ArticleFile.objects.create(file=file, article=art, name=name)
                 return JsonResponse({'result': 'ok'})
             except:
@@ -163,6 +170,9 @@ def edit_article(request):
                         ArticleFile.objects.get(pk=file.pk).delete()
                 for pk_name, file in request.FILES.items():
                     name = pk_name[pk_name.index('-') + 1:]
+                    current_gmt = time.gmtime()
+                    time_stamp = calendar.timegm(current_gmt)
+                    file.name = f'{time_stamp}-{uuid4().hex}.{file.name.split(".")[-1]}'
                     ArticleFile.objects.create(file=file, article=art, name=name)
                 return JsonResponse({'result': 'ok'})
             except:

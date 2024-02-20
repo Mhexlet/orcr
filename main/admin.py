@@ -50,7 +50,7 @@ class MainSliderImageAdmin(admin.ModelAdmin):
             if change:
                 try:
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
-                except FileNotFoundError:
+                except (FileNotFoundError, UnicodeEncodeError):
                     pass
             compress_img(form.instance, 'image', 'images')
         return super(MainSliderImageAdmin, self).save_model(request, obj, form, change)
@@ -65,7 +65,7 @@ class BannerAdmin(admin.ModelAdmin):
             if change:
                 try:
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
-                except FileNotFoundError:
+                except (FileNotFoundError, UnicodeEncodeError):
                     pass
             compress_img(form.instance, 'image', 'images', change_format=False)
         return super(BannerAdmin, self).save_model(request, obj, form, change)
@@ -115,7 +115,7 @@ class NewsAdmin(SummernoteModelAdmin):
             if change:
                 try:
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
-                except FileNotFoundError:
+                except (FileNotFoundError, UnicodeEncodeError):
                     pass
             compress_img(form.instance, 'image', 'images')
         try:
@@ -143,7 +143,7 @@ class IndexLinkAdmin(admin.ModelAdmin):
             if change:
                 try:
                     os.remove(os.path.join(BASE_DIR, 'media', form.initial['image'].name))
-                except FileNotFoundError:
+                except (FileNotFoundError, UnicodeEncodeError):
                     pass
             compress_img(form.instance, 'image', 'images', change_format=False)
         return super(IndexLinkAdmin, self).save_model(request, obj, form, change)

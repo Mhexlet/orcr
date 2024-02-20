@@ -200,7 +200,7 @@ def compress_album_image(sender, instance, **kwargs):
 def delete_album_img(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.image.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass
 
 
@@ -208,5 +208,5 @@ def delete_album_img(sender, instance, using, origin, **kwargs):
 def delete_file(sender, instance, using, origin, **kwargs):
     try:
         os.remove(os.path.join(BASE_DIR, 'media', instance.file.name))
-    except FileNotFoundError:
+    except (FileNotFoundError, UnicodeEncodeError):
         pass
