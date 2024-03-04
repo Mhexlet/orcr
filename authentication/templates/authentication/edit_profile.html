@@ -58,7 +58,6 @@
 <a href="{% url 'authentication:logout' %}" class="menu-page">Выйти</a>
 {% endblock %}
 {% block content %}
-<input type="hidden" value="{{ user.field_of_activity.pk }}" id="user_field_of_activity">
 <input type="hidden" value="{{ user.get_birthdate }}" id="user_birthdate">
 <h1 class="page-title">Ваш профиль</h1>
 <div class="separator"></div>
